@@ -77,10 +77,6 @@ INSERT INTO `colaborador` (`idUsuario`, `idViaje`) VALUES
 
 
 /* ****************************************************************************** */
-INSERT INTO `viajero` (`idUsuario`, `idViaje`)
-    SELECT u.nickname as idUsuario, v.id as idViaje
-    FROM usuario u JOIN viaje v ON v.idUsuario = u.nickname
-;
 
 INSERT INTO `destinovotado` (`idUsuario`, `idViaje`, `idDestino`) 
     SELECT sc.nickname, sc.idViaje, d.id as idDestino

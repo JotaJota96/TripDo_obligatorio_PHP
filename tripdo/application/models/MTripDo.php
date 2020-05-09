@@ -40,7 +40,7 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function crearViaje($dtViaje, $idUsuario){
-
+        
     }
 
     //--------------------------------------------------------------------------------
@@ -97,7 +97,19 @@ class MTripDo extends CI_Model {
     * @param int $idDestino id del destino votado
     * @return void
     */
-    public function votarDestinoOPlan($idUsario, $idViaje, $idDestino){
+    public function votarDestino($idUsario, $idViaje, $idDestino){
+
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * el sistema registra que un usuario voto por un cierto plan
+    * @param string $idUsario id del usuario que vota 
+    * @param int $idViaje id del viaje del que es parte el plan que se pretende votar
+    * @param int $idPlan id del plan votado
+    * @return void
+    */
+    public function votarPlan($idUsario, $idViaje, $idPlan){
 
     }
 
@@ -120,7 +132,7 @@ class MTripDo extends CI_Model {
     * @param int $idViaje id del viaje que se desea dar por realizado
     * @return void
     */
-    public function MarcarViajeComoRealizado($idUsuario, $idViaje){
+    public function marcarViajeComoRealizado($idUsuario, $idViaje){
 
     }
 
@@ -133,7 +145,7 @@ class MTripDo extends CI_Model {
     * @param string $texto comentario asignado a la valoracion (opcional)
     * @return void
     */
-    public function CalificarViaje($idUsuario, $idViaje, $valoracion, $texto=null){
+    public function calificarViaje($idUsuario, $idViaje, $valoracion, $texto=null){
 
     }
 

@@ -22,7 +22,6 @@
 }
 .news_post
 {
-	margin-top: 5%;
 	width: 100%;
 	margin-bottom: 59px;
 }
@@ -30,7 +29,10 @@
 {
 	margin-bottom: 0;
 }
+.post_title
+{
 
+}
 .post_title a
 {
 	font-size: 40px;
@@ -131,45 +133,6 @@
 /*********************************
 2. Sidebar
 *********************************/
-.icon_box_more
-{
-	display: inline-block;
-	position: relative;
-	font-size: 12px;
-	font-weight: 400;
-	color: #131a2f;
-	margin-top: 35px;
-	overflow: hidden;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
-}
-.icon_box_more:hover
-{
-	color: #fe3c52;
-}
-.icon_box_more::before
-{
-	display: block;
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	content: '';
-	background: #fe3c52;
-	-webkit-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
-    -moz-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
-    -ms-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
-    -o-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
-    transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
-}
-.icon_box_more:hover::before
-{
-	left: 100%;
-}
 
 .sidebar
 {
@@ -238,7 +201,6 @@
 }
 .sidebar_featured_post
 {
-	padding-top: 5%;
 	margin-bottom: 26px;
 }
 .sidebar_featured_image
@@ -251,9 +213,9 @@
 }
 .sidebar_featured_title
 {
-	margin-top: 111px;
+	margin-top: 30px;
 }
-.sidebar_featured_title h2
+.sidebar_featured_title a
 {
 	font-size: 20px;
 	font-weight: 400;
@@ -437,29 +399,6 @@
 /*********************************
 3. Newsletter
 *********************************/
-.tab_panel_content p:last-of-type
-{
-	margin-bottom: 0;
-}
-
-.tab_panels
-{
-	
-	margin-top: 10px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border: solid 2px #fe3c52;
-}
-.tab_panel
-{
-	width: 100%;
-	height: 100%;
-	-webkit-animation: fadeEffect 1s;
-    animation: fadeEffect 1s;
-}
-
 
 .newsletter
 {
@@ -554,122 +493,4 @@
 	font-weight: 400 !important;
 	font-style: italic;
 	color: #FFFFFF !important;
-}
-
-/*********************************
-6.2 Accordions & Tabs
-*********************************/
-
-.accordions_tabs
-{
-	margin-top: 89px;
-}
-.accordions_tabs_container
-{
-	margin-top: 74px;
-}
-
-/*********************************
-6.2.1 Accordions
-*********************************/
-
-.accordion_container
-{
-	margin-bottom: 20px;
-}
-.accordion_container:last-child
-{
-	margin-bottom: 0;
-}
-.accordion
-{
-	height: 53px;
-	width: 100%;
-	border: solid 2px #dbdbdb;
-	background: #FFFFFF;
-	padding-left: 20px;
-	cursor: pointer;
-	color: #131a2f;
-	font-size: 15px;
-	font-weight: 400;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
-}
-.accordion div
-{
-	max-width: 91%;
-	overflow: hidden;
-	white-space: nowrap;
-}
-.accordion.active
-{
-	background: #fe3c52;
-	border: solid 2px #fe3c52;
-	color: #FFFFFF;
-}
-.accordion:active
-{
-	background: #fe3c52 !important;
-}
-.accordion::after
-{
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	top: 0;
-	right: 13px;
-	height: 100%;
-	content: '+';
-	font-size: 16px;
-	color: #07122c;
-	font-weight: 400;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
-}
-.accordion.active::after
-{
-	color: #FFFFFF;
-	content: '-';
-}
-.accordion:hover
-{
-	background: #fe3c52;
-	color: #FFFFFF;
-	border: solid 2px #fe3c52;
-}
-.accordion:hover::after
-{
-	color: #FFFFFF;
-}
-.accordion_panel
-{
-	padding-left: 15px;
-	padding-right: 15px;
-	max-height: 0px;
-	overflow: hidden;
-	-webkit-transition: all 500ms ease;
-	-moz-transition: all 500ms ease;
-	-ms-transition: all 500ms ease;
-	-o-transition: all 500ms ease;
-	transition: all 500ms ease;
-}
-.accordion_panel p
-{
-	padding-top: 15px;
-}
-.accordion_panel p:last-of-type
-{
-	margin-bottom: 0;
 }

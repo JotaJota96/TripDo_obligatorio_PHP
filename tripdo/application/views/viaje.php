@@ -11,10 +11,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Destino project">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link href="<?= base_url()?>/public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="<?= base_url()?>/public/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/animate.css">
+
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.css">
+	
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/main_styles.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/inex_style.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/index_reponsive.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/viaje_style.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/viaje_reponsive.css">
 </head>
 
 <body>
@@ -46,6 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<li class="main_nav_item"><a href="#">Contact</a></li>
 								</ul>
 							</nav>
+							
 							<!-- Hamburger -->
 							<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
 						</div>
@@ -259,11 +269,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</footer>
 	</div>
 
-
-
 	<script src="<?= base_url()?>/public/js/jquery-3.2.1.min.js"></script>
 	<script src="<?= base_url()?>/public/styles/bootstrap4/popper.js"></script>
 	<script src="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.js"></script>
+	<script src="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="<?= base_url()?>/public/plugins/easing/easing.js"></script>
+	<script src="<?= base_url()?>/public/plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="<?= base_url()?>/publicp/lugins/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script src="<?= base_url()?>/public/js/custom.js"></script>
 </body>
 

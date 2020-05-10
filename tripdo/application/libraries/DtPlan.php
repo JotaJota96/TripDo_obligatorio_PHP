@@ -9,7 +9,7 @@ class DtPlan {
   public $idDestino;
   public $agregadoPor;
   public $fechaAgregado;
-}
+
   function __construct(){}
 
   function get_array(){
@@ -26,5 +26,6 @@ class DtPlan {
       );
       return $ret;
   }
+}
 ?>
 

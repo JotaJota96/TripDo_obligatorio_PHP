@@ -6,8 +6,12 @@ class Welcome extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('MTripDo');
+        $this->load->library('DtDestino');
+        $this->load->library('DtPlan');
+        $this->load->library('DtTag');
         $this->load->library('DtUsuario');
         $this->load->library('DtViaje');
+        $this->load->library('DtViajero');
     }
 	/**
 	 * Index Page for this controller.
@@ -26,6 +30,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index(){
         $data = array();
+        
 		$this->load->view('welcome_message', $data);
 	}
 }

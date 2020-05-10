@@ -30,13 +30,34 @@ class MTripDo extends CI_Model {
 
     //--------------------------------------------------------------------------------
     /**
-    * iniciar secion valida el inicio de secion de un usuario y su contrseña
+    * iniciar secion valida el inicio de secion de un usuario. Si los datos son correctos retorna su nickname, de lo contrario NULL
     * @param string $id puede ser el nickname o el correo
     * @param string $contrasenia contrasenia del usuario
     * @return string 
     */
     public function iniciarSecion($id, $contrasenia){
+        if ((!isset($id) || strlen($id) == 0) || (!isset($contrasenia) || strlen($contrasenia) == 0)){
+            throw new Exception("Alguno de los parametros recibidos esta vacío");
+        }
+        // Genero la consulta
+        // SELECT u.nickname FROM usuario u WHERE ( u.nickname = $id OR u.email = $id ) AND u.contrasenia = $contrasenia 
+        $this->db->select('u.nickname')->from('usuario u')
+            ->group_start()
+                ->where('u.nickname', $id)
+                ->or_where('u.email', $id)
+            ->group_end()
+            ->where('u.contrasenia', $contrasenia);
+        // ejecuto la query
+        $result = $this->db->get();
 
+        if ($result->num_rows() == 1){
+            $r = $result->row();
+            $resultNick = $r->nickname;
+            return $resultNick;
+        }else{
+            return NULL;
+        }
+        
     } 
 
     //--------------------------------------------------------------------------------
@@ -58,7 +79,28 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function agregarColaboradorAViaje($idViaje, $idUsuario){
-
+        echo "descomentar en agregarColaboradorAViaje";
+        /* DESCOMENTAR
+        if (!$this->existeIdViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
+        */
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con ese id");
+        }
+        /* DESCOMENTAR
+        if($this->esViajero($idViaje, $idUsuario)){
+            throw new Exception("El usuario no puede agregarse como colaborador porque es viajero");
+        }
+        if($this->esColaborador($idViaje, $idUsuario)){
+            return;
+        }
+        */
+        $colaborador= array(
+            'idUsuario'=> $idUsuario,
+            'idViaje'=>$idViaje
+        );
+        $this->db->insert('colaborador', $colaborador);
     }
 
     //--------------------------------------------------------------------------------
@@ -204,7 +246,7 @@ class MTripDo extends CI_Model {
     * @param string $idUsuario id del usuario
     * @return bool
     */
-    public function esviajero($idViaje, $idUsuario){
+    public function esViajero($idViaje, $idUsuario){
 
     }
 
@@ -216,7 +258,20 @@ class MTripDo extends CI_Model {
     * @return bool
     */
     public function esColaborador($idViaje, $idUsuario){
+        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        $this->db->select('*')
+            ->from('colaborador c')
+            ->where('c.idUsuario', $idUsuario)
+            ->where('c.idViaje', $idViaje);
+        $result = $this->db->get();
 
+        if($result->num_rows() == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //--------------------------------------------------------------------------------

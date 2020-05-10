@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 	<title>Destino</title>
@@ -11,7 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Destino project">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/main_styles.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/inex_style.css">
@@ -40,10 +39,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!-- Main Navigation -->
 							<nav class="main_nav ml-auto ">
 								<ul class="main_nav_list ">
-									<li class="main_nav_item active"><a href="index.html">Inicio</a></li>
+									<li class="main_nav_item"><a href="index.html">Inicio</a></li>
 									<li class="main_nav_item"><a href="#">About us</a></li>
 									<li class="main_nav_item"><a href="busqueda.html">Buscar</a></li>
-									<li class="main_nav_item"><a href="viaje.html">Viaje</a></li>
+									<li class="main_nav_item active"><a href="viaje.html">Viaje</a></li>
 									<li class="main_nav_item"><a href="#">Contact</a></li>
 								</ul>
 							</nav>
@@ -70,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<form action="#" id="menu_search_form">
 							<input type="search" class="menu_search_input menu_mm">
 							<button id="menu_search_submit" class="menu_search_submit" type="submit"><img
-									src="<?= base_url()?>/public/images/search_2.png" alt=""></button>
+									src="images/search_2.png" alt=""></button>
 						</form>
 					</div>
 					<ul class="menu_list menu_mm">
@@ -105,123 +104,106 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		</div>
 
-		<!-- Home -->
-		<div class="home">
-			<div class="home_background" style="background-image:url(<?= base_url()?>/public/images/home.jpg)"></div>
-			<div class="home_content">
-				<div class="home_content_inner">
-					<div class="home_text_large">TRIPDO</div>
-					<div class="home_text_small">Discover new worlds</div>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Popular -->
-		<div class="popular">
+		<!-- news -->
+		<div class="news">
 			<div class="container">
 				<div class="row">
-					<div class="col">
-						<div class="section_title text-center">
-							<h2>Popular destinations in 2018</h2>
-							<div>take a look at these offers</div>
+					<!-- News Posts -->
+					<div class="col-lg-8">
+						<div class="news_posts">
+							<!-- News Post -->
+							<div class="news_post">
+								<div class="post_title">
+									<h2>Top destinations in Europe</h2>
+								</div>
+
+								<div class="post_image">
+									<img src="<?= base_url()?>/public/images/news_1.jpg">
+
+								</div>
+								<div class="post_text">
+									<div class="accordion_container">
+
+										<div class="accordion_container">
+											<div class="accordion d-flex flex-row align-items-center">
+												<div>Destino 1</div>
+											</div>
+											<div class="accordion_panel">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+													fringilla lectus nec diam auctor, ut fringilla diam sLorem ipsum
+													dolor sit amet, consectetur adipiscing elit. Fusce fringilla lectus
+													nec diam auctor, ut fringilla diam sLorem ipsum dolor sit amet,
+													consectetur adipiscing elit. Fusce fringilla lectu.</p>
+											</div>
+										</div>
+
+										<div class="accordion_container">
+											<div class="accordion d-flex flex-row align-items-center">
+												<div>Destino 2</div>
+											</div>
+											<div class="accordion_panel">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+													fringilla lectus nec diam auctor, ut fringilla diam sLorem ipsum
+													dolor sit amet, consectetur adipiscing elit. Fusce fringilla lectus
+													nec diam auctor, ut fringilla diam sLorem ipsum dolor sit amet,
+													consectetur adipiscing elit. Fusce fringilla lectu.</p>
+											</div>
+										</div>
+
+										<div class="accordion_container">
+											<div class="accordion d-flex flex-row align-items-center">
+												<div>Destino 3</div>
+											</div>
+											<div class="accordion_panel">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+													fringilla lectus nec diam auctor, ut fringilla diam sLorem ipsum
+													dolor sit amet, consectetur adipiscing elit. Fusce fringilla lectus
+													nec diam auctor, ut fringilla diam sLorem ipsum dolor sit amet,
+													consectetur adipiscing elit. Fusce fringilla lectu.</p>
+											</div>
+										</div>
+
+										<div class="accordion_container">
+											<div class="accordion d-flex flex-row align-items-center">
+												<div>Destino 4</div>
+											</div>
+											<div class="accordion_panel">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+													fringilla lectus nec diam auctor, ut fringilla diam sLorem ipsum
+													dolor sit amet, consectetur adipiscing elit. Fusce fringilla lectus
+													nec diam auctor, ut fringilla diam sLorem ipsum dolor sit amet,
+													consectetur adipiscing elit. Fusce fringilla lectu.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div
-							class="popular_content d-flex flex-md-row flex-column flex-wrap align-items-md-center align-items-start justify-content-md-between justify-content-start">
 
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_1.jpg" alt="image by Egzon Bytyqi">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Turkey</div>
+					<!-- Sidebar -->
+					<div class="col-lg-4">
+						<div class="sidebar">
+							<!-- Featured Posts -->
+							<div class="sidebar_featured">
+
+								<!-- Featured Post -->
+								<div class="sidebar_featured_post">
+									<div class="tab_panels">
+										<div class="sidebar_featured_image"><img src="<?= base_url()?>/public/images/mapa.png" alt=""></div>
 									</div>
-								</a>
-							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_2.jpg" alt="https://unsplash.com/@michael75">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Hawai</div>
+									<div class="tab_panels">
+										<div class="tab_panel">
+											<div class="tab_panel_content">
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fringilla lectus nec diam auctor, ut fringilla diam sLorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fringilla lectus nec diam auctor.</p>
+											</div>
+										</div>
 									</div>
-								</a>
+								</div>
 							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_3.jpg" alt="https://unsplash.com/@sapegin">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Ireland</div>
-									</div>
-								</a>
-							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_4.jpg" alt="https://unsplash.com/@kensuarez">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Thailand</div>
-									</div>
-								</a>
-							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_5.jpg" alt="https://unsplash.com/@noahbasle">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Croatia</div>
-									</div>
-								</a>
-							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_6.jpg" alt="https://unsplash.com/@seb">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Bali</div>
-									</div>
-								</a>
-							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_7.jpg" alt="https://unsplash.com/@nevenkrcmarek">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">France</div>
-									</div>
-								</a>
-							</div>
-
-							<!-- Popular Item -->
-							<div class="popular_item">
-								<a href="offers.html">
-									<img src="<?= base_url()?>/public/images/popular_8.jpg" alt="https://unsplash.com/@bergeryap87">
-									<div class="popular_item_content">
-										<div class="popular_item_price">From $890</div>
-										<div class="popular_item_title">Vietnam</div>
-									</div>
-								</a>
-							</div>
-
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -276,6 +258,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</footer>
 	</div>
+
+
 
 	<script src="<?= base_url()?>/public/js/jquery-3.2.1.min.js"></script>
 	<script src="<?= base_url()?>/public/styles/bootstrap4/popper.js"></script>

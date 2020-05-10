@@ -18,7 +18,14 @@ class MTripDo extends CI_Model {
      * @return void
      */
     public function registrarUsuario($dtUsuario){
-
+        if (!$this->validarObjeto($dtUsuario, 'DtUsuario')){
+            throw new Exception("El tipo de dato recibido no es válido");
+        }
+        if ($this->existeNickname($dtUsuario->nickname) || $this->existeEmail($dtUsuario->email)){
+            throw new Exception("Ya existe un usuario con ese nickname o email");
+        }
+        $dtUsuario->verificado = false;
+        $this->db->insert('usuario', $dtUsuario->get_array());
     }
 
     //--------------------------------------------------------------------------------
@@ -222,6 +229,44 @@ class MTripDo extends CI_Model {
 
     }
 
+    //--------------------------------------------------------------------------------
+    /**
+    * Devuelve TRUE si el nickname pasado como parametro ya se encuentra en uso
+    * @param string $nickname Nickname a verificar
+    * @return boolean
+    */
+    public function existeNickname($nickname){
+        $this->db->select('u.nickname');
+        $this->db->from('usuario u');
+        $this->db->where('u.nickname', $nickname);
+        $result = $this->db->get();
+        return ($result->num_rows() == 1);
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * Devuelve TRUE si el email pasado como parametro ya se encuentra en uso
+    * @param string $email Email a verificar
+    * @return boolean
+    */
+    public function existeEmail($email){
+        $this->db->select('u.email');
+        $this->db->from('usuario u');
+        $this->db->where('u.email', $email);
+        $result = $this->db->get();
+        return ($result->num_rows() == 1);
+    }
+
+    //**********************************************************************************************
+    private function validarObjeto($ingresado, $esperado){
+        if (is_null($ingresado) || gettype($ingresado) != "object"){
+            return false;
+        }
+        if (get_class($ingresado) != $esperado){
+            return false;
+        }
+        return true;
+    }
 
 }
 ?>

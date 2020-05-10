@@ -268,7 +268,7 @@ section
 {
 	display: block;
 	position: fixed;
-	top: 15px;
+	top: 47px;
 	width: 100%;
 	z-index: 100;
 	-webkit-transition: all 400ms ease;
@@ -277,10 +277,14 @@ section
 	-o-transition: all 400ms ease;
 	transition: all 400ms ease;
 }
+.header.scrolled
+{
+	top: 15px;
+}
 .header_container
 {
 	width: 100%;
-	height: 90px;
+	height: 121px;
 	background: #131a2f;
 	-webkit-transition: all 400ms ease;
 	-moz-transition: all 400ms ease;
@@ -288,10 +292,13 @@ section
 	-o-transition: all 400ms ease;
 	transition: all 400ms ease;
 }
-
+.header.scrolled .header_container
+{
+	height: 90px;
+}
 
 /*********************************
-4.1 Logo
+3.1 Logo
 *********************************/
 
 .logo_container
@@ -330,9 +337,9 @@ section
 .logo_image
 {
 	position: absolute;
-	width: 40px;
-	top: -28px;
-	left: 46px;
+	top: -34px;
+	left: 41px;
+	width: 50px;
 	height: 41px;
 	-webkit-transition: all 400ms ease;
 	-moz-transition: all 400ms ease;
@@ -340,14 +347,19 @@ section
 	-o-transition: all 400ms ease;
 	transition: all 400ms ease;
 }
-
+.header.scrolled .logo_image
+{
+	width: 40px;
+	top: -28px;
+	left: 46px;
+}
 .logo_image img
 {
 	max-width: 100%;
 }
 
 /*********************************
-4.2 Navigation
+3.2 Navigation
 *********************************/
 
 .main_nav
@@ -385,7 +397,7 @@ section
 	font-size: 15px;
 	font-weight: 400;
 	color: #FFFFFF;
-	line-height: 90px;
+	line-height: 121px;
 	padding-left: 22px;
 	padding-right: 22px;
 	-webkit-transition: all 200ms ease;
@@ -394,7 +406,10 @@ section
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
-
+.header.scrolled .main_nav_item a
+{
+	line-height: 90px;
+}
 .main_nav_item.active a
 {
 	color: #fe435b;
@@ -404,9 +419,140 @@ section
 	color: #fe435b;
 }
 
+/*********************************
+3.3 Search
+*********************************/
+
+.search
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 121px;
+	height: 100%;
+	background: #fe435b;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.search.active
+{
+	width: 300px;
+}
+.search:hover
+{
+	background: #eb334a;
+}
+.search_form
+{
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.search_input
+{
+	display: none;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+	left: 25px;
+	height: 36px;
+	background: transparent;
+	border: solid 2px rgba(255, 255, 255, 0.5);
+	color: #FFFFFF;
+	outline: none;
+	padding-left: 10px;
+	-webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.search.active .search_input
+{
+	display: inline-block;
+}
+.search_button
+{
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+	right: 49px;
+	width: 24px;
+	height: 26px;
+	background: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	pointer-events: none;
+}
+.search_button img
+{
+	pointer-events: none;
+}
+.search_button:focus
+{
+	outline: none;
+}
+.search.active .search_button
+{
+	pointer-events: auto;
+}
+.search_input::-webkit-input-placeholder
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: rgba(255, 255, 255, 0.5) !important;
+}
+.search_input:-moz-placeholder
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: rgba(255, 255, 255, 0.5) !important;
+}
+.search_input::-moz-placeholder
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: rgba(255, 255, 255, 0.5) !important;
+} 
+.search_input:-ms-input-placeholder
+{ 
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: rgba(255, 255, 255, 0.5) !important;
+}
+.search_input::input-placeholder
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: rgba(255, 255, 255, 0.5) !important;
+}
 
 /*********************************
-4.4 Hamburger
+3.4 Hamburger
 *********************************/
 
 .hamburger
@@ -417,6 +563,19 @@ section
 	color: #3a3a3a;
 	margin-right: 20px;
 	cursor: pointer;
+}
+.hamburger i
+{
+	color: #FFFFFF;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.hamburger:hover i
+{
+	color: #fe435b;
 }
 
 /*********************************

@@ -7,7 +7,11 @@ class Welcome extends CI_Controller {
         parent::__construct();
         $this->load->model('MTripDo');
         $this->load->library('DtUsuario');
-        $this->load->library('DtViaje');
+		$this->load->library('DtViaje');
+		$this->load->library('DtPlan');
+		$this->load->library('DtTag');
+		$this->load->library('DtDestino');
+		$this->load->library('DtViajero');
     }
 	/**
 	 * Index Page for this controller.
@@ -25,7 +29,18 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index(){
-        $data = array();
+		$data = array();
+
+		/*
+		$dtPlan = new DtPlan();
+		$dtPlan->nombre="las bahamas";
+		$dtPlan->descripcion="dddd";
+		$dtPlan->latitud="32.23";
+		$dtPlan->longitud="53.23";
+		$this->MTripDo->agregarPlanADestino($dtPlan,1,'antonio57');
+		*/
+		$this->MTripDo->marcarViajeComoRealizado('jose57', 5);
+
 		$this->load->view('welcome_message', $data);
 	}
 }

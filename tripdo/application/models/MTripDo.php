@@ -47,7 +47,22 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function crearViaje($dtViaje, $idUsuario){
-        
+        if (!$this->validarObjeto($dtViaje, 'DtViaje')){
+            throw new Exception("El tipo de dato recibido no es válido");
+        }
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con id");
+        }
+
+        $dtViaje->idUsuario = $idUsuario;
+        $viaje = $dtViaje->get_array();
+
+        unset($viaje['id']);
+        unset($viaje['realizado']);
+        unset($viaje['valoracion']);
+
+
+        $this->db->insert('viaje', $viaje);
     }
 
     //--------------------------------------------------------------------------------
@@ -70,6 +85,26 @@ class MTripDo extends CI_Model {
     */
     public function agregarViajeroAViaje($idViaje, $idUsuario){
 
+
+        if (!$this->existeIdViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con ese id");
+        }
+        /*if($this->esColavorador($idViaje, $idUsuario)){   //DESCOMENTAME
+            throw new Exception("El usuario no puede agregarse como viajero porque es colaborador");
+        }*/
+        if($this->esViajero($idViaje, $idUsuario)){
+            return;
+        }
+
+        $viajero= array(
+            'idUsuario'=> $idUsuario,
+            'idViaje'=>$idViaje
+        );
+
+        $this->db->insert('viajero', $viajero);
     }
 
     //--------------------------------------------------------------------------------
@@ -93,7 +128,25 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function agregarPlanADestino($dtPlan, $idDestino, $idUsuario){
+        if (!$this->validarObjeto($dtPlan, 'DtPlan')){
+            throw new Exception("El tipo de dato recibido no es válido");
+        }
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con id");
+        }
+        if (!$this->existeDestino($idDestino)){
+            throw new Exception("No existe un usuario con id");
+        }
 
+        $dtPlan->idDestino = $idDestino;
+        $dtPlan->agregadoPor = $idUsuario;
+
+        $Plan = $dtPlan->get_array();
+
+        unset($Plan['id']);
+        unset($Plan['fechaAgregado']);
+
+        $this->db->insert('plan', $Plan);
     }
 
     //--------------------------------------------------------------------------------
@@ -111,13 +164,27 @@ class MTripDo extends CI_Model {
     //--------------------------------------------------------------------------------
     /**
     * el sistema registra que un usuario voto por un cierto plan
-    * @param string $idUsario id del usuario que vota 
+    * @param string $idUsuario id del usuario que vota 
     * @param int $idViaje id del viaje del que es parte el plan que se pretende votar
     * @param int $idPlan id del plan votado
     * @return void
     */
-    public function votarPlan($idUsario, $idViaje, $idPlan){
+    public function votarPlan($idUsuario, $idViaje, $idPlan){
 
+        if (!$this->esViajero($idViaje, $idUsuario)){
+            throw new Exception("El usuario no es viajero del viaje");
+        }
+        if (!$this->existePlan($idPlan)){
+            throw new Exception("No existe un plan con ese id");
+        }
+
+        $voto= array(
+            'idUsuario'=>$idUsuario,
+            'idViaje'=>$idViaje,
+            'idPlan'=>$idPlan
+        );
+
+        $this->db->insert('planvotado', $voto);
     }
 
     //--------------------------------------------------------------------------------
@@ -141,6 +208,12 @@ class MTripDo extends CI_Model {
     */
     public function marcarViajeComoRealizado($idUsuario, $idViaje){
 
+        if (!$this->esPropietario($idViaje, $idUsuario)){
+            throw new Exception("El usuario no es propietario del viaje");
+        }
+        $this->db->set('realizado', true);
+        $this->db->where('id', $idViaje);
+        $this->db->update('viaje');
     }
 
     //--------------------------------------------------------------------------------
@@ -204,7 +277,21 @@ class MTripDo extends CI_Model {
     * @param string $idUsuario id del usuario
     * @return bool
     */
-    public function esviajero($idViaje, $idUsuario){
+    public function esViajero($idViaje, $idUsuario){
+        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        $this->db->select('*');
+        $this->db->from('viajero v');
+        $this->db->where('v.idUsuario', $idUsuario);
+        $this->db->where('v.idViaje', $idViaje);
+        $result = $this->db->get();
+        if($result->num_rows() == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
 
@@ -227,6 +314,47 @@ class MTripDo extends CI_Model {
     */
     public function buscarPorPalabrasClave($keyWords){
 
+    }
+    //--------------------------------------------------------------------------------
+    /**
+    * el sistema debuelve un conjunto de viajes cuyos tags o nombres coinsidan con las keywords
+    * @param array $keyWords conjunto de palabras clave de la busqueda
+    * @return array
+    */
+    public function existePlan($idPlan){
+        $this->db->select('p.id');
+        $this->db->from('plan p');
+        $this->db->where('p.id', $idPlan);
+        $result = $this->db->get();
+        return ($result->num_rows() == 1);
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * Devuelve TRUE si el id pasado como parametro ya se encuentra en uso
+    * @param int $idViaje id del viaje
+    * @return boolean
+    */
+    public function existeDestino($idDestino){
+        $this->db->select('d.id');
+        $this->db->from('destino d');
+        $this->db->where('d.id', $idDestino);
+        $result = $this->db->get();
+        return ($result->num_rows() == 1);
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * Devuelve TRUE si el id pasado como parametro ya se encuentra en uso
+    * @param int $idViaje id del viaje
+    * @return boolean
+    */
+    public function existeIdViaje($idViaje){
+        $this->db->select('v.id');
+        $this->db->from('viaje v');
+        $this->db->where('v.id', $idViaje);
+        $result = $this->db->get();
+        return ($result->num_rows() == 1);
     }
 
     //--------------------------------------------------------------------------------

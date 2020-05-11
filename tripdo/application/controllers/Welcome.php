@@ -39,7 +39,8 @@ class Welcome extends CI_Controller {
 		$dtPlan->longitud="53.23";
 		$this->MTripDo->agregarPlanADestino($dtPlan,1,'antonio57');
 		*/
-		$this->MTripDo->marcarViajeComoRealizado('jose57', 5);
+		$arr=$this->MTripDo->obtenerViaje(1);
+		echo $arr[0]->nombre;
 
 		$this->load->view('welcome_message', $data);
 	}

@@ -207,10 +207,11 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function marcarViajeComoRealizado($idUsuario, $idViaje){
-
-        if (!$this->esPropietario($idViaje, $idUsuario)){
+        echo "ATENCION: descomentar esPropietario en marcarViajeComoRealizado<br>";
+        //DESCOMENTAMEEEEEEEEEE
+        /*if (!$this->esPropietario($idViaje, $idUsuario)){
             throw new Exception("El usuario no es propietario del viaje");
-        }
+        }*/
         $this->db->set('realizado', true);
         $this->db->where('id', $idViaje);
         $this->db->update('viaje');
@@ -236,7 +237,33 @@ class MTripDo extends CI_Model {
     * @return array
     */
     public function obtenerPlanes($idDestino){
+        if (!$this->existeDestino($idDestino)){
+            throw new Exception("No existe un destino con ese id");
+        }
 
+        $filas = $this->db
+            ->select('*')
+            ->from('plan p')
+            ->where('p.idDestino', $idDestino)
+            ->get()->result_array();
+        
+        $ret = array();
+        foreach ($filas as $row){
+            $dtp = new DtDestino();
+
+            $dtp->id = $row['id'];
+            $dtp->nombre = $row['nombre'];
+            $dtp->descripcion = $row['descripcion'];
+            $dtp->latitud = $row['latitud'];
+            $dtp->longitud = $row['longitud'];
+            $dtp->link = $row['link'];
+            $dtp->idDestino = $row['idDestino'];
+            $dtp->agregadoPor = $row['agregadoPor'];
+            $dtp->fechaAgregado = $row['fechaAgregado'];
+            array_push($ret, $dtp);
+        }
+        return $ret;
+    
     }
 
     //--------------------------------------------------------------------------------
@@ -256,7 +283,29 @@ class MTripDo extends CI_Model {
     * @return DtViaje 
     */
     public function obtenerViaje($idViaje){
+        if (!$this->existeIdViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
 
+        $this->db->select('*');
+        $this->db->from('viajevaloracion v');
+        $this->db->where('v.id', $idViaje);
+
+        $resultado = $this->db->get();
+
+        if($resultado->num_rows() == 1){
+            $r = $resultado->row();
+            $viaje = array(
+                'id'=>$r->id,
+                'nombre'=>$r->nombre,
+                'descripcion'=>$r->descripcion,
+                'publico'=>$r->publico,
+                'realizado'=>$r->realizado,
+                'idUsuario'=>$r->idUsuario,
+                'valoracion'=>$r->valoracion
+            );
+            return $viaje;
+        }
     }
 
     //--------------------------------------------------------------------------------
@@ -313,7 +362,36 @@ class MTripDo extends CI_Model {
     * @return array
     */
     public function buscarPorPalabrasClave($keyWords){
+        $filas = $this->db
+            ->select('*')
+            ->from('viajevaloracion v')
+            ->where('v.nombre', $keyWords)
+            ->get()->result_array();
+        
+        $ret = array();
+        foreach ($filas as $row){
+            $dtv = new DtViaje();
 
+            public $id;
+            public $nombre;
+            public $descripcion;
+            public $publico;
+            public $realizado;
+            public $idUsuario;
+            public $valoracion;
+
+            $dtv->id = $row['id'];
+            $dtv->nombre = $row['nombre'];
+            $dtv->descripcion = $row['descripcion'];
+            $dtv->publico = $row['publico'];
+            $dtv->realizado = $row['realizado'];
+            $dtv->idUsuario = $row['idUsuario'];
+            $dtv->idDestino = $row['idDestino'];
+            $dtv->valoracion = $row['valoracion'];
+   
+            array_push($ret, $dtv);
+        }
+        return $ret;  
     }
     //--------------------------------------------------------------------------------
     /**

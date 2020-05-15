@@ -283,6 +283,8 @@ class MTripDo extends CI_Model {
     * @return DtViaje 
     */
     public function obtenerViaje($idViaje){
+
+        /*
         if (!$this->existeIdViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
@@ -306,6 +308,7 @@ class MTripDo extends CI_Model {
             );
             return $viaje;
         }
+        */
     }
 
     //--------------------------------------------------------------------------------
@@ -362,7 +365,8 @@ class MTripDo extends CI_Model {
     * @return array
     */
     public function buscarPorPalabrasClave($keyWords){
-        $filas = $this->db
+        
+        /*$filas = $this->db
             ->select('*')
             ->from('viajevaloracion v')
             ->where('v.nombre', $keyWords)
@@ -371,14 +375,6 @@ class MTripDo extends CI_Model {
         $ret = array();
         foreach ($filas as $row){
             $dtv = new DtViaje();
-
-            public $id;
-            public $nombre;
-            public $descripcion;
-            public $publico;
-            public $realizado;
-            public $idUsuario;
-            public $valoracion;
 
             $dtv->id = $row['id'];
             $dtv->nombre = $row['nombre'];
@@ -391,7 +387,7 @@ class MTripDo extends CI_Model {
    
             array_push($ret, $dtv);
         }
-        return $ret;  
+        return $ret; */ 
     }
     //--------------------------------------------------------------------------------
     /**

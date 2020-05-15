@@ -312,7 +312,10 @@ CREATE TRIGGER `tg_viaje_viajero`
   AFTER INSERT ON `viaje` FOR EACH ROW
   INSERT INTO `viajero` (`idUsuario`, `idViaje`) VALUES (NEW.idUsuario, NEW.id);
 
-
+create view viajevaloracion as
+	SELECT v.*, AVG(j.valoracion) AS valoracion
+	FROM `viaje` v JOIN `viajero` j on v.id = j.idViaje
+	GROUP BY v.id;
 
 
 

@@ -41,7 +41,7 @@ class mTripDo extends CI_Model {
         if ($this->existeNickname($dtUsuario->nickname) || $this->existeEmail($dtUsuario->email)){
             throw new Exception("Ya existe un usuario con ese nickname o email");
         }
-        
+
         $dtUsuario->verificado = false;
         $this->db->insert('usuario', $dtUsuario->get_array());
     }
@@ -53,7 +53,7 @@ class mTripDo extends CI_Model {
     * @param string $contrasenia contrasenia del usuario
     * @return string 
     */
-    public function iniciarSecion($id, $contrasenia){
+    public function iniciarSesion($id, $contrasenia){
         if ((!isset($id) || strlen($id) == 0) || (!isset($contrasenia) || strlen($contrasenia) == 0)){
             throw new Exception("Alguno de los parametros recibidos esta vacío");
         }

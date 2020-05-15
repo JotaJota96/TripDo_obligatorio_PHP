@@ -9,6 +9,9 @@
 1. News
 2. Sidebar
 3. Newsletter
+4. Accordions
+5. Tabs
+6. Buttons
 *********************************/
 
 /*********************************
@@ -22,6 +25,8 @@
 }
 .news_post
 {
+	
+	margin-top: 5%;
 	width: 100%;
 	margin-bottom: 59px;
 }
@@ -29,13 +34,11 @@
 {
 	margin-bottom: 0;
 }
-.post_title
-{
 
-}
-.post_title a
+.post_title h2
 {
-	font-size: 40px;
+	
+	font-size: 40	px;
 	font-weight: 300;
 	color: #131a2f;
 	-webkit-transition: all 200ms ease;
@@ -136,6 +139,7 @@
 
 .sidebar
 {
+	margin-top: 114px;
 	width: 100%;
 }
 .sidebar_search
@@ -197,6 +201,7 @@
 }
 .sidebar_featured
 {
+	
 	margin-top: 85px;
 }
 .sidebar_featured_post
@@ -493,4 +498,241 @@
 	font-weight: 400 !important;
 	font-style: italic;
 	color: #FFFFFF !important;
+}
+
+
+/*********************************
+4. Accordions
+*********************************/
+
+.accordion_container
+{
+	margin-bottom: 20px;
+}
+.accordion_container:last-child
+{
+	margin-bottom: 0;
+}
+.accordion
+{
+	height: 53px;
+	width: 100%;
+	border: solid 2px #dbdbdb;
+	background: #FFFFFF;
+	padding-left: 20px;
+	cursor: pointer;
+	color: #131a2f;
+	font-size: 15px;
+	font-weight: 400;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.accordion div
+{
+	max-width: 91%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.accordion.active
+{
+	background: #fe3c52;
+	border: solid 2px #fe3c52;
+	color: #FFFFFF;
+}
+.accordion:active
+{
+	background: #fe3c52 !important;
+}
+.accordion::after
+{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	right: 13px;
+	height: 100%;
+	content: '+';
+	font-size: 16px;
+	color: #07122c;
+	font-weight: 400;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.accordion.active::after
+{
+	color: #FFFFFF;
+	content: '-';
+}
+.accordion:hover
+{
+	background: #fe3c52;
+	color: #FFFFFF;
+	border: solid 2px #fe3c52;
+}
+.accordion:hover::after
+{
+	color: #FFFFFF;
+}
+.accordion_panel
+{
+	padding-left: 15px;
+	padding-right: 15px;
+	max-height: 0px;
+	overflow: hidden;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	transition: all 500ms ease;
+}
+.accordion_panel p
+{
+	padding-top: 15px;
+}
+.accordion_panel p:last-of-type
+{
+	margin-bottom: 0;
+}
+
+/*********************************
+5. Tabs
+*********************************/
+
+.tabs_container
+{
+	width: 100%;
+}
+.tabs
+{
+	width: 100%;
+}
+.tab
+{
+	height: 50px;
+	background: transparent;
+	font-size: 15px;
+	color: #131a2f;
+	font-weight: 400;
+	line-height: 50px;
+	flex-grow: 1;
+	text-align: center;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.tab.active,
+.tab:hover
+{
+	background: #fe3c52;
+	color: #FFFFFF;
+}
+.tab_panels
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: solid 2px #fe3c52;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.tab_panel.active
+{
+	display: block !important;
+}
+.tab_panel_content p:last-of-type
+{
+	margin-bottom: 0;
+}
+
+/*********************************
+6. Buttons
+*********************************/
+
+.buttons_container
+{
+	margin-top: 74px;
+}
+.button_1
+{
+	background: rgba(254,60,82,1);
+	vertical-align: middle;
+}
+.button_2
+{
+	background: rgba(19,26,47,1);
+	vertical-align: middle;
+}
+.button_3
+{
+	background: transparent;
+	border: solid 2px rgba(254,60,82,1);
+	vertical-align: middle;
+}
+.button_3 a
+{
+	color: rgba(254,60,82,1);
+}
+.button_4
+{
+	background: transparent;
+	border: solid 2px rgba(19,26,47,1);
+	vertical-align: middle;
+}
+.button_4 a
+{
+	color: rgba(19,26,47,1);
+}
+.button_1:hover
+{
+	background: rgba(254,60,82,0.8);
+}
+.button_2:hover
+{
+	background: rgba(19,26,47,0.8);
+}
+.button_3:hover
+{
+	background: rgba(254,60,82,0.8);
+}
+.button_3:hover a
+{
+	color: #FFFFFF;
+}
+.button_4:hover
+{
+	background: rgba(19,26,47,0.8);
+}
+.button_4:hover a
+{
+	color: #FFFFFF;
+}
+.elements_button
+{
+	margin-right: 17px;
+	margin-bottom: 15px;
 }

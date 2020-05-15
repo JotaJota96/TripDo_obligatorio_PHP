@@ -1,5 +1,5 @@
 <?php
-class MTripDo extends CI_Model {
+class mTripDo extends CI_Model {
 
     public function __construct() {
         parent::__construct();

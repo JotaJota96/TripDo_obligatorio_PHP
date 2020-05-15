@@ -153,19 +153,6 @@ CREATE TABLE `viajero` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 
-CREATE VIEW `viajevaloracion` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `descripcion` text COLLATE utf8_spanish2_ci NOT NULL,
-  `publico` tinyint(1) NOT NULL,
-  `realizado` tinyint(1) NOT NULL DEFAULT 0,
-  `idUsuario` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `valoracion` int() 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-CREATE VIEW `viajevaloracion` AS SELECT * FROM `viaje v` INNER JOIN `viajero j` ON `v.id`=`j.idViaje`;
-
-
 ALTER TABLE `colaborador`
   ADD PRIMARY KEY (`idUsuario`,`idViaje`),
   ADD KEY `fk_colaborador_idviaje` (`idViaje`);

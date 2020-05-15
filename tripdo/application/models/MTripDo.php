@@ -33,8 +33,8 @@ class mTripDo extends CI_Model {
             strcmp($dtUsuario->apellido, "") == 0){
                 throw new Exception("Hay datos obligatorios sin completar");
         }
-        if (is_numeric($dtUsuario->nombre) ||
-            is_numeric($dtUsuario->apellido) ||
+        if ( ! is_string($dtUsuario->nombre) ||
+            ! is_string($dtUsuario->apellido) ||
             ! filter_var($dtUsuario->email, FILTER_VALIDATE_EMAIL)){
                 throw new Exception("Hay datos con formato incorrecto");
         }
@@ -92,10 +92,22 @@ class mTripDo extends CI_Model {
             throw new Exception("No existe un usuario con id");
         }
 
+        if ( ! isset($dtViaje->nombre) ||
+            strcmp($dtViaje->nombre, "") == 0 ||
+            ! isset($dtViaje->descripcion) ||
+            strcmp($dtViaje->descripcion, "") == 0 ||
+            ! isset($dtViaje->publico)){
+                throw new Exception("Hay datos obligatorios sin completar");
+        }
+        if ( ! is_string($dtViaje->nombre) ||
+            ! is_string($dtViaje->descripcion) ||
+            ! is_bool($dtViaje->publico)){
+                throw new Exception("Hay datos con formato incorrecto");
+        }
+
         // se reasignan dats y se obtiene el array del objeto
         $dtViaje->idUsuario = $idUsuario;
         $viaje = $dtViaje->get_array();
-
         // se remueven datos
         unset($viaje['id']);
         unset($viaje['realizado']);

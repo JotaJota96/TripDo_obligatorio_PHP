@@ -21,9 +21,27 @@ class mTripDo extends CI_Model {
         if (!$this->validarObjeto($dtUsuario, 'DtUsuario')){
             throw new Exception("El tipo de dato recibido no es válido");
         }
+        if ( ! isset($dtUsuario->nickname) ||
+            strcmp($dtUsuario->nickname, "") == 0 ||
+            ! isset($dtUsuario->email) ||
+            strcmp($dtUsuario->email, "") == 0 ||
+            ! isset($dtUsuario->contrasenia) ||
+            strcmp($dtUsuario->contrasenia, "") == 0 ||
+            ! isset($dtUsuario->nombre) ||
+            strcmp($dtUsuario->nombre, "") == 0 ||
+            ! isset($dtUsuario->apellido) ||
+            strcmp($dtUsuario->apellido, "") == 0){
+                throw new Exception("Hay datos obligatorios sin completar");
+        }
+        if (is_numeric($dtUsuario->nombre) ||
+            is_numeric($dtUsuario->apellido) ||
+            ! filter_var($dtUsuario->email, FILTER_VALIDATE_EMAIL)){
+                throw new Exception("Hay datos con formato incorrecto");
+        }
         if ($this->existeNickname($dtUsuario->nickname) || $this->existeEmail($dtUsuario->email)){
             throw new Exception("Ya existe un usuario con ese nickname o email");
         }
+        
         $dtUsuario->verificado = false;
         $this->db->insert('usuario', $dtUsuario->get_array());
     }
@@ -302,13 +320,13 @@ class mTripDo extends CI_Model {
         if (!$this->existeNickname($idUsuario)){
             throw new Exception('El usuario no existe');
         }
-        if (!$this->esViaje($idViaje)){
+        if (!$this->existeIdViaje($idViaje)){
             throw new Exception('El usuario no existe');
         }
         // copiado del viaje
         $dtv = $this->obtenerViaje($idViaje);
         $dtv = $this->crearViaje($dtv, $idUsuario);
-
+        
         // copiado de destinos, tags y planes
         $arrDtd = $this->obtenerDestinos($idViaje);
         foreach($arrDtd as $dtd){

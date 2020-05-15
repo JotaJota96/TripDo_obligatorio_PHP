@@ -30,7 +30,21 @@ class Welcome extends CI_Controller {
 	 */
 	public function index(){
         $data = array();
-        
+        try {
+            $dtu = new DtUsuario();
+            $dtu->nickname = "JotaJota96";
+            $dtu->email = "jjap96@gmail.com";
+            $dtu->contrasenia = "1234";
+            $dtu->nombre = "Juan";
+            $dtu->apellido = "Alvarez";
+            $dtu->telefono = "098947701";
+            
+            $this->MTripDo->registrarUsuario($dtu);
+
+        } catch (Exception $e) {
+            echo "Excepcion capturada<br>";
+            echo $e->getMessage();
+        }
 		$this->load->view('welcome_message', $data);
 	}
 }

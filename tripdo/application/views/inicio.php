@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="es">
 
 <head>
-	<title>Destino</title>
+	<title>Inicio</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Destino project">
@@ -46,15 +46,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<!-- Main Navigation -->
 							<nav class="main_nav ml-auto ">
 								<ul class="main_nav_list ">
-									<li class="main_nav_item active"><a href="index.html">Inicio</a></li>
-									<li class="main_nav_item"><a href="#">About us</a></li>
-									<li class="main_nav_item"><a href="busqueda.html">Buscar</a></li>
-									<li class="main_nav_item"><a href="viaje.html">Viaje</a></li>
-									<li class="main_nav_item"><a href="#">Contact</a></li>
+
+									<?php foreach($main_menu as $item): ?>
+									<li class="main_nav_item">
+										<a href="<?= $item['url'] ?>"><?= $item['title'] ?></a>
+									</li>
+									<?php endforeach ?>									
 								</ul>
 							</nav>
 							<!-- Hamburger -->
 							<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+							<?php echo current_url(); ?>
 						</div>
 					</div>
 				</div>
@@ -80,11 +82,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</form>
 					</div>
 					<ul class="menu_list menu_mm">
-						<li class="menu_item menu_mm"><a href="#">Home</a></li>
-						<li class="menu_item menu_mm"><a href="about.html">About us</a></li>
-						<li class="menu_item menu_mm"><a href="offers.html">Offers</a></li>
-						<li class="menu_item menu_mm"><a href="news.html">News</a></li>
-						<li class="menu_item menu_mm"><a href="contact.html">Contact</a></li>
+						<li class="menu_item menu_mm"><a href="#">Inicio</a></li>
+						<li class="menu_item menu_mm"><a href="about.html">Sobre nosotros</a></li>
+						<li class="menu_item menu_mm"><a href="offers.html">Ofertas</a></li>
+						<li class="menu_item menu_mm"><a href="news.html">Noticias</a></li>
+						<li class="menu_item menu_mm"><a href="contact.html">Contacto</a></li>
 					</ul>
 
 					<!-- Menu Social -->
@@ -117,7 +119,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="home_content">
 				<div class="home_content_inner">
 					<div class="home_text_large">TRIPDO</div>
-					<div class="home_text_small">Discover new worlds</div>
+					<div class="home_text_small">Descubre nuevos mundos</div>
 				</div>
 			</div>
 		</div>

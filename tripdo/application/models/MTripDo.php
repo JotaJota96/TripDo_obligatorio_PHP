@@ -30,13 +30,34 @@ class MTripDo extends CI_Model {
 
     //--------------------------------------------------------------------------------
     /**
-    * iniciar secion valida el inicio de secion de un usuario y su contrseña
+    * iniciar secion valida el inicio de secion de un usuario. Si los datos son correctos retorna su nickname, de lo contrario NULL
     * @param string $id puede ser el nickname o el correo
     * @param string $contrasenia contrasenia del usuario
     * @return string 
     */
     public function iniciarSecion($id, $contrasenia){
+        if ((!isset($id) || strlen($id) == 0) || (!isset($contrasenia) || strlen($contrasenia) == 0)){
+            throw new Exception("Alguno de los parametros recibidos esta vacío");
+        }
+        // Genero la consulta
+        // SELECT u.nickname FROM usuario u WHERE ( u.nickname = $id OR u.email = $id ) AND u.contrasenia = $contrasenia 
+        $this->db->select('u.nickname')->from('usuario u')
+            ->group_start()
+                ->where('u.nickname', $id)
+                ->or_where('u.email', $id)
+            ->group_end()
+            ->where('u.contrasenia', $contrasenia);
+        // ejecuto la query
+        $result = $this->db->get();
 
+        if ($result->num_rows() == 1){
+            $r = $result->row();
+            $resultNick = $r->nickname;
+            return $resultNick;
+        }else{
+            return NULL;
+        }
+        
     } 
 
     //--------------------------------------------------------------------------------
@@ -73,7 +94,28 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function agregarColaboradorAViaje($idViaje, $idUsuario){
-
+        echo "ATENCION: descomentar en agregarColaboradorAViaje <br>";
+        /* DESCOMENTAR
+        if (!$this->existeIdViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
+        */
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con ese id");
+        }
+        /* DESCOMENTAR
+        if($this->esViajero($idViaje, $idUsuario)){
+            throw new Exception("El usuario no puede agregarse como colaborador porque es viajero");
+        }
+        if($this->esColaborador($idViaje, $idUsuario)){
+            return;
+        }
+        */
+        $colaborador= array(
+            'idUsuario'=> $idUsuario,
+            'idViaje'=>$idViaje
+        );
+        $this->db->insert('colaborador', $colaborador);
     }
 
     //--------------------------------------------------------------------------------
@@ -113,10 +155,51 @@ class MTripDo extends CI_Model {
     * @param DtDestino $dtDestino datos del destino a agregar a un viaje
     * @param string $idViaje id del viaje al cual se le agrega el destino
     * @param string $idUsuario id del usuario que sugiere el destino
+    * @param array $arrTags tags (strings) que el usuario asocia al destino
     * @return void
     */
-    public function agregarDestinoAViaje($dtDestino, $idViaje, $idUsuario){
+    public function agregarDestinoAViaje($dtDestino, $idViaje, $idUsuario, $arrTags){
+        if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idViaje)){
+            throw new Exception("Alguno de los parametros recibidos esta vacío");
+        }
+        if (!$this->validarObjeto($dtDestino, 'DtDestino')){
+            throw new Exception("El tipo de dato recibido no es válido");
+        }
+        echo "ATENCION: descomentar en agregarDestinoAViaje";
+        /* DESCMENTAR
+        if (!$this->esViaje($idViaje)){
+            throw new Exception("El viaje no existe");
+        }
+        if (!$this->esPropietario($idUsuario) && !$this->esViajero($idViaje, $idUsuario) && !$this->esColaborador($idViaje, $idUsuario)){
+            throw new Exception('El usuario no tiene los permisos para realizar esta acción');
+        }
+        */
 
+        // INSERT en 'destino'
+        $dtDestino->idViaje = $idViaje;
+        $dtDestino->agregadoPor = $idUsuario;
+        $arrDestino = $dtDestino->get_array();
+        unset($arrDestino['id']);
+        unset($arrDestino['fechaAgregado']);
+        $this->db->insert('destino', $arrDestino);
+
+        // obtengo el ID del destino insertado para poder referenciar los tags
+        $idDestinoInsertado = $this->db->insert_id();
+
+        // INSERT en 'tag'
+        $insertTags = array();
+        foreach($arrTags as $tag){
+            $dtTag = new DtTag();
+            $dtTag->texto = $tag;
+            $dtTag->idDestino = $idDestinoInsertado;
+            $tagArr = $dtTag->get_array();
+            unset($tagArr['id']);
+            array_push($insertTags, $tagArr);
+        }
+
+        if (count($insertTags) > 0){
+            $this->db->insert_batch('tag', $insertTags);
+        }
     }
 
     //--------------------------------------------------------------------------------
@@ -157,8 +240,26 @@ class MTripDo extends CI_Model {
     * @param int $idDestino id del destino votado
     * @return void
     */
-    public function votarDestino($idUsario, $idViaje, $idDestino){
-
+    public function votarDestino($idUsuario, $idViaje, $idDestino){
+        if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idViaje)){
+            throw new Exception("Alguno de los parametros recibidos esta vacío");
+        }
+        echo "ATENCION: descomentar en votarDestino";
+        /* DESCMENTAR
+        if (!$this->esViajero($idViaje, $idUsuario)) {
+            throw new Exception('El usuario no tiene los permisos para realizar esta acción');
+        }
+        if (!$this->esDestino($idDestino)){
+            throw new Exception("El destino no existe");
+        }
+        */
+        
+        $datos = array(
+            "idUsuario" => $idUsuario,
+            "idViaje" => $idViaje,
+            "idDestino" => $idDestino
+        );
+        $this->db->insert('destinovotado', $datos);
     }
 
     //--------------------------------------------------------------------------------
@@ -193,10 +294,73 @@ class MTripDo extends CI_Model {
     * planes y tags y se los asugan al usuario que realiza la copia
     * @param string $idUsuario id del usuario que realiza la copia
     * @param int $idViaje id del viaje que se desea copiar
-    * @return void
+    * @return DtViaje
     */
     public function copiarViaje($idUsuario, $idViaje){
+        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception('El usuario no existe');
+        }
+        echo "ATENCION: descomentar en copiarViaje <br>";
+        throw new Exception('descomentar el codigo para usar esta funcion');
+        /* DESCOMENTAR
+        if (!$this->esViaje($idViaje)){
+            throw new Exception('El usuario no existe');
+        }
+        */
+        // copiado del viaje
+        /* DESCOMENTAR
+        $dtv = $this->obtenerViaje($idViaje);
+        $dtv = $this->crearViaje($dtv, $idUsuario);
+        */
+        // copiado de destinos, tags y planes
+        $arrDtd = $this->obtenerDestinos($idViaje);
+        foreach($arrDtd as $dtd){
+            echo "copiando $dtd->id";
+            $destinoCopiado = $dtd->get_array();
+            unset($destinoCopiado['id']);
+            $destinoCopiado['agregadoPor'] = null;
+            $destinoCopiado['fechaAgregado'] = null;
 
+            $this->db->insert('destino', $destinoCopiado);
+            $destinoCopiado['id'] = $this->db->insert_id();
+
+            // copiado de tags del destino
+            // obtengo los tags originales
+            $arrTags = $this->db
+                ->select('*')
+                ->from('tag')
+                ->where('idDestino', $dtd->id)
+                ->get()->result_array();
+            // si hay algun tag, los copio, sino no, ¿sino que voy a copiar? xD
+            if (count($arrTags) > 0){
+                foreach($arrTags as &$t){
+                    unset($t['id']);
+                    $t['idDestino'] = $destinoCopiado['id'];
+                }
+                $this->db->insert_batch('tag', $arrTags);
+            }
+
+            // copiado de los planes del destino
+            $arrPlanes = $this->db
+                ->select('*')
+                ->from('plan')
+                ->where('idDestino', $dtd->id)
+                ->get()->result_array();
+            // si hay algun plan, los copio, sino no
+            if (count($arrPlanes) > 0){
+                foreach($arrPlanes as &$p){
+                    unset($p['id']);
+                    $p['idDestino'] = $destinoCopiado['id'];
+                    $p['agregadoPor'] = null;
+                    $p['fechaAgregado'] = null;
+                }
+                $this->db->insert_batch('plan', $arrPlanes);
+            }
+        }
+        return $dtv;
     }
 
     //--------------------------------------------------------------------------------
@@ -227,7 +391,46 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function calificarViaje($idUsuario, $idViaje, $valoracion, $texto=null){
+        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario=="" || !isset($valoracion)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if ($valoracion < 1 || $valoracion > 5){
+            throw new Exception('La valoración está fuera del rango 1 a 5');
+        }
+        echo "ATENCION: descomentar en calificarViaje";
+        /* DESCMENTAR
+        if (!$this->esViajero($idViaje, $idUsuario)) {
+            throw new Exception('El usuario no tiene los permisos para realizar esta acción');
+        }
+        $dtv = $this->obtenerViaje($idViaje);
+        if ($dtv->realizado != true){
+            throw new Exception('No se puede valorar un viaje aun no realizado');
+        }
+        */
 
+        // verifico si el usuario ya valoró el viaje anteriormente
+        $row = $this->db
+            ->select('v.valoracion')
+            ->from('viajero v')
+            ->where('idUsuario', $idUsuario)
+            ->where('idViaje', $idViaje)
+            ->get()->row();
+        
+        if ($row->valoracion != null){
+            throw new Exception('El usuario ya ha valorado el viaje anteriormente');
+        }
+
+        // preparo el UPDATE
+        if (isset($texto) && strlen($texto) == 0){
+            $texto = null;
+        }
+        $datos = array(
+            "valoracion" => $valoracion,
+            "texto" => $texto
+        );
+        $this->db->where('idUsuario', $idUsuario);
+        $this->db->where('idViaje', $idViaje);
+        $this->db->update('viajero', $datos);
     }
 
     //--------------------------------------------------------------------------------
@@ -273,7 +476,33 @@ class MTripDo extends CI_Model {
     * @return array 
     */
     public function obtenerDestinos($idViaje){
-
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        echo "ATENCION: descomentar en obtenerDestinos<br>";
+        /* DESCOMENTAR
+        if (!esViaje($idViaje)){
+            throw new Exception("El viaje no existe");
+        }
+        */
+        $filas = $this->db
+            ->select('*')
+            ->from('destino d')
+            ->where('d.idViaje', $idViaje)
+            ->get()->result_array();
+        
+        $ret = array();
+        foreach ($filas as $row){
+            $dtd = new DtDestino();
+            $dtd->id = $row['id'];
+            $dtd->pais = $row['pais'];
+            $dtd->ciudad = $row['ciudad'];
+            $dtd->idViaje = $row['idViaje'];
+            $dtd->agregadoPor = $row['agregadoPor'];
+            $dtd->fechaAgregado = $row['fechaAgregado'];
+            array_push($ret, $dtd);
+        }
+        return $ret;
     }
 
     //--------------------------------------------------------------------------------
@@ -319,7 +548,11 @@ class MTripDo extends CI_Model {
     * @return bool 
     */
     public function esPropietario($idViaje, $idUsuario){
-
+        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        $dtv = $this->obtenerViaje($idViaje);
+        return ($dtv->idUsuario == $idUsuario);
     }
 
     //--------------------------------------------------------------------------------
@@ -355,7 +588,20 @@ class MTripDo extends CI_Model {
     * @return bool
     */
     public function esColaborador($idViaje, $idUsuario){
+        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        $this->db->select('*')
+            ->from('colaborador c')
+            ->where('c.idUsuario', $idUsuario)
+            ->where('c.idViaje', $idViaje);
+        $result = $this->db->get();
 
+        if($result->num_rows() == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //--------------------------------------------------------------------------------

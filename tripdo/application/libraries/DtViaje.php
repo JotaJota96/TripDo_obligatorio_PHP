@@ -21,6 +21,6 @@ class DtViaje{
             'valoracion'=>$this->valoracion
         );
         return $dato;
-      }
+    }
 }
 ?>

@@ -57,7 +57,6 @@ class MTripDo extends CI_Model {
         }else{
             return NULL;
         }
-        
     } 
 
     //--------------------------------------------------------------------------------
@@ -75,13 +74,14 @@ class MTripDo extends CI_Model {
             throw new Exception("No existe un usuario con id");
         }
 
+        // se reasignan dats y se obtiene el array del objeto
         $dtViaje->idUsuario = $idUsuario;
         $viaje = $dtViaje->get_array();
 
+        // se remueven datos
         unset($viaje['id']);
         unset($viaje['realizado']);
         unset($viaje['valoracion']);
-
 
         $this->db->insert('viaje', $viaje);
     }
@@ -94,23 +94,18 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function agregarColaboradorAViaje($idViaje, $idUsuario){
-        echo "ATENCION: descomentar en agregarColaboradorAViaje <br>";
-        /* DESCOMENTAR
         if (!$this->existeIdViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
-        */
         if (!$this->existeNickname($idUsuario)){
             throw new Exception("No existe un usuario con ese id");
         }
-        /* DESCOMENTAR
         if($this->esViajero($idViaje, $idUsuario)){
             throw new Exception("El usuario no puede agregarse como colaborador porque es viajero");
         }
         if($this->esColaborador($idViaje, $idUsuario)){
             return;
         }
-        */
         $colaborador= array(
             'idUsuario'=> $idUsuario,
             'idViaje'=>$idViaje
@@ -126,17 +121,15 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function agregarViajeroAViaje($idViaje, $idUsuario){
-
-
         if (!$this->existeIdViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
         if (!$this->existeNickname($idUsuario)){
             throw new Exception("No existe un usuario con ese id");
         }
-        /*if($this->esColavorador($idViaje, $idUsuario)){   //DESCOMENTAME
+        if($this->esColavorador($idViaje, $idUsuario)){
             throw new Exception("El usuario no puede agregarse como viajero porque es colaborador");
-        }*/
+        }
         if($this->esViajero($idViaje, $idUsuario)){
             return;
         }
@@ -165,35 +158,42 @@ class MTripDo extends CI_Model {
         if (!$this->validarObjeto($dtDestino, 'DtDestino')){
             throw new Exception("El tipo de dato recibido no es válido");
         }
-        echo "ATENCION: descomentar en agregarDestinoAViaje";
-        /* DESCMENTAR
         if (!$this->esViaje($idViaje)){
             throw new Exception("El viaje no existe");
         }
         if (!$this->esPropietario($idUsuario) && !$this->esViajero($idViaje, $idUsuario) && !$this->esColaborador($idViaje, $idUsuario)){
             throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
-        */
 
         // INSERT en 'destino'
+        // reasigno valores
         $dtDestino->idViaje = $idViaje;
         $dtDestino->agregadoPor = $idUsuario;
+        // obtengo el array del objeto
         $arrDestino = $dtDestino->get_array();
+        // quito valores autogenerados
         unset($arrDestino['id']);
         unset($arrDestino['fechaAgregado']);
+        // mando el insert
         $this->db->insert('destino', $arrDestino);
 
         // obtengo el ID del destino insertado para poder referenciar los tags
         $idDestinoInsertado = $this->db->insert_id();
 
         // INSERT en 'tag'
+        // declaro array con los todos los tags a insertar
         $insertTags = array();
+        // recorro los tags recibidos creando los objetos para insertar
         foreach($arrTags as $tag){
+            // creo objeto DtTag
             $dtTag = new DtTag();
             $dtTag->texto = $tag;
             $dtTag->idDestino = $idDestinoInsertado;
+            // obtengo su array
             $tagArr = $dtTag->get_array();
+            // le saco el ID porque lo genera la Base de Datos
             unset($tagArr['id']);
+            // lo agrego al array
             array_push($insertTags, $tagArr);
         }
 
@@ -220,15 +220,15 @@ class MTripDo extends CI_Model {
         if (!$this->existeDestino($idDestino)){
             throw new Exception("No existe un usuario con id");
         }
-
+        // reasigno datos
         $dtPlan->idDestino = $idDestino;
         $dtPlan->agregadoPor = $idUsuario;
-
+        // obtengo el array del objeto
         $Plan = $dtPlan->get_array();
-
+        // remuevo lo generado por la base de datos
         unset($Plan['id']);
         unset($Plan['fechaAgregado']);
-
+        // mando insert
         $this->db->insert('plan', $Plan);
     }
 
@@ -241,18 +241,15 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function votarDestino($idUsuario, $idViaje, $idDestino){
-        if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idViaje)){
+        if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idViaje) || !isset($idDestino)){
             throw new Exception("Alguno de los parametros recibidos esta vacío");
         }
-        echo "ATENCION: descomentar en votarDestino";
-        /* DESCMENTAR
         if (!$this->esViajero($idViaje, $idUsuario)) {
             throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
-        if (!$this->esDestino($idDestino)){
+        if (!$this->existeDestino($idDestino)){
             throw new Exception("El destino no existe");
         }
-        */
         
         $datos = array(
             "idUsuario" => $idUsuario,
@@ -271,7 +268,9 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function votarPlan($idUsuario, $idViaje, $idPlan){
-
+        if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idViaje) || !isset($idPlan)){
+            throw new Exception("Alguno de los parametros recibidos esta vacío");
+        }
         if (!$this->esViajero($idViaje, $idUsuario)){
             throw new Exception("El usuario no es viajero del viaje");
         }
@@ -297,24 +296,19 @@ class MTripDo extends CI_Model {
     * @return DtViaje
     */
     public function copiarViaje($idUsuario, $idViaje){
-        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
         if (!$this->existeNickname($idUsuario)){
             throw new Exception('El usuario no existe');
         }
-        echo "ATENCION: descomentar en copiarViaje <br>";
-        throw new Exception('descomentar el codigo para usar esta funcion');
-        /* DESCOMENTAR
         if (!$this->esViaje($idViaje)){
             throw new Exception('El usuario no existe');
         }
-        */
         // copiado del viaje
-        /* DESCOMENTAR
         $dtv = $this->obtenerViaje($idViaje);
         $dtv = $this->crearViaje($dtv, $idUsuario);
-        */
+
         // copiado de destinos, tags y planes
         $arrDtd = $this->obtenerDestinos($idViaje);
         foreach($arrDtd as $dtd){
@@ -371,11 +365,9 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function marcarViajeComoRealizado($idUsuario, $idViaje){
-        echo "ATENCION: descomentar esPropietario en marcarViajeComoRealizado<br>";
-        //DESCOMENTAMEEEEEEEEEE
-        /*if (!$this->esPropietario($idViaje, $idUsuario)){
+        if (!$this->esPropietario($idViaje, $idUsuario)){
             throw new Exception("El usuario no es propietario del viaje");
-        }*/
+        }
         $this->db->set('realizado', true);
         $this->db->where('id', $idViaje);
         $this->db->update('viaje');
@@ -391,14 +383,12 @@ class MTripDo extends CI_Model {
     * @return void
     */
     public function calificarViaje($idUsuario, $idViaje, $valoracion, $texto=null){
-        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario=="" || !isset($valoracion)){
+        if( !isset($idViaje) || !isset($idUsuario) || stcmp($idUsuario, "") == 0 || !isset($valoracion)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
         if ($valoracion < 1 || $valoracion > 5){
             throw new Exception('La valoración está fuera del rango 1 a 5');
         }
-        echo "ATENCION: descomentar en calificarViaje";
-        /* DESCMENTAR
         if (!$this->esViajero($idViaje, $idUsuario)) {
             throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
@@ -406,7 +396,6 @@ class MTripDo extends CI_Model {
         if ($dtv->realizado != true){
             throw new Exception('No se puede valorar un viaje aun no realizado');
         }
-        */
 
         // verifico si el usuario ya valoró el viaje anteriormente
         $row = $this->db
@@ -443,13 +432,14 @@ class MTripDo extends CI_Model {
         if (!$this->existeDestino($idDestino)){
             throw new Exception("No existe un destino con ese id");
         }
-
+        // obtengo un array de arrays, cada array es una fila del resultado
         $filas = $this->db
             ->select('*')
             ->from('plan p')
             ->where('p.idDestino', $idDestino)
             ->get()->result_array();
         
+        // convierto los arrays obtenidos a objetos
         $ret = array();
         foreach ($filas as $row){
             $dtp = new DtDestino();
@@ -466,7 +456,6 @@ class MTripDo extends CI_Model {
             array_push($ret, $dtp);
         }
         return $ret;
-    
     }
 
     //--------------------------------------------------------------------------------
@@ -479,18 +468,17 @@ class MTripDo extends CI_Model {
         if (!isset($idViaje)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
-        echo "ATENCION: descomentar en obtenerDestinos<br>";
-        /* DESCOMENTAR
         if (!esViaje($idViaje)){
             throw new Exception("El viaje no existe");
         }
-        */
+        // obtengo un array con las filas del resultado, cada fila obtenida es un array asociativo
         $filas = $this->db
             ->select('*')
             ->from('destino d')
             ->where('d.idViaje', $idViaje)
             ->get()->result_array();
         
+        // convierto cada array asociativo obtenido a un objeto
         $ret = array();
         foreach ($filas as $row){
             $dtd = new DtDestino();
@@ -548,7 +536,7 @@ class MTripDo extends CI_Model {
     * @return bool 
     */
     public function esPropietario($idViaje, $idUsuario){
-        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
         $dtv = $this->obtenerViaje($idViaje);
@@ -563,7 +551,7 @@ class MTripDo extends CI_Model {
     * @return bool
     */
     public function esViajero($idViaje, $idUsuario){
-        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
         $this->db->select('*');
@@ -588,7 +576,7 @@ class MTripDo extends CI_Model {
     * @return bool
     */
     public function esColaborador($idViaje, $idUsuario){
-        if( !isset($idViaje) || !isset($idUsuario) || $idUsuario==""){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
         $this->db->select('*')
@@ -707,10 +695,10 @@ class MTripDo extends CI_Model {
 
     //**********************************************************************************************
     private function validarObjeto($ingresado, $esperado){
-        if (is_null($ingresado) || gettype($ingresado) != "object"){
+        if (is_null($ingresado) || strcmp(gettype($ingresado), "object") != 0){
             return false;
         }
-        if (get_class($ingresado) != $esperado){
+        if (strcmp(get_class($ingresado), $esperado) != 0){
             return false;
         }
         return true;

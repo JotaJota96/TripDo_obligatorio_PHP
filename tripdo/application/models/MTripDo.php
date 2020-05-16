@@ -203,8 +203,7 @@ class mTripDo extends CI_Model {
         if ( ! isset($dtDestino->pais) ||
             strcmp($dtDestino->pais, "") == 0 ||
             ! isset($dtDestino->ciudad) ||
-            strcmp($dtDestino->ciudad, "") == 0 ||
-            ! isset($dtDestino->contrasenia)){
+            strcmp($dtDestino->ciudad, "") == 0){
                 throw new Exception("Hay datos obligatorios sin completar");
         }
         if ( ! is_string($dtDestino->pais) ||
@@ -269,21 +268,51 @@ class mTripDo extends CI_Model {
     * @return DtPlan
     */
     public function agregarPlanADestino($dtPlan, $idDestino, $idUsuario){
+        if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idDestino)){
+            throw new Exception("Alguno de los parametros recibidos esta vacío");
+        }
         if (!$this->validarObjeto($dtPlan, 'DtPlan')){
             throw new Exception("El tipo de dato recibido no es válido");
         }
-            /////////////////////////////////////////////////////////////////
-           // CARLOS                                                      //
-          // Si arreglas esta funcion tenes que devolver el DT del plan, //
-         // fijate como hice con 'agregarDestinoAViaje'                 //
-        /////////////////////////////////////////////////////////////////
-        
         if (!$this->existeNickname($idUsuario)){
             throw new Exception("No existe un usuario con id");
         }
         if (!$this->existeDestino($idDestino)){
             throw new Exception("No existe un usuario con id");
         }
+        $idViaje = $this->obtenerDestino($idDestino)->idViaje;
+        if (!$this->esPropietario($idViaje, $idUsuario) && !$this->esViajero($idViaje, $idUsuario) && !$this->esColaborador($idViaje, $idUsuario)){
+            throw new Exception('El usuario no tiene los permisos para realizar esta acción');
+        }
+        
+        if (! isset($dtPlan->nombre) ||
+            ! isset($dtPlan->descripcion) ||
+            ! isset($dtPlan->latitud) ||
+            ! isset($dtPlan->longitud) ||
+            strcmp($dtPlan->nombre, "") == 0 ||
+            strcmp($dtPlan->descripcion, "") == 0 ||
+            strcmp($dtPlan->latitud, "") == 0 ||
+            strcmp($dtPlan->longitud, "") == 0){
+                throw new Exception("Hay datos obligatorios sin completar");
+        }
+
+        if (! is_string($dtPlan->nombre) ||
+            ! is_string($dtPlan->descripcion) ||
+            ! is_numeric($dtPlan->latitud) ||
+            ! is_numeric($dtPlan->longitud) ||
+            (isset($dtPlan->link) && ! is_string($dtPlan->link))){
+                throw new Exception("Hay datos con formato incorrecto");
+        }
+
+        // verifico rango de latitud y longitud
+        $lat = $dtPlan->latitud;
+        $lon = $dtPlan->longitud;
+        // Latitud: -90 <= lat <= 90
+        // longitud: -180 <= lon <= 180
+        if ( !(-90 <= $lat && $lat <= 90 && -180 <= $lon && $lon <= 180)){
+            throw new Exception("Latitud o longitud fuera de rango");
+        }
+
         // reasigno datos
         $dtPlan->idDestino = $idDestino;
         $dtPlan->agregadoPor = $idUsuario;
@@ -294,6 +323,11 @@ class mTripDo extends CI_Model {
         unset($Plan['fechaAgregado']);
         // mando insert
         $this->db->insert('plan', $Plan);
+
+        // obtenog el ID insertado
+        $idPlanInsertado = $this->db->insert_id();
+        // retorno el DtPlan insertado
+        return $this->obtenerPlan($idPlanInsertado);
     }
 
     //--------------------------------------------------------------------------------
@@ -567,7 +601,7 @@ class mTripDo extends CI_Model {
         if (!isset($idPlan)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
-        if (!$this->existeDestino($idDestino)){
+        if (!$this->existePlan($idPlan)){
             throw new Exception("No existe un plan con ese id");
         }
 

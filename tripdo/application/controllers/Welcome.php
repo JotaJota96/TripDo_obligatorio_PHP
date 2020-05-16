@@ -54,7 +54,16 @@ class Welcome extends CI_Controller {
             $tags = array("tag1", 'tag2', 'tag3');
             var_dump($this->MTripDo->agregarDestinoAViaje($dtd, ?, "JotaJota96", $tags));
             */
+            /*
+            $dtp = new DtPlan();
+            $dtp->nombre = "ssdf";
+            $dtp->descripcion = "sdf";
+            $dtp->latitud = -89.671879;
+            $dtp->longitud = -179.660332;
+            var_dump($this->MTripDo->agregarPlanADestino($dtp, 17, "JotaJota96"));
+            */
 
+            
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";
             echo $e->getMessage();

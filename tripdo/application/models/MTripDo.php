@@ -124,7 +124,7 @@ class mTripDo extends CI_Model {
     * @return void
     */
     public function agregarColaboradorAViaje($idViaje, $idUsuario){
-        if (!$this->existeIdViaje($idViaje)){
+        if (!$this->existeViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
         if (!$this->existeNickname($idUsuario)){
@@ -151,7 +151,7 @@ class mTripDo extends CI_Model {
     * @return void
     */
     public function agregarViajeroAViaje($idViaje, $idUsuario){
-        if (!$this->existeIdViaje($idViaje)){
+        if (!$this->existeViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
         if (!$this->existeNickname($idUsuario)){
@@ -332,7 +332,7 @@ class mTripDo extends CI_Model {
         if (!$this->existeNickname($idUsuario)){
             throw new Exception('El usuario no existe');
         }
-        if (!$this->existeIdViaje($idViaje)){
+        if (!$this->existeViaje($idViaje)){
             throw new Exception('El usuario no existe');
         }
         // copiado del viaje
@@ -501,7 +501,7 @@ class mTripDo extends CI_Model {
         if (!isset($idViaje)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
-        if (!$this->existeIdViaje($idViaje)){
+        if (!$this->existeViaje($idViaje)){
             throw new Exception("El viaje no existe");
         }
         // obtengo un array con las filas del resultado, cada fila obtenida es un array asociativo
@@ -536,7 +536,7 @@ class mTripDo extends CI_Model {
         if (!isset($idViaje)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
-        if (!$this->existeIdViaje($idViaje)){
+        if (!$this->existeViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
 
@@ -628,34 +628,62 @@ class mTripDo extends CI_Model {
 
     //--------------------------------------------------------------------------------
     /**
-    * el sistema debuelve un conjunto de viajes cuyos tags o nombres coinsidan con las keywords
-    * @param array $keyWords conjunto de palabras clave de la busqueda
+    * el sistema debuelve un conjunto de DtViaje cuyos tags o nombres coinsidan con las keywords
+    * @param array $keyWords conjunto de palabras clave de la busqueda. En caso de que el array este vacio, se devuelven todos los viajes del sistema
     * @return array
     */
     public function buscarPorPalabrasClave($keyWords){
+        if ( ! isset($keyWords)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if ( ! is_array($keyWords)){
+            throw new Exception("El tipo de dato recibido no es válido");
+        }
         
-        /*$filas = $this->db
-            ->select('*')
+        /* Consulta de referencia
+        SELECT DISTINCT * 
+        FROM viajevaloracion v
+        JOIN destino d ON v.id = d.idViaje
+        JOIN tag t ON t.idDestino = d.id
+        WHERE lower(t.texto) LIKE lower('%keyWords[0]%') OR
+        lower(t.texto) LIKE lower('%keyWords[1]%') OR
+        lower(t.texto) LIKE lower('%keyWords[2]%')
+        */
+        $this->db
+            ->select('v.*')
+            ->distinct()
             ->from('viajevaloracion v')
-            ->where('v.nombre', $keyWords)
-            ->get()->result_array();
+            ->join('destino d', 'v.id = d.idViaje')
+            ->join('tag t', 't.idDestino = d.id');
+        foreach ($keyWords as $kw){
+            $this->db->or_where("LOWER(t.texto) LIKE LOWER('%$kw%')");
+            // algun dia pueden ser útiles...
+            // $this->db->or_where("LOWER(d.pais) LIKE LOWER('%$kw%')");
+            // $this->db->or_where("LOWER(d.ciudad) LIKE LOWER('%$kw%')");
+            // $this->db->or_where("LOWER(v.nombre) LIKE LOWER('%$kw%')");
+            // $this->db->or_where("LOWER(v.descripcion) LIKE LOWER('%$kw%')");
+        }
+        // echo $this->db->get_compiled_select();
+        // return null;
+
+        // obtengo el array de arrays asociativos resultantes
+        $filas = $this->db->get()->result_array();
         
         $ret = array();
         foreach ($filas as $row){
+            // para cada fila se crea un DtViaje y se le rellenan los datos
             $dtv = new DtViaje();
-
             $dtv->id = $row['id'];
             $dtv->nombre = $row['nombre'];
             $dtv->descripcion = $row['descripcion'];
             $dtv->publico = $row['publico'];
             $dtv->realizado = $row['realizado'];
             $dtv->idUsuario = $row['idUsuario'];
-            $dtv->idDestino = $row['idDestino'];
             $dtv->valoracion = $row['valoracion'];
-   
+            // se agrega el DT al array de resultados
             array_push($ret, $dtv);
         }
-        return $ret; */ 
+        return $ret;
     }
     //--------------------------------------------------------------------------------
     /**
@@ -691,7 +719,7 @@ class mTripDo extends CI_Model {
     * @param int $idViaje id del viaje
     * @return boolean
     */
-    public function existeIdViaje($idViaje){
+    public function existeViaje($idViaje){
         $this->db->select('v.id');
         $this->db->from('viaje v');
         $this->db->where('v.id', $idViaje);

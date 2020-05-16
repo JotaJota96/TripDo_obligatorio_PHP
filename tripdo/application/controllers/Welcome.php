@@ -31,38 +31,6 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-            /*
-            $dtu = new DtUsuario();
-            $dtu->nickname = "JotaJota96";
-            $dtu->email = "jjap96@gmail.com";
-            $dtu->contrasenia = "1234";
-            $dtu->nombre = "Juan";
-            $dtu->apellido = "Alvarez";
-            $this->MTripDo->registrarUsuario($dtu);
-            */
-            /*
-            $dtv = new DtViaje();
-            $dtv->nombre = "Viaje al departamento de Rocha";
-            $dtv->descripcion = "Un viaje de vagayo";
-            $dtv->publico = false;
-            var_dump($this->MTripDo->crearViaje($dtv, "JotaJota96"));
-            */
-            /*
-            $dtd = new DtDestino();
-            $dtd->pais = "Uruguay";
-            $dtd->ciudad = "Rocha";
-            $tags = array("tag1", 'tag2', 'tag3');
-            var_dump($this->MTripDo->agregarDestinoAViaje($dtd, ?, "JotaJota96", $tags));
-            */
-            /*
-            $dtp = new DtPlan();
-            $dtp->nombre = "ssdf";
-            $dtp->descripcion = "sdf";
-            $dtp->latitud = -89.671879;
-            $dtp->longitud = -179.660332;
-            var_dump($this->MTripDo->agregarPlanADestino($dtp, 17, "JotaJota96"));
-            */
-
             
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";

@@ -348,7 +348,25 @@ class mTripDo extends CI_Model {
         if (!$this->existeDestino($idDestino)){
             throw new Exception("El destino no existe");
         }
+        $dtd = $this->obtenerDestino($idDestino);
+        if ($dtd->idViaje != $idViaje){
+            throw new Exception("El destino no pertenece al viaje");
+        }
+
+        $filas = $this->db
+            ->select('*')
+            ->from('destinovotado dv')
+            ->where('dv.idUsuario', $idUsuario)
+            ->where('dv.idViaje', $idViaje)
+            ->where('dv.idDestino', $idDestino)
+            ->get()->result_array();
         
+        // si la consulta anterior devuelve un resultado, el destino ya fue votado por el usuario asi que no se hace nada
+        if (count($filas) == 1){
+            return;
+        }
+        
+        // INSERT en la BDD
         $datos = array(
             "idUsuario" => $idUsuario,
             "idViaje" => $idViaje,
@@ -375,13 +393,31 @@ class mTripDo extends CI_Model {
         if (!$this->existePlan($idPlan)){
             throw new Exception("No existe un plan con ese id");
         }
+        $dtp = $this->obtenerPlan($idPlan);
+        $dtd = $this->obtenerDestino($dtp->idDestino);
+        if ($dtd->idViaje != $idViaje){
+            throw new Exception("El plan no pertenece al viaje");
+        }
 
+        $filas = $this->db
+            ->select('*')
+            ->from('planvotado pv')
+            ->where('pv.idUsuario', $idUsuario)
+            ->where('pv.idViaje', $idViaje)
+            ->where('pv.idPlan', $idPlan)
+            ->get()->result_array();
+        
+        // si la consulta anterior devuelve un resultado, el plan ya fue votado por el usuario asi que no se hace nada
+        if (count($filas) == 1){
+            return;
+        }
+        
+        // INSERT en la BDD
         $voto= array(
             'idUsuario'=>$idUsuario,
             'idViaje'=>$idViaje,
             'idPlan'=>$idPlan
         );
-
         $this->db->insert('planvotado', $voto);
     }
 

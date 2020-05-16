@@ -157,7 +157,7 @@ class mTripDo extends CI_Model {
         if (!$this->existeNickname($idUsuario)){
             throw new Exception("No existe un usuario con ese id");
         }
-        if($this->esColavorador($idViaje, $idUsuario)){
+        if($this->esColaborador($idViaje, $idUsuario)){
             throw new Exception("El usuario no puede agregarse como viajero porque es colaborador");
         }
         if($this->esViajero($idViaje, $idUsuario)){

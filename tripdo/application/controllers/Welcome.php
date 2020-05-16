@@ -31,13 +31,8 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-            $keys = array('playa', 'termas');//array('sureste','asiatico','con','los','pibes');
             
-            foreach ($this->MTripDo->buscarPorPalabrasClave($keys) as $v){
-                var_dump($v);
-                echo "<br><br>";
-            }
-            
+            $this->MTripDo->agregarViajeroAViaje(3, "francisco91");
 
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";

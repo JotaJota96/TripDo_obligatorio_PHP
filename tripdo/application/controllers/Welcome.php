@@ -31,8 +31,10 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-
-            var_dump($this->MTripDo->obtenerViaje(1));
+            foreach($this->MTripDo->obtenerDestinos(1) as $d){
+                var_dump($d);
+                echo "<br>";
+            }
 
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";

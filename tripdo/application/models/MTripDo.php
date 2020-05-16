@@ -498,7 +498,7 @@ class mTripDo extends CI_Model {
         if (!isset($idViaje)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
-        if (!esViaje($idViaje)){
+        if (!$this->existeIdViaje($idViaje)){
             throw new Exception("El viaje no existe");
         }
         // obtengo un array con las filas del resultado, cada fila obtenida es un array asociativo

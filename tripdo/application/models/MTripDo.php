@@ -437,8 +437,11 @@ class mTripDo extends CI_Model {
             throw new Exception('El usuario no existe');
         }
         if (!$this->existeViaje($idViaje)){
-            throw new Exception('El usuario no existe');
+            throw new Exception('El viaje no existe');
         }
+
+        $this->db->trans_start();
+
         // copiado del viaje
         $dtv = $this->obtenerViaje($idViaje);
         $dtv = $this->crearViaje($dtv, $idUsuario);
@@ -446,9 +449,9 @@ class mTripDo extends CI_Model {
         // copiado de destinos, tags y planes
         $arrDtd = $this->obtenerDestinosDeViaje($idViaje);
         foreach($arrDtd as $dtd){
-            echo "copiando $dtd->id";
             $destinoCopiado = $dtd->get_array();
             unset($destinoCopiado['id']);
+            $destinoCopiado['idViaje'] = $dtv->id;
             $destinoCopiado['agregadoPor'] = null;
             $destinoCopiado['fechaAgregado'] = null;
 
@@ -456,29 +459,33 @@ class mTripDo extends CI_Model {
             $destinoCopiado['id'] = $this->db->insert_id();
 
             // copiado de tags del destino
-            // obtengo los tags originales
-            $arrTags = $this->db
-                ->select('*')
-                ->from('tag')
-                ->where('idDestino', $dtd->id)
-                ->get()->result_array();
+            // obtengo los DtTags originales
+            $arrDtTags = $this->obtenerTagsDeDestino($dtd->id);
+
             // si hay algun tag, los copio, sino no, ¿sino que voy a copiar? xD
-            if (count($arrTags) > 0){
-                foreach($arrTags as &$t){
+            if (count($arrDtTags) > 0){
+                // como el array que obtuve es de DtTag, lo convierto a un array de arrays asociativos
+                $arrTags = array();
+                foreach($arrDtTags as $t){
+                    array_push($arrTags, $t->get_array());
+                }
+                // modifico los datos para los tags copiados
+                foreach($arrTags as &$t){ // lleva el '&' para que el cambio se mantenga luego del foreach
                     unset($t['id']);
                     $t['idDestino'] = $destinoCopiado['id'];
                 }
                 $this->db->insert_batch('tag', $arrTags);
             }
+            // fin del copiado de tags del destino
 
             // copiado de los planes del destino
-            $arrPlanes = $this->db
-                ->select('*')
-                ->from('plan')
-                ->where('idDestino', $dtd->id)
-                ->get()->result_array();
+            $arrDtPlanes = $this->obtenerPlanesDeDestino($dtd->id);
             // si hay algun plan, los copio, sino no
-            if (count($arrPlanes) > 0){
+            if (count($arrDtPlanes) > 0){
+                $arrPlanes = array();
+                foreach ($arrDtPlanes as $p){
+                    array_push($arrPlanes, $p->get_array());
+                }
                 foreach($arrPlanes as &$p){
                     unset($p['id']);
                     $p['idDestino'] = $destinoCopiado['id'];
@@ -488,6 +495,7 @@ class mTripDo extends CI_Model {
                 $this->db->insert_batch('plan', $arrPlanes);
             }
         }
+        $this->db->trans_complete();
         return $dtv;
     }
 
@@ -580,13 +588,13 @@ class mTripDo extends CI_Model {
             $r = $resultado->row();
             $dtv = new DtViaje();
 
-            $dtv->id = $r->id;
-            $dtv->nombre = $r->nombre;
-            $dtv->descripcion = $r->descripcion;
-            $dtv->publico = $r->publico;
-            $dtv->realizado = $r->realizado;
-            $dtv->idUsuario = $r->idUsuario;
-            $dtv->valoracion = $r->valoracion;
+            $dtv->id          = (int)    $r->id;
+            $dtv->nombre      = (string) $r->nombre;
+            $dtv->descripcion = (string) $r->descripcion;
+            $dtv->publico     = (bool)   $r->publico;
+            $dtv->realizado   = (bool)   $r->realizado;
+            $dtv->idUsuario   = (int)    $r->idUsuario;
+            $dtv->valoracion  = (bool)   $r->valoracion;
 
             return $dtv;
         }
@@ -616,12 +624,12 @@ class mTripDo extends CI_Model {
             $r = $resultado->row();
             $dtd = new DtDestino();
 
-            $dtd->id = $r->id;
-            $dtd->pais = $r->pais;
-            $dtd->ciudad = $r->ciudad;
-            $dtd->idViaje = $r->idViaje;
-            $dtd->agregadoPor = $r->agregadoPor;
-            $dtd->fechaAgregado = $r->fechaAgregado;
+            $dtd->id            = (int)    $r->id;
+            $dtd->pais          = (string) $r->pais;
+            $dtd->ciudad        = (string) $r->ciudad;
+            $dtd->idViaje       = (int)    $r->idViaje;
+            $dtd->agregadoPor   = (string) $r->agregadoPor;
+            $dtd->fechaAgregado = (string) $r->fechaAgregado;
 
             return $dtd;
         }
@@ -651,16 +659,16 @@ class mTripDo extends CI_Model {
             $r = $resultado->row();
             $dtp = new DtPlan();
 
-            $dtp->id = $r->id;
-            $dtp->nombre = $r->nombre;
-            $dtp->descripcion = $r->descripcion;
-            $dtp->latitud = $r->latitud;
-            $dtp->longitud = $r->longitud;
-            $dtp->link = $r->link;
-            $dtp->idDestino = $r->idDestino;
-            $dtp->agregadoPor = $r->agregadoPor;
-            $dtp->fechaAgregado = $r->fechaAgregado;
-            
+            $dtp->id            = (int)    $r->id;
+            $dtp->nombre        = (string) $r->nombre;
+            $dtp->descripcion   = (string) $r->descripcion;
+            $dtp->latitud       = (float)  $r->latitud;
+            $dtp->longitud      = (float)  $r->longitud;
+            $dtp->link          = (string) $r->link;
+            $dtp->idDestino     = (int)    $r->idDestino;
+            $dtp->agregadoPor   = (string) $r->agregadoPor;
+            $dtp->fechaAgregado = (string) $r->fechaAgregado;
+
             return $dtp;
         }
     }
@@ -689,17 +697,52 @@ class mTripDo extends CI_Model {
         $ret = array();
         foreach ($filas as $row){
             $dtd = new DtDestino();
-            $dtd->id = $row['id'];
-            $dtd->pais = $row['pais'];
-            $dtd->ciudad = $row['ciudad'];
-            $dtd->idViaje = $row['idViaje'];
-            $dtd->agregadoPor = $row['agregadoPor'];
-            $dtd->fechaAgregado = $row['fechaAgregado'];
+
+            $dtd->id            = (int)    $row['id'];
+            $dtd->pais          = (string) $row['pais'];
+            $dtd->ciudad        = (string) $row['ciudad'];
+            $dtd->idViaje       = (int)    $row['idViaje'];
+            $dtd->agregadoPor   = (string) $row['agregadoPor'];
+            $dtd->fechaAgregado = (string) $row['fechaAgregado'];
+
             array_push($ret, $dtd);
         }
         return $ret;
     }
 
+    //--------------------------------------------------------------------------------
+    /**
+    * el sistema debuelve todos los tags asociados al destino
+    * @param int $idDestino id del destino, cuyos tags seran debueltos
+    * @return array
+     */
+    public function obtenerTagsDeDestino($idDestino){
+        if (!isset($idDestino)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeDestino($idDestino)){
+            throw new Exception("No existe un destino con ese id");
+        }
+        
+        $filas = $this->db
+            ->select('*')
+            ->from('tag')
+            ->where('idDestino', $idDestino)
+            ->get()->result_array();
+        
+        // convierto los arrays obtenidos a objetos
+        $ret = array();
+        foreach ($filas as $row){
+            $dtt = new DtTag();
+
+            $dtt->id        = (int)    $row['id'];
+            $dtt->texto     = (string) $row['texto'];
+            $dtt->idDestino = (string) $row['idDestino'];
+
+            array_push($ret, $dtt);
+        }
+        return $ret;
+    }
     //--------------------------------------------------------------------------------
     /**
     * el sistema debuelve todos los palanes asociados al destino
@@ -725,15 +768,16 @@ class mTripDo extends CI_Model {
         foreach ($filas as $row){
             $dtp = new DtPlan();
 
-            $dtp->id = $row['id'];
-            $dtp->nombre = $row['nombre'];
-            $dtp->descripcion = $row['descripcion'];
-            $dtp->latitud = $row['latitud'];
-            $dtp->longitud = $row['longitud'];
-            $dtp->link = $row['link'];
-            $dtp->idDestino = $row['idDestino'];
-            $dtp->agregadoPor = $row['agregadoPor'];
-            $dtp->fechaAgregado = $row['fechaAgregado'];
+            $dtp->id            = (int)    $row['id'];
+            $dtp->nombre        = (string) $row['nombre'];
+            $dtp->descripcion   = (string) $row['descripcion'];
+            $dtp->latitud       = (float)  $row['latitud'];
+            $dtp->longitud      = (float)  $row['longitud'];
+            $dtp->link          = (string) $row['link'];
+            $dtp->idDestino     = (int)    $row['idDestino'];
+            $dtp->agregadoPor   = (string) $row['agregadoPor'];
+            $dtp->fechaAgregado = (string) $row['fechaAgregado'];
+
             array_push($ret, $dtp);
         }
         return $ret;

@@ -31,7 +31,7 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-            
+            var_dump($this->MTripDo->copiarViaje("jose57", 1));
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";
             echo $e->getMessage();

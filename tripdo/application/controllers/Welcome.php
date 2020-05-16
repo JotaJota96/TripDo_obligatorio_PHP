@@ -31,8 +31,9 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-            foreach($this->MTripDo->obtenerDestinos(1) as $d){
-                var_dump($d);
+            foreach($this->MTripDo->obtenerPlanes(1) as $p){
+                var_dump($p);
+                echo "<br>";
                 echo "<br>";
             }
 

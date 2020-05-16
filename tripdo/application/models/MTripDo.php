@@ -459,6 +459,9 @@ class mTripDo extends CI_Model {
     * @return array
     */
     public function obtenerPlanes($idDestino){
+        if (!isset($idDestino)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
         if (!$this->existeDestino($idDestino)){
             throw new Exception("No existe un destino con ese id");
         }
@@ -472,7 +475,7 @@ class mTripDo extends CI_Model {
         // convierto los arrays obtenidos a objetos
         $ret = array();
         foreach ($filas as $row){
-            $dtp = new DtDestino();
+            $dtp = new DtPlan();
 
             $dtp->id = $row['id'];
             $dtp->nombre = $row['nombre'];

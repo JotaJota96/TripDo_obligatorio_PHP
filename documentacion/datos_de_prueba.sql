@@ -105,5 +105,5 @@ INSERT INTO `planvotado` (`idUsuario`, `idViaje`, `idPlan`)
 	OR (sc.idViaje <> 1 AND sc.nickname LIKE '%e%')
 ;
 
-
+UPDATE plan SET latitud = latitud*0.6;
 

@@ -31,12 +31,8 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-            $dtv = new DtViaje();
-            $dtv->nombre = "viaje test";
-            $dtv->descripcion = "viaje test";
-            $dtv->publico = false;
 
-            echo $this->MTripDo->crearViaje(null, "jose57");
+            var_dump($this->MTripDo->obtenerViaje(1));
 
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";

@@ -530,8 +530,9 @@ class mTripDo extends CI_Model {
     * @return DtViaje 
     */
     public function obtenerViaje($idViaje){
-
-        /*
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
         if (!$this->existeIdViaje($idViaje)){
             throw new Exception("No existe un viaje con ese id");
         }
@@ -544,18 +545,18 @@ class mTripDo extends CI_Model {
 
         if($resultado->num_rows() == 1){
             $r = $resultado->row();
-            $viaje = array(
-                'id'=>$r->id,
-                'nombre'=>$r->nombre,
-                'descripcion'=>$r->descripcion,
-                'publico'=>$r->publico,
-                'realizado'=>$r->realizado,
-                'idUsuario'=>$r->idUsuario,
-                'valoracion'=>$r->valoracion
-            );
-            return $viaje;
+            $dtv = new DtViaje();
+
+            $dtv->id = $r->id;
+            $dtv->nombre = $r->nombre;
+            $dtv->descripcion = $r->descripcion;
+            $dtv->publico = $r->publico;
+            $dtv->realizado = $r->realizado;
+            $dtv->idUsuario = $r->idUsuario;
+            $dtv->valoracion = $r->valoracion;
+
+            return $dtv;
         }
-        */
     }
 
     //--------------------------------------------------------------------------------

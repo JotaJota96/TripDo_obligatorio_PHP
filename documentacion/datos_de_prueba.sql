@@ -107,3 +107,4 @@ INSERT INTO `planvotado` (`idUsuario`, `idViaje`, `idPlan`)
 
 UPDATE plan SET latitud = latitud*0.6;
 
+UPDATE tag SET texto = lower(texto);

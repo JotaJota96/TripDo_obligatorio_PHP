@@ -237,7 +237,7 @@ class mTripDo extends CI_Model {
         foreach($arrTags as $tag){
             // creo objeto DtTag
             $dtTag = new DtTag();
-            $dtTag->texto = $tag;
+            $dtTag->texto = strtolower($tag);
             $dtTag->idDestino = $idDestinoInsertado;
 
             // obtengo su array
@@ -787,6 +787,42 @@ class mTripDo extends CI_Model {
             $dtp->fechaAgregado = (string) $row['fechaAgregado'];
 
             array_push($ret, $dtp);
+        }
+        return $ret;
+    }
+    //--------------------------------------------------------------------------------
+    /**
+     * Devuelve un array de strings con cierta cantidad de tags ordenados de mayor a menor cantidad de apariciones
+    * @param int $cant cantidad de resultados deseada (la cantidad resultante puede ser menor a la especificada)
+    * @return array
+     */
+    public function obtenerTopTags($cant){
+        if ( ! isset($cant)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if ( ! is_numeric($cant)){
+            throw new Exception("El tipo de dato recibido no es válido");
+        }
+        if ( $cant < 1){
+            throw new Exception("La cantidad de elementos deseada debe ser mayor a 0");
+        }
+        /* estilo de la consulta resultante
+        SELECT t.texto, count(*) AS contador FROM tag t
+        GROUP BY t.texto
+        ORDER BY contador DESC
+        LIMIT $cant
+        */
+        $result = $this->db
+            ->select("t.texto, count(*) AS contador")
+            ->from("tag t")
+            ->group_by("t.texto")
+            ->order_by("contador", "DESC")
+            ->limit($cant)
+            ->get()->result_array();
+        
+        $ret = array();
+        foreach ($result as $t){
+            array_push($ret, $t['texto']);
         }
         return $ret;
     }

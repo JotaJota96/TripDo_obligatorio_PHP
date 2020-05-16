@@ -31,7 +31,9 @@ class Welcome extends CI_Controller {
 	public function index(){
         $data = array();
         try {
-            
+            foreach ($this->MTripDo->obtenerTopTags(5) as $t){
+                echo "$t<br>";
+            }
         } catch (Exception $e) {
             echo "Excepcion capturada<br>";
             echo $e->getMessage();

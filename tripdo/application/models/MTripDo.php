@@ -444,6 +444,7 @@ class mTripDo extends CI_Model {
 
         // copiado del viaje
         $dtv = $this->obtenerViaje($idViaje);
+        $dtv->realizado = false;
         $dtv = $this->crearViaje($dtv, $idUsuario);
         
         // copiado de destinos, tags y planes
@@ -502,11 +503,14 @@ class mTripDo extends CI_Model {
     //--------------------------------------------------------------------------------
     /**
     * el sistema marca el viaje como realizado
-    * @param string $idUsuario id del usuario propietario del viaje
+    * @param string $idUsuario id del usuario que quiere realizar la accion
     * @param int $idViaje id del viaje que se desea dar por realizado
     * @return void
     */
     public function marcarViajeComoRealizado($idUsuario, $idViaje){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
         if (!$this->esPropietario($idViaje, $idUsuario)){
             throw new Exception("El usuario no es propietario del viaje");
         }
@@ -525,18 +529,22 @@ class mTripDo extends CI_Model {
     * @return void
     */
     public function calificarViaje($idUsuario, $idViaje, $valoracion, $texto=null){
-        if( !isset($idViaje) || !isset($idUsuario) || stcmp($idUsuario, "") == 0 || !isset($valoracion)){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0 || !isset($valoracion)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
+        if ( ! is_numeric($valoracion)){
+            throw new Exception("Hay datos con formato incorrecto");
+        }
+        // la valoracion va de1 a 5
         if ($valoracion < 1 || $valoracion > 5){
             throw new Exception('La valoración está fuera del rango 1 a 5');
-        }
-        if (!$this->esViajero($idViaje, $idUsuario)) {
-            throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
         $dtv = $this->obtenerViaje($idViaje);
         if ($dtv->realizado != true){
             throw new Exception('No se puede valorar un viaje aun no realizado');
+        }
+        if (!$this->esViajero($idViaje, $idUsuario)) {
+            throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
 
         // verifico si el usuario ya valoró el viaje anteriormente
@@ -593,7 +601,7 @@ class mTripDo extends CI_Model {
             $dtv->descripcion = (string) $r->descripcion;
             $dtv->publico     = (bool)   $r->publico;
             $dtv->realizado   = (bool)   $r->realizado;
-            $dtv->idUsuario   = (int)    $r->idUsuario;
+            $dtv->idUsuario   = (string) $r->idUsuario;
             $dtv->valoracion  = (bool)   $r->valoracion;
 
             return $dtv;
@@ -855,7 +863,7 @@ class mTripDo extends CI_Model {
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
         $dtv = $this->obtenerViaje($idViaje);
-        return ($dtv->idUsuario == $idUsuario);
+        return (strcmp( $dtv->idUsuario, $idUsuario) == 0);
     }
 
     //--------------------------------------------------------------------------------

@@ -82,7 +82,7 @@ class mTripDo extends CI_Model {
     * registra un viaje en el sistema
     * @param DtViaje $dtViaje datos del viaje que se desea rejistrar
     * @param string $idUsuario id del propietario del viaje
-    * @return void
+    * @return DtViaje
     */
     public function crearViaje($dtViaje, $idUsuario){
         if (!$this->validarObjeto($dtViaje, 'DtViaje')){
@@ -114,6 +114,8 @@ class mTripDo extends CI_Model {
         unset($viaje['valoracion']);
 
         $this->db->insert('viaje', $viaje);
+        $idInsertado = $this->db->insert_id();
+        return $this->obtenerViaje($idInsertado);
     }
 
     //--------------------------------------------------------------------------------
@@ -174,12 +176,12 @@ class mTripDo extends CI_Model {
 
     //--------------------------------------------------------------------------------
     /**
-    * el sistema agrega el destino a un viaje
+    * el sistema agrega el destino y sus tags a un viaje. Devuelve el destino creado o una Excepcion si ocurre un problema
     * @param DtDestino $dtDestino datos del destino a agregar a un viaje
     * @param string $idViaje id del viaje al cual se le agrega el destino
     * @param string $idUsuario id del usuario que sugiere el destino
     * @param array $arrTags tags (strings) que el usuario asocia al destino
-    * @return void
+    * @return DtDestino
     */
     public function agregarDestinoAViaje($dtDestino, $idViaje, $idUsuario, $arrTags){
         if ( !isset($idUsuario) || strlen($idUsuario) == 0 || !isset($idViaje)){
@@ -188,12 +190,31 @@ class mTripDo extends CI_Model {
         if (!$this->validarObjeto($dtDestino, 'DtDestino')){
             throw new Exception("El tipo de dato recibido no es válido");
         }
-        if (!$this->esViaje($idViaje)){
+        if (!$this->existeViaje($idViaje)){
             throw new Exception("El viaje no existe");
         }
-        if (!$this->esPropietario($idUsuario) && !$this->esViajero($idViaje, $idUsuario) && !$this->esColaborador($idViaje, $idUsuario)){
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con ese id");
+        }
+        if (!$this->esPropietario($idViaje, $idUsuario) && !$this->esViajero($idViaje, $idUsuario) && !$this->esColaborador($idViaje, $idUsuario)){
             throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
+
+        if ( ! isset($dtDestino->pais) ||
+            strcmp($dtDestino->pais, "") == 0 ||
+            ! isset($dtDestino->ciudad) ||
+            strcmp($dtDestino->ciudad, "") == 0 ||
+            ! isset($dtDestino->contrasenia)){
+                throw new Exception("Hay datos obligatorios sin completar");
+        }
+        if ( ! is_string($dtDestino->pais) ||
+            ! is_string($dtDestino->ciudad)){
+                throw new Exception("Hay datos con formato incorrecto");
+        }
+
+        // comienzo una transaccion para que si ocurre un error, no queden datos desconectados en la BDD
+        // lo hago por el tema de los tags
+        $this->db->trans_start();
 
         // INSERT en 'destino'
         // reasigno valores
@@ -219,10 +240,13 @@ class mTripDo extends CI_Model {
             $dtTag = new DtTag();
             $dtTag->texto = $tag;
             $dtTag->idDestino = $idDestinoInsertado;
+
             // obtengo su array
             $tagArr = $dtTag->get_array();
+
             // le saco el ID porque lo genera la Base de Datos
             unset($tagArr['id']);
+
             // lo agrego al array
             array_push($insertTags, $tagArr);
         }
@@ -230,20 +254,30 @@ class mTripDo extends CI_Model {
         if (count($insertTags) > 0){
             $this->db->insert_batch('tag', $insertTags);
         }
+        // finalizo la transaccion
+        $this->db->trans_complete();
+        
+        return $this->obtenerDestino($idDestinoInsertado);; // devuelvo el destino creado
     }
 
     //--------------------------------------------------------------------------------
     /**
-    * el sistema agrega el plan al destino
+    * el sistema agrega el plan al destino. Devuelve el plan creado o una Excepcion si ocurre un problema
     * @param DtPlan $dtplan datos del plan a agregar al destino
     * @param int $idDestino id del destino al cual se le agrega el plan
     * @param string $idUsuario id del usuario que sugiere el plan
-    * @return void
+    * @return DtPlan
     */
     public function agregarPlanADestino($dtPlan, $idDestino, $idUsuario){
         if (!$this->validarObjeto($dtPlan, 'DtPlan')){
             throw new Exception("El tipo de dato recibido no es válido");
         }
+            /////////////////////////////////////////////////////////////////
+           // CARLOS                                                      //
+          // Si arreglas esta funcion tenes que devolver el DT del plan, //
+         // fijate como hice con 'agregarDestinoAViaje'                 //
+        /////////////////////////////////////////////////////////////////
+        
         if (!$this->existeNickname($idUsuario)){
             throw new Exception("No existe un usuario con id");
         }
@@ -340,7 +374,7 @@ class mTripDo extends CI_Model {
         $dtv = $this->crearViaje($dtv, $idUsuario);
         
         // copiado de destinos, tags y planes
-        $arrDtd = $this->obtenerDestinos($idViaje);
+        $arrDtd = $this->obtenerDestinosDeViaje($idViaje);
         foreach($arrDtd as $dtd){
             echo "copiando $dtd->id";
             $destinoCopiado = $dtd->get_array();
@@ -454,11 +488,155 @@ class mTripDo extends CI_Model {
 
     //--------------------------------------------------------------------------------
     /**
+    * el sistema debuelve los datos del viaje o Exception si no se encuentra
+    * @param int $idViaje id del viaje, cuyos datos seran debueltos
+    * @return DtViaje 
+    */
+    public function obtenerViaje($idViaje){
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
+
+        $this->db->select('*');
+        $this->db->from('viajevaloracion v');
+        $this->db->where('v.id', $idViaje);
+
+        $resultado = $this->db->get();
+
+        if($resultado->num_rows() == 1){
+            $r = $resultado->row();
+            $dtv = new DtViaje();
+
+            $dtv->id = $r->id;
+            $dtv->nombre = $r->nombre;
+            $dtv->descripcion = $r->descripcion;
+            $dtv->publico = $r->publico;
+            $dtv->realizado = $r->realizado;
+            $dtv->idUsuario = $r->idUsuario;
+            $dtv->valoracion = $r->valoracion;
+
+            return $dtv;
+        }
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * el sistema debuelve los datos del destino o Exception si no se encuentra
+    * @param int $idDestino id del destino, cuyos datos seran debueltos
+    * @return DtDestino 
+    */
+    public function obtenerDestino($idDestino){
+        if (!isset($idDestino)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeDestino($idDestino)){
+            throw new Exception("No existe un destino con ese id");
+        }
+
+        $this->db->select('*');
+        $this->db->from('destino d');
+        $this->db->where('d.id', $idDestino);
+
+        $resultado = $this->db->get();
+
+        if($resultado->num_rows() == 1){
+            $r = $resultado->row();
+            $dtd = new DtDestino();
+
+            $dtd->id = $r->id;
+            $dtd->pais = $r->pais;
+            $dtd->ciudad = $r->ciudad;
+            $dtd->idViaje = $r->idViaje;
+            $dtd->agregadoPor = $r->agregadoPor;
+            $dtd->fechaAgregado = $r->fechaAgregado;
+
+            return $dtd;
+        }
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * el sistema debuelve los datos del plan o Exception si no se encuentra
+    * @param int $idPlan id del plan, cuyos datos seran debueltos
+    * @return DtPlan 
+    */
+    public function obtenerPlan($idPlan){
+        if (!isset($idPlan)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeDestino($idDestino)){
+            throw new Exception("No existe un plan con ese id");
+        }
+
+        $this->db->select('*');
+        $this->db->from('plan p');
+        $this->db->where('p.id', $idPlan);
+
+        $resultado = $this->db->get();
+
+        if($resultado->num_rows() == 1){
+            $r = $resultado->row();
+            $dtp = new DtPlan();
+
+            $dtp->id = $r->id;
+            $dtp->nombre = $r->nombre;
+            $dtp->descripcion = $r->descripcion;
+            $dtp->latitud = $r->latitud;
+            $dtp->longitud = $r->longitud;
+            $dtp->link = $r->link;
+            $dtp->idDestino = $r->idDestino;
+            $dtp->agregadoPor = $r->agregadoPor;
+            $dtp->fechaAgregado = $r->fechaAgregado;
+            
+            return $dtp;
+        }
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * el sistema debuelve todos los destinos asociados al viaje
+    * @param int $idViaje id del viaje, cuyos destinos seran debueltos
+    * @return array 
+    */
+    public function obtenerDestinosDeViaje($idViaje){
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("El viaje no existe");
+        }
+        // obtengo un array con las filas del resultado, cada fila obtenida es un array asociativo
+        $filas = $this->db
+            ->select('*')
+            ->from('destino d')
+            ->where('d.idViaje', $idViaje)
+            ->get()->result_array();
+        
+        // convierto cada array asociativo obtenido a un objeto
+        $ret = array();
+        foreach ($filas as $row){
+            $dtd = new DtDestino();
+            $dtd->id = $row['id'];
+            $dtd->pais = $row['pais'];
+            $dtd->ciudad = $row['ciudad'];
+            $dtd->idViaje = $row['idViaje'];
+            $dtd->agregadoPor = $row['agregadoPor'];
+            $dtd->fechaAgregado = $row['fechaAgregado'];
+            array_push($ret, $dtd);
+        }
+        return $ret;
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
     * el sistema debuelve todos los palanes asociados al destino
     * @param int $idDestino id del destino, cuyos planes seran debueltos
     * @return array
     */
-    public function obtenerPlanes($idDestino){
+    public function obtenerPlanesDeDestino($idDestino){
         if (!isset($idDestino)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
@@ -493,75 +671,64 @@ class mTripDo extends CI_Model {
 
     //--------------------------------------------------------------------------------
     /**
-    * el sistema debuelve todos los destinos asociados al viaje
-    * @param int $idViaje id del viaje, cuyos destinos seran debueltos
-    * @return array 
+    * el sistema debuelve un conjunto de DtViaje cuyos tags o nombres coinsidan con las keywords
+    * @param array $keyWords conjunto de palabras clave de la busqueda. En caso de que el array este vacio, se devuelven todos los viajes del sistema
+    * @return array
     */
-    public function obtenerDestinos($idViaje){
-        if (!isset($idViaje)){
+    public function buscarPorPalabrasClave($keyWords){
+        if ( ! isset($keyWords)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
-        if (!$this->existeViaje($idViaje)){
-            throw new Exception("El viaje no existe");
+        if ( ! is_array($keyWords)){
+            throw new Exception("El tipo de dato recibido no es válido");
         }
-        // obtengo un array con las filas del resultado, cada fila obtenida es un array asociativo
-        $filas = $this->db
-            ->select('*')
-            ->from('destino d')
-            ->where('d.idViaje', $idViaje)
-            ->get()->result_array();
         
-        // convierto cada array asociativo obtenido a un objeto
+        /* Consulta de referencia
+        SELECT DISTINCT * 
+        FROM viajevaloracion v
+        JOIN destino d ON v.id = d.idViaje
+        JOIN tag t ON t.idDestino = d.id
+        WHERE lower(t.texto) LIKE lower('%keyWords[0]%') OR
+        lower(t.texto) LIKE lower('%keyWords[1]%') OR
+        lower(t.texto) LIKE lower('%keyWords[2]%')
+        */
+        $this->db
+            ->select('v.*')
+            ->distinct()
+            ->from('viajevaloracion v')
+            ->join('destino d', 'v.id = d.idViaje')
+            ->join('tag t', 't.idDestino = d.id');
+        foreach ($keyWords as $kw){
+            $this->db->or_where("LOWER(t.texto) LIKE LOWER('%$kw%')");
+            // algun dia pueden ser útiles...
+            // $this->db->or_where("LOWER(d.pais) LIKE LOWER('%$kw%')");
+            // $this->db->or_where("LOWER(d.ciudad) LIKE LOWER('%$kw%')");
+            // $this->db->or_where("LOWER(v.nombre) LIKE LOWER('%$kw%')");
+            // $this->db->or_where("LOWER(v.descripcion) LIKE LOWER('%$kw%')");
+        }
+        // echo $this->db->get_compiled_select();
+        // return null;
+
+        // obtengo el array de arrays asociativos resultantes
+        $filas = $this->db->get()->result_array();
+        
         $ret = array();
         foreach ($filas as $row){
-            $dtd = new DtDestino();
-            $dtd->id = $row['id'];
-            $dtd->pais = $row['pais'];
-            $dtd->ciudad = $row['ciudad'];
-            $dtd->idViaje = $row['idViaje'];
-            $dtd->agregadoPor = $row['agregadoPor'];
-            $dtd->fechaAgregado = $row['fechaAgregado'];
-            array_push($ret, $dtd);
+            // para cada fila se crea un DtViaje y se le rellenan los datos
+            $dtv = new DtViaje();
+            $dtv->id = $row['id'];
+            $dtv->nombre = $row['nombre'];
+            $dtv->descripcion = $row['descripcion'];
+            $dtv->publico = $row['publico'];
+            $dtv->realizado = $row['realizado'];
+            $dtv->idUsuario = $row['idUsuario'];
+            $dtv->valoracion = $row['valoracion'];
+            // se agrega el DT al array de resultados
+            array_push($ret, $dtv);
         }
         return $ret;
     }
-
-    //--------------------------------------------------------------------------------
-    /**
-    * el sistema debuelve los datos del viaje o null si no se encuentra
-    * @param int $idViaje id del viaje, cuyos datos seran debueltos
-    * @return DtViaje 
-    */
-    public function obtenerViaje($idViaje){
-        if (!isset($idViaje)){
-            throw new Exception("algunos de los parametros recibidos estan vacios");
-        }
-        if (!$this->existeViaje($idViaje)){
-            throw new Exception("No existe un viaje con ese id");
-        }
-
-        $this->db->select('*');
-        $this->db->from('viajevaloracion v');
-        $this->db->where('v.id', $idViaje);
-
-        $resultado = $this->db->get();
-
-        if($resultado->num_rows() == 1){
-            $r = $resultado->row();
-            $dtv = new DtViaje();
-
-            $dtv->id = $r->id;
-            $dtv->nombre = $r->nombre;
-            $dtv->descripcion = $r->descripcion;
-            $dtv->publico = $r->publico;
-            $dtv->realizado = $r->realizado;
-            $dtv->idUsuario = $r->idUsuario;
-            $dtv->valoracion = $r->valoracion;
-
-            return $dtv;
-        }
-    }
-
+    
     //--------------------------------------------------------------------------------
     /**
     * retorna true si el usuario es propietario del viaje, false de los contrario
@@ -626,65 +793,6 @@ class mTripDo extends CI_Model {
         }
     }
 
-    //--------------------------------------------------------------------------------
-    /**
-    * el sistema debuelve un conjunto de DtViaje cuyos tags o nombres coinsidan con las keywords
-    * @param array $keyWords conjunto de palabras clave de la busqueda. En caso de que el array este vacio, se devuelven todos los viajes del sistema
-    * @return array
-    */
-    public function buscarPorPalabrasClave($keyWords){
-        if ( ! isset($keyWords)){
-            throw new Exception("algunos de los parametros recibidos estan vacios");
-        }
-        if ( ! is_array($keyWords)){
-            throw new Exception("El tipo de dato recibido no es válido");
-        }
-        
-        /* Consulta de referencia
-        SELECT DISTINCT * 
-        FROM viajevaloracion v
-        JOIN destino d ON v.id = d.idViaje
-        JOIN tag t ON t.idDestino = d.id
-        WHERE lower(t.texto) LIKE lower('%keyWords[0]%') OR
-        lower(t.texto) LIKE lower('%keyWords[1]%') OR
-        lower(t.texto) LIKE lower('%keyWords[2]%')
-        */
-        $this->db
-            ->select('v.*')
-            ->distinct()
-            ->from('viajevaloracion v')
-            ->join('destino d', 'v.id = d.idViaje')
-            ->join('tag t', 't.idDestino = d.id');
-        foreach ($keyWords as $kw){
-            $this->db->or_where("LOWER(t.texto) LIKE LOWER('%$kw%')");
-            // algun dia pueden ser útiles...
-            // $this->db->or_where("LOWER(d.pais) LIKE LOWER('%$kw%')");
-            // $this->db->or_where("LOWER(d.ciudad) LIKE LOWER('%$kw%')");
-            // $this->db->or_where("LOWER(v.nombre) LIKE LOWER('%$kw%')");
-            // $this->db->or_where("LOWER(v.descripcion) LIKE LOWER('%$kw%')");
-        }
-        // echo $this->db->get_compiled_select();
-        // return null;
-
-        // obtengo el array de arrays asociativos resultantes
-        $filas = $this->db->get()->result_array();
-        
-        $ret = array();
-        foreach ($filas as $row){
-            // para cada fila se crea un DtViaje y se le rellenan los datos
-            $dtv = new DtViaje();
-            $dtv->id = $row['id'];
-            $dtv->nombre = $row['nombre'];
-            $dtv->descripcion = $row['descripcion'];
-            $dtv->publico = $row['publico'];
-            $dtv->realizado = $row['realizado'];
-            $dtv->idUsuario = $row['idUsuario'];
-            $dtv->valoracion = $row['valoracion'];
-            // se agrega el DT al array de resultados
-            array_push($ret, $dtv);
-        }
-        return $ret;
-    }
     //--------------------------------------------------------------------------------
     /**
     * el sistema debuelve un conjunto de viajes cuyos tags o nombres coinsidan con las keywords

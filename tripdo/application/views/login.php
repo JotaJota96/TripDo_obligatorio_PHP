@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Mensaje de error al iniciar sesion -->
         <p><?= $mensaje ?></p>
     </div>
-
+    
     <!-- Footer -->
     <?php include("include/footer.php");?>
 

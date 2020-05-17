@@ -256,7 +256,7 @@ section
 .button
 {
 	display: inline-block;
-	width: 161px;
+	width: 175px;
 	height: 56px;
 	background: #fe3c52;
 	text-align: center;
@@ -299,6 +299,11 @@ section
 /*********************************
 6.1 Buttons
 *********************************/
+
+.buttons{
+	margin-top: 5px;
+}
+
 
 .buttons_container
 {
@@ -346,7 +351,7 @@ section
 {
 	background: rgba(254,60,82,0.8);
 }
-.button_3:hover a
+.button_1:hover a
 {
 	color: #FFFFFF;
 }
@@ -358,11 +363,7 @@ section
 {
 	color: #FFFFFF;
 }
-.elements_button
-{
-	margin-right: 0px;
-	margin-bottom: 5px;
-}
+
 
 /*********************************
 6.2 Accordions & Tabs

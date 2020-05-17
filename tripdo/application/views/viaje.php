@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="container">
 				<div class="row">
 					<!-- News Posts -->
-					<div class="col-lg-8">
+					<div class="col-lg-7">
 						<div class="news_posts">
 							<!-- News Post -->
 
@@ -48,7 +48,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<img src="<?= base_url()?>/public/images/news_1.jpg">
 
 								</div>
-							
+
+								<!-- Buttons -->
+								<div class="buttons">
+									<div class="buttons_container">
+										<div class="button button_1 elements_button"><a href="#">Administrar</a></div>
+									</div>
+								</div>
+								<hr>
 								<div class="post_text">
 									<div class="accordions_content">
 
@@ -65,31 +72,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											</div>
 										</div>
 									</div>
-									
 								</div>
 							</div>
 						</div>
 					</div>
 
 					<!-- Sidebar -->
-					<div class="col-lg-4">
+					<div class="col-lg-5">
 						<div class="sidebar">
 							<!-- Featured Posts -->
-							<div class="sidebar_featured">
-									<!-- Buttons -->
-							<div class="buttons">
-								<div class="container">
-									<div class="row">
-										<div class="col">
-											<div class="buttons_container">
-												<div class="button button_1 elements_button"><a href="#">Button</a></div>
-												<div class="button button_1 elements_button"><a href="#">Button</a></div>
-											</div>
-										</div>
-									</div>
-								</div>	
-							</div>
-
+							<div class="sidebar_featured">|
 								<!-- Featured Post -->
 								<div class="sidebar_featured_post">
 									<div class="tab_panels">

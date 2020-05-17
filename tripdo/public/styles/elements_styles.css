@@ -256,7 +256,7 @@ section
 .button
 {
 	display: inline-block;
-	width: 161px;
+	width: 175px;
 	height: 56px;
 	background: #fe3c52;
 	text-align: center;
@@ -266,7 +266,7 @@ section
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
-.button a
+.button
 {
 	display: block;
 	font-size: 16px;
@@ -300,14 +300,19 @@ section
 6.1 Buttons
 *********************************/
 
+.buttons{
+	margin: 5px;
+}
+
+
 .buttons_container
 {
-	margin-top: 0px;
+	margin: 5px;
 }
 .button_1
 {
-	background: rgba(254,60,82,1);
-	vertical-align: middle;
+	color: #FFFFFF;
+	background: rgba(254,60,82,1);	
 }
 .button_2
 {
@@ -346,7 +351,7 @@ section
 {
 	background: rgba(254,60,82,0.8);
 }
-.button_3:hover a
+.button_1:hover a
 {
 	color: #FFFFFF;
 }
@@ -354,15 +359,15 @@ section
 {
 	background: rgba(19,26,47,0.8);
 }
-.button_4:hover a
+.button_4:hover 
 {
 	color: #FFFFFF;
 }
 .elements_button
 {
-	margin-right: 0px;
-	margin-bottom: 5px;
+	margin: 5 px;
 }
+
 
 /*********************************
 6.2 Accordions & Tabs
@@ -519,10 +524,10 @@ section
 }
 .tab_panels
 {
-	padding-left: 41px;
-	padding-right: 20px;
-	padding-top: 48px;
-	padding-bottom: 49px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	border: solid 2px #fe3c52;
 }
 .tab_panel
@@ -677,4 +682,15 @@ section
 .icon_box_more:hover::before
 {
 	left: 100%;
+}
+
+.tab.log,
+.tab:hover
+{
+	background: #fe3c52;
+	color: #FFFFFF;
+}
+.tab_panel.log
+{
+	display: block !important;
 }

@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/main_styles.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/viaje_style.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/viaje_reponsive.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/elements_styles.css">
 </head>
 
 <body>
@@ -37,6 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="col-lg-8">
 						<div class="news_posts">
 							<!-- News Post -->
+
 							<div class="news_post">
 								<div class="post_title">
 									<h2>Top destinations in Europe</h2>
@@ -46,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<img src="<?= base_url()?>/public/images/news_1.jpg">
 
 								</div>
-
+							
 								<div class="post_text">
 									<div class="accordions_content">
 
@@ -72,28 +74,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<!-- Sidebar -->
 					<div class="col-lg-4">
 						<div class="sidebar">
+							<!-- Featured Posts -->
+							<div class="sidebar_featured">
+									<!-- Buttons -->
 							<div class="buttons">
 								<div class="container">
 									<div class="row">
 										<div class="col">
-											<div class="elements_title">Buttons</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col">
 											<div class="buttons_container">
-												<div class="button button_2 elements_button"><a href="#">Button</a></div>
-												<div class="button button_2 elements_button"><a href="#">Button</a></div>
-												<div class="button button_2 elements_button"><a href="#">Button</a></div>
-												<div class="button button_2 elements_button"><a href="#">Button</a></div>
+												<div class="button button_1 elements_button"><a href="#">Button</a></div>
+												<div class="button button_1 elements_button"><a href="#">Button</a></div>
 											</div>
 										</div>
 									</div>
 								</div>	
 							</div>
-
-							<!-- Featured Posts -->
-							<div class="sidebar_featured">
 
 								<!-- Featured Post -->
 								<div class="sidebar_featured_post">

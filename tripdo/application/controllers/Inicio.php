@@ -1,20 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Viaje extends CI_Controller {
+class Inicio extends CI_Controller {
 
-	function __construct(){
-        parent::__construct();
-		
+	public function __construct(){
+		parent:: __construct();
 		$this->load->helper(array('main_menu', 'url'));
-    }
+		
+	}
 
 	/**
-	 * 
+	 
 	 */
 	public function index()
 	{
 		$data['main_menu'] = mainMenu();
-		$this->load->view('viaje', $data);
+		$this->load->view('inicio', $data);
 	}
 }

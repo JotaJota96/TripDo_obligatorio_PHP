@@ -8,7 +8,7 @@ class Registro extends CI_Controller {
     function __construct(){
         parent::__construct();
 		$this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
-		$this->load->helper(array('main_menu', 'register_rules', 'url','html'));		
+		$this->load->helper(array('main_menu', 'url','html'));		
 		$this->data['title'] = 'Registro';
 		$this->data['style'] = 'registro_style.css';
 		$this->data['responsive'] = 'registro_reponsive.css';

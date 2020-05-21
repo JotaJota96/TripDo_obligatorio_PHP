@@ -7,7 +7,7 @@ function mainMenu(){
             'url' => base_url('/')
         ),
         array(
-            'title'=> 'Login',
+            'title'=> 'Iniciar Sessión',
             'url' => base_url('/login')
         ),
         array(

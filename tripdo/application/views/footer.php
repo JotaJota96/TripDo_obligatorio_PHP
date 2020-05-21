@@ -1,4 +1,4 @@
-	<footer class="footer">
+<footer class="footer">
 		<div class="container">
 			<div class="row">
 				<!-- Footer Column -->
@@ -46,7 +46,10 @@
 		</div>
 	</footer>
 
-    
+    <script src="<?= base_url()?>/public/js/jquery-3.2.1.min.js"></script>
+	<script src="<?= base_url()?>/public/styles/bootstrap4/popper.js"></script>
+	<script src="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.js"></script>
+	<script src="<?= base_url()?>/public/js/custom.js"></script>
+</body>
 
-        
-
+</html>

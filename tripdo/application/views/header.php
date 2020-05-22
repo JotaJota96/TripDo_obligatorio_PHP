@@ -13,6 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="description" content="Registro de usuario">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/elementos_styles.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/main_styles.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/<?= $style ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/<?= $responsive ?>">

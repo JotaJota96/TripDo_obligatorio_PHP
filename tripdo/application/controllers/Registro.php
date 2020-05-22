@@ -5,6 +5,7 @@ class Registro extends CI_Controller {
  
 	public $data = array();
 
+
     function __construct(){
 		parent::__construct();
 		$this->load->model('MTripDo');
@@ -17,11 +18,16 @@ class Registro extends CI_Controller {
 		$this->data['main_menu'] = mainMenu();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
 		$this->data['footer'] = $this->load->view('footer', '', TRUE);
+
+		$this->data['defBiog'] =$this->input->post('biografia');
+		$this->data['defTel'] =$this->input->post('telefono');
+		$this->data['defApellido'] =$this->input->post('apellido');
+		$this->data['defNombre'] =$this->input->post('nombre');
+		$this->data['defEmail'] =$this->input->post('email');
+		$this->data['defNick'] =$this->input->post('nickname');
+
     }
-	/**
-	 
-	 * 
-	 */
+
 	public function index(){	
 		// si hay una sesion iniciada, redirige a la pagina de inicio
         if ($this->session->has_userdata('nickname')){
@@ -50,6 +56,8 @@ class Registro extends CI_Controller {
 		$this->form_validation->set_message('alpha', 'El campo %s solo puede contener caracteres alfabéticos.');
 		$this->form_validation->set_message('alpha_dash','El campo %s solo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
 		$this->form_validation->set_message('is_unique','Ya existe un usuario con ese %s');
+		
+
 
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('registro', $this->data);
@@ -64,9 +72,6 @@ class Registro extends CI_Controller {
         if ( ! isset($redirigir)) {
             redirect(base_url());
 		}
-		
-		//$this->load->view('sssss');
-		//return;
 
 		$dtusuario = new DtUsuario();
 		$nick = $this->input->post('nickname');

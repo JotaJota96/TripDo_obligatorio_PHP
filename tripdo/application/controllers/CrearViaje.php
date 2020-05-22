@@ -6,7 +6,9 @@ class CrearViaje extends CI_Controller {
 	public $data = array();
 
     function __construct(){
-        parent::__construct();
+		parent::__construct();
+		$this->load->model('MTripDo');
+		$this->load->library('DtViaje');
 		$this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
 		$this->load->helper(array('main_menu', 'url','html'));		
 		$this->data['title'] = 'Crear Viaje';
@@ -15,23 +17,58 @@ class CrearViaje extends CI_Controller {
 		$this->data['main_menu'] = mainMenu();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
 		$this->data['footer'] = $this->load->view('footer', '', TRUE);
+
+		$this->data['defNombre'] =$this->input->post('nombreViaje');
+		$this->data['defDescripcion'] =$this->input->post('descripcion');
     }
-	/**
-	 
-	 * 
-	 */
-	public function index()
-	{		
+
+	public function index(){	
+		// si hay una sesion iniciada, redirige a la pagina de inicio
+        if (!$this->session->has_userdata('nickname')){
+            redirect(base_url());
+		}
 		$this->load->view('crear_viaje', $this->data);		
+	}
+	public function crear_Viaje(){
+		
+		$redirigir = $this->input->post('btncrearViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		$dtviaje = new DtViaje();
+		$dtviaje->nombre = $this->input->post('nombreViaje');
+		$dtviaje->descripcion = $this->input->post('descripcion');
+ 
+		$publico = $this->input->post('publico');
+
+		if($publico=='option1'){
+			$dtviaje->publico = false;
+		}else{
+			$dtviaje->publico = true;
+		}
+
+		try {
+			$idUsuario = $this->session->userdata('nickname');
+			
+			$this->MTripDo->crearViaje($dtviaje, $idUsuario);
+
+			//$this->load->view('iiiiiiiiiiiiiiiiiii'); //con esto de-Bugeo!!!
+
+			redirect(base_url());
+
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+			$this->load->view('crear_viaje', $this->data);
+		}
+	
 	}
 
 	public function validate(){
-		//$rules = getRegisterRules();
+
 		//Validaciones
 		$this->form_validation->set_rules('nombreViaje', 'Nombre Viaje', 'trim|required|min_length[5]|max_length[50]|alpha_dash');
-		
-		$this->form_validation->set_rules('descripcion', 'Descripcion', 'trim|required|apha_dash');
-		//$this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
+		$this->form_validation->set_rules('descripcion', 'Descripcion', 'trim|required');
 
 		//Mensajes de error
 		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s characters.');
@@ -42,7 +79,7 @@ class CrearViaje extends CI_Controller {
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('crear_viaje', $this->data);
 		}else{
-
+			$this->crear_Viaje();
 		}
     }
     

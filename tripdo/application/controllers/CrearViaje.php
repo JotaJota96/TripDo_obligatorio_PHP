@@ -10,11 +10,12 @@ class CrearViaje extends CI_Controller {
 		$this->load->model('MTripDo');
 		$this->load->library('DtViaje');
 		$this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
-		$this->load->helper(array('main_menu', 'url','html'));		
+		$this->load->helper(array('main_menu', 'footer', 'url','html'));		
 		$this->data['title'] = 'Crear Viaje';
 		$this->data['style'] = 'crear_viaje_style.css';
 		$this->data['responsive'] = 'crear_viaje_reponsive.css';
 		$this->data['main_menu'] = mainMenu();
+		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
 		$this->data['footer'] = $this->load->view('footer', '', TRUE);
 

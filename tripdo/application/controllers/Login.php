@@ -28,23 +28,24 @@ class Login extends CI_Controller {
     }
 
     public function ingresar(){
-        if ( $this->input->post('login') == null) {
+        $redirigir = $this->input->post('login');
+        if ( ! isset($redirigir)) {
             redirect(base_url());
         }
-        $nick = $this->input->post('txtnick');
-        $pass = $this->input->post('txtpass');
+        $nickname = $this->input->post('nickname');
+        $contrasenia = $this->input->post('contrasenia');
 
-        $nick = $this->MTripDo->iniciarSesion($nick, $pass);
-        $this->data['mensaje'] = "";
+        $nick = $this->MTripDo->iniciarSesion($nickname, $contrasenia);
 
         if ($nick == null){
-            $this->data['mensaje'] = "Usuario o contraseña incorrectos";
+            $this->data['loginFailed'] = true;
             $this->load->view('login', $this->data);
             return;
         }else{
             $this->session->set_userdata('nickname', $nick);
             redirect(base_url());
         }
+        
     }
 
     public function salir(){
@@ -69,7 +70,7 @@ class Login extends CI_Controller {
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('login', $this->data);
 		}else{
-
+            $this->ingresar();
 		}
 	}
 }

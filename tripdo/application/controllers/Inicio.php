@@ -6,7 +6,7 @@ class Inicio extends CI_Controller {
 	public $data = array();
 
 	public function __construct(){
-		parent:: __construct();
+        parent:: __construct();
 		$this->load->helper(array('main_menu', 'url'));				
 		$this->data['title'] = 'Incio';
 		$this->data['style'] = 'inicio_style.css';

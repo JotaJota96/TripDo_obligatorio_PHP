@@ -8,11 +8,12 @@ class Login extends CI_Controller {
         parent:: __construct();
         $this->load->model('MTripDo');
         $this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
-		$this->load->helper(array('main_menu', 'url'));				
+		$this->load->helper(array('main_menu', 'footer', 'url'));				
 		$this->data['title'] = 'Iniciar Sesión';
 		$this->data['style'] = 'login_style.css';
 		$this->data['responsive'] = 'login_reponsive.css';
 		$this->data['main_menu'] = mainMenu();
+		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
 		$this->data['footer'] = $this->load->view('footer', '', TRUE);
     }

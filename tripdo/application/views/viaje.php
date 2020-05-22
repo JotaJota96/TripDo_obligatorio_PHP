@@ -1,6 +1,6 @@
 <!-- Heder  -->
 		<?php echo $header;	?>
-
+		
 		<!-- news -->
 		<div class="news">
 			<div class="container">

@@ -102,7 +102,7 @@
 				</div>
 			</div>
 		</div>		
-	<?php echo $_SERVER['REQUEST_URI']; ?>
+
 	<!-- Footer -->
 	<?php echo $footer;?>
 

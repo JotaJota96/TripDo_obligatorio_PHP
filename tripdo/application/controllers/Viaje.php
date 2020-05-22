@@ -6,7 +6,7 @@ class Viaje extends CI_Controller {
 	function __construct(){
         parent::__construct();
 		
-		$this->load->helper(array('main_menu', 'url'));
+		$this->load->helper(array('main_menu', 'footer', 'url'));
     }
 
 	/**

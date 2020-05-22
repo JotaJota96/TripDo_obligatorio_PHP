@@ -24,15 +24,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<div
-						class=" header_container fixed-top d-flex flex-row align-items-center justify-content-start">
+					<div class=" header_container fixed-top d-flex flex-row align-items-center justify-content-start">
 						<!-- Logo -->
 						<div class="logo_container ">
-							<div class="logo">
-								<div>TripDo</div>
-								<div>Agencia de viajes</div>
-								<div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
-							</div>
+                            <a href="<?= base_url() ?>">
+                                <div class="logo">
+                                    <div>TripDo</div>
+                                    <div>Agencia de viajes</div>
+                                    <div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
+                                </div>
+                            </a>
 						</div>
 
 						<!-- Main Navigation -->

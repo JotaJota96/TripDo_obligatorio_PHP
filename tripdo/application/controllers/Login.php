@@ -2,30 +2,58 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
-
 	public $data = array();
 
 	public function __construct(){
         parent:: __construct();
+        $this->load->model('MTripDo');
         $this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
-		$this->load->helper(array('main_menu', 'url'));				
+		$this->load->helper(array('main_menu', 'footer', 'url'));				
 		$this->data['title'] = 'Iniciar Sesión';
 		$this->data['style'] = 'login_style.css';
 		$this->data['responsive'] = 'login_reponsive.css';
 		$this->data['main_menu'] = mainMenu();
+		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
 		$this->data['footer'] = $this->load->view('footer', '', TRUE);
-		
-	}
-
-	/**
-	 
-	 */
-	public function index()
-	{
-		$this->load->view('login', $this->data);
     }
     
+	public function index(){
+        // si hay una sesion iniciada, redirige a la pagina de inicio
+        if ($this->session->has_userdata('nickname')){
+            redirect(base_url());
+        }
+        // sino redirijo al login
+        $this->data['mensaje'] = "";
+		$this->load->view('login', $this->data);
+    }
+
+    public function ingresar(){
+        $redirigir = $this->input->post('login');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+        }
+        $nickname = $this->input->post('nickname');
+        $contrasenia = $this->input->post('contrasenia');
+
+        $nick = $this->MTripDo->iniciarSesion($nickname, $contrasenia);
+
+        if ($nick == null){
+            $this->data['loginFailed'] = true;
+            $this->load->view('login', $this->data);
+            return;
+        }else{
+            $this->session->set_userdata('nickname', $nick);
+            redirect(base_url());
+        }
+        
+    }
+
+    public function salir(){
+        $this->session->sess_destroy();
+        redirect(base_url());
+    }
+
     public function validate(){
 		//$rules = getRegisterRules();
 		//Validaciones
@@ -43,7 +71,7 @@ class Login extends CI_Controller {
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('login', $this->data);
 		}else{
-
+            $this->ingresar();
 		}
 	}
 }

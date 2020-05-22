@@ -1,4 +1,4 @@
-<footer class="footer">
+    <footer class="footer">
 		<div class="container">
 			<div class="row">
 				<!-- Footer Column -->
@@ -12,15 +12,15 @@
 								<div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
 							</div>
 						</div>
-						<div class="footer_about_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Integer pulvinar sed mauris eget tincidunt. Sed lectus nulla, tempor vel eleifend quis,
-							tempus rut rum metus. Pellentesque ultricies enim eu quam fermentum hendrerit.</div>
+						<div class="footer_about_text">
+                            Et consiliumque facere, ut ædificaretur erit TripDo® dicitur, quod sino users creare, manage, et participes peregrinatione itineraries.
+                            Situm visitatores ad videre poterit diversis options commendatae a peregrinatione templo laetus senatus, tum itinerum fecere ab TripDo voted summa civitatem. Sed ut satus per partum peregrinatione itineribus, necesse erit ut relatus et ad profile.
+                        </div>
 						<div class="copyright">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							Copyright &copy;
-							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
-							template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados | 
+                            Esta plantilla está hecha con <a href="https://colorlib.com" target="_blank">Colorlib</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</div>
 					</div>
@@ -30,15 +30,11 @@
 					<div class="tags footer_tags">
 						<div class="footer_title">Tags</div>
 						<ul class="tags_content d-flex flex-row flex-wrap align-items-start justify-content-start">
-							<li class="tag"><a href="#">travel</a></li>
-							<li class="tag"><a href="#">summer</a></li>
-							<li class="tag"><a href="#">cruise</a></li>
-							<li class="tag"><a href="#">beach</a></li>
-							<li class="tag"><a href="#">offer</a></li>
-							<li class="tag"><a href="#">vacation</a></li>
-							<li class="tag"><a href="#">trip</a></li>
-							<li class="tag"><a href="#">city break</a></li>
-							<li class="tag"><a href="#">adventure</a></li>
+                            <?php //Muestro cada tag y pongo el enlace a una busqueda por ese tag. Le pongo el urlencode() para evitar problemas con los espacios
+                                foreach ($footerTags as $t){
+                            ?>
+							<li class="tag"><a href="<?= base_url('/busqueda?keywords=') . urlencode($t) ?>"><?= $t ?></a></li>
+                            <?php } ?>
 						</ul>
 					</div>
 				</div>

@@ -21,6 +21,10 @@ function mainMenu(){
         array(
             'title'=> 'Buscar',
             'url' => base_url('/buscar')
+        ),
+        array(
+            'title'=> 'Crear Viaje',
+            'url' => base_url('/crearViaje')
         )
     );
 }

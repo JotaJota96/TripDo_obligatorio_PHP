@@ -12,20 +12,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="description" content="Destino project">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.css">
 	
-	<link href="<?= base_url()?>/public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="<?= base_url()?>public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/main_styles.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/elements_styles.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/viaje_style.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/viaje_reponsive.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/main_styles.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/elements_styles.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/viaje_style.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/viaje_reponsive.css">
 </head>
 
 <body>
 	<div class="super_container">
-
-
 
 		<!-- Heder  -->
 		<?php include("include/heder.php");?>
@@ -45,33 +43,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class="post_image">
-									<img src="<?= base_url()?>/public/images/news_1.jpg">
+									<img src="<?= base_url()?>public/images/news_1.jpg">
 
 								</div>
-								<div class="container">
-									<div class="row">
-									<div class="col-lg-4">
-										<div class="buttons">
-											<div class="buttons_container">
-												<div class="button button_1 elements_button" data-toggle="modal" data-target="#agregarDestino">Agregar destino</div>
+
+								<div class="container p-1 m-0">
+									<div class="justify-content-between row ">
+
+										<div class="col-12 col-md-4 p-0 m-0">
+											<div class="buttons">
+												<div class="buttons_container">
+													<div class="button button_1 elements_button" data-toggle="modal" data-target="#agregarDestino">Agregar destino</div>
+												</div>
 											</div>
 										</div>
-										</div>
-										
-									<div class="col-lg-4">
-										<div class="buttons">
-											<div class="buttons_container">
-												<div class="button button_1 elements_button" data-toggle="modal" data-target="#agregarPlan">Agregar plan</div>
+
+										<div class="col-12 col-md-4 p-0 m-0">
+											<div class="buttons">
+												<div class="buttons_container">
+													<div class="button button_1 elements_button" data-toggle="modal" data-target="#agregarPlan">Agregar plan</div>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="col-lg-4">
-										<div class="buttons">
-											<div class="buttons_container">
-												<div class="button button_1 elements_button" data-toggle="modal" data-target="#administracion">Administrar</div>
+
+										<div class="col-12 col-md-4 p-0 m-0">
+											<div class="buttons">
+												<div class="buttons_container">
+													<div class="button button_1 elements_button" data-toggle="modal" data-target="#administracion">Administrar</div>
+												</div>
 											</div>
 										</div>
-									</div>
 									</div>
 								</div>
 
@@ -187,8 +188,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																</li>
 															</ul>	
 															<p>¿Quieres invitar a alguien mas?</p> 
-															<div class="menu_search_form_container" >
-																<input type="email" class="form-control" class="menu_search_input menu_mm" >
+															<div class="container p-1 m-0">
+																<div class="menu_search_form_container row">
+																	<div class="col-9 pt-2">
+																		<input type="email" class="form-control" class="menu_search_input menu_mm" >	
+																	</div>
+																	<div class="col-3  p-0 m-0">
+																		<div class="buttons_container w-75 h-75 p-0 m-0">
+																			<div class="pb-3 button button_1 elements_button" data-toggle="modal">Enviar</div>
+																		</div>
+																	</div>
+																</div>
 															</div>												
 														</div>
 													</div>
@@ -212,18 +222,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	Cras justo odio
 																</li>
 																<p>¿Quieres invitar a alguien mas?</p> 
-																<div class="menu_search_form_container" >
-																	<input type="email" class="form-control" class="menu_search_input menu_mm" >
-																</div>
+																<div class="container p-1 m-0">
+																	<div class="menu_search_form_container row">
+																		<div class="col-9 pt-2">
+																			<input type="email" class="form-control" class="menu_search_input menu_mm" >	
+																		</div>
+																		<div class="col-3  p-0 m-0">
+																			<div class="buttons_container w-75 h-75 p-0 m-0">
+																				<div class="pb-3 button button_1 elements_button" data-toggle="modal">Enviar</div>
+																			</div>
+																		</div>
+																	</div>
+															</div>
 															</ul>		
 														</div>
 													</div>
 												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<div class="buttons_container">
-												<div class="button button_1 elements_button" data-dismiss="modal" aria-label="Close"> Guardar</div>
 											</div>
 										</div>
 										</div>
@@ -293,21 +307,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 	</div>
 
-	<script src="<?= base_url()?>/public/js/jquery-3.2.1.min.js"></script>
-	<script src="<?= base_url()?>/public/styles/bootstrap4/popper.js"></script>
-	<script src="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.js"></script>
+	<script src="<?= base_url()?>public/js/jquery-3.2.1.min.js"></script>
+	<script src="<?= base_url()?>public/styles/bootstrap4/popper.js"></script>
+	<script src="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.js"></script>
 
-	<script src="<?= base_url()?>/public/plugins/greensock/TweenMax.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/greensock/TimelineMax.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/scrollmagic/ScrollMagic.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/greensock/animation.gsap.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/greensock/ScrollToPlugin.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/easing/easing.js"></script>
-	<script src="<?= base_url()?>/public/plugins/progressbar/progressbar.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/greensock/TweenMax.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/greensock/TimelineMax.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/greensock/animation.gsap.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/easing/easing.js"></script>
+	<script src="<?= base_url()?>public/plugins/progressbar/progressbar.min.js"></script>
+	<script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
 
-	<script src="<?= base_url()?>/public/js/elements_custom.js"></script>
-	<script src="<?= base_url()?>/public/js/news_custom.js"></script>
+	<script src="<?= base_url()?>public/js/elements_custom.js"></script>
+	<script src="<?= base_url()?>public/js/news_custom.js"></script>
 
 </body>
 

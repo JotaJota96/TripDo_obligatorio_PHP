@@ -1,35 +1,5 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-	<title>Destino</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="Destino project">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link href="<?= base_url()?>/public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href="<?= base_url()?>/public/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/animate.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/main_styles.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/inex_style.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>/public/styles/index_reponsive.css">
-
-</head>
-
-<body>
-	<div class="super_container">
-
-
-		<!-- Heder  -->
-		<?php include("include/heder.php");?>
+	<!-- Heder  -->
+	<?php echo $header;	?>
 
 		<!-- Home -->
 		<div class="home">
@@ -37,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="home_content">
 				<div class="home_content_inner">
 					<div class="home_text_large">TRIPDO</div>
-					<div class="home_text_small">Discover new worlds</div>
+					<div class="home_text_small">Descubre nuevos mundos</div>
 				</div>
 			</div>
 		</div>
@@ -145,19 +115,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-		<!-- Footer -->
-		<?php include("include/footer.php");?>
-	</div>
-
-
-	<script src="<?= base_url()?>/public/js/jquery-3.2.1.min.js"></script>
-	<script src="<?= base_url()?>/public/styles/bootstrap4/popper.js"></script>
-	<script src="<?= base_url()?>/public/styles/bootstrap4/bootstrap.min.js"></script>
-	<script src="<?= base_url()?>/public/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-	<script src="<?= base_url()?>/public/plugins/easing/easing.js"></script>
-	<script src="<?= base_url()?>/public/plugins/parallax-js-master/parallax.min.js"></script>
-	<script src="<?= base_url()?>/publicp/lugins/magnific-popup/jquery.magnific-popup.min.js"></script>
-	<script src="<?= base_url()?>/public/js/custom.js"></script>
-</body>
-
-</html>
+<!-- Footer -->
+<?php echo $footer;?>

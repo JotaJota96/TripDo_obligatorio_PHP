@@ -63,29 +63,39 @@
 								</div>
 
 								<div class="form-group col-md-9 row">
-									<label class="col-md-3" for="telefono">Teléfono</label>
+									<label class="col-md-3" for="telefono">Teléfono *</label>
 									<div class="col-md-9">
 										<input type="phone" class="form-control" id="telefono" name="telefono">
 									</div>
 								</div>
 
 								<div class="form-group row col-md-9">
-									<label class="col-md-3" for="biografia">Biografía</label>
+									<label class="col-md-3" for="biografia">Biografía *</label>
 									<div class="col-md-9">
-    									<textarea class="form-control" id="biografia" rows="4"></textarea>
+    									<textarea class="form-control" id="biografia" rows="4" name="biografia"></textarea>
 									</div>
 								</div>	
 
 								<div class="form-group row col-md-9">
-									<label class="col-md-3" for="foto">Subir Foto</label>
+									<label class="col-md-3" for="foto">Subir Foto *</label>
 									<div class="col-md-9">
 										<input type="file" class="form-control-file" id="foto">
 									</div>
-								</div>						
+								</div>	
+								
 								<div class="form-goup row">
 									<div class="col-md-9">
-										<button type="submit" class="_button btn-block">Registrarse</button>
+										<button type="submit" class="_button btn-block" name="btnregistrar">Registrarse</button>
+										
+										<?php if(isset($exception)){ ?>
+										<span><?=  $exception; ?></span>
+										<?php } ?>
+											
 									</div>
+								</div>
+
+								<div class="form-group row col-md-9 mt-2">
+									<span class="text-muted">Los campos con * son opcionales.</span>
 								</div>
 							</form>
 							

@@ -68,7 +68,7 @@ class CrearViaje extends CI_Controller {
 	public function validate(){
 
 		//Validaciones
-		$this->form_validation->set_rules('nombreViaje', 'Nombre Viaje', 'trim|required|min_length[5]|max_length[50]|alpha_dash');
+		$this->form_validation->set_rules('nombreViaje', 'Nombre Viaje', 'trim|required|min_length[5]|max_length[50]|alpha_numeric_spaces');
 		$this->form_validation->set_rules('descripcion', 'Descripcion', 'trim|required');
 
 		//Mensajes de error
@@ -76,6 +76,7 @@ class CrearViaje extends CI_Controller {
 		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s characters.');
 		$this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 		$this->form_validation->set_message('alpha_dash','El campo %s solo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
+		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s solo puede contener caracteres alfanuméricos, números y espacios');
 
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('crear_viaje', $this->data);

@@ -41,12 +41,12 @@ class Registro extends CI_Controller {
 	public function validate(){
 		//$rules = getRegisterRules();
 		//Validaciones
-		$this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|min_length[5]|max_length[25]|alpha_dash|is_unique[usuario.nickname]');
+		$this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|min_length[5]|max_length[20]|alpha_dash|is_unique[usuario.nickname]');
 		$this->form_validation->set_rules('contrasenia', 'Contraseña', 'trim|required|min_length[4]|max_length[20]');
 		$this->form_validation->set_rules('contrasenia2', 'Confirmar Contraseña', 'trim|required|min_length[4]|max_length[20]|matches[contrasenia]');
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required|trim|min_length[5]|max_length[20]|alpha');
-		$this->form_validation->set_rules('apellido', 'Apellido', 'trim|required|min_length[3]|max_length[20]|alpha');
-		$this->form_validation->set_rules('email', 'Correo', 'trim|required|valid_email|is_unique[usuario.email]');
+		$this->form_validation->set_rules('nombre', 'Nombre', 'required|trim|min_length[2]|max_length[20]|alpha_numeric_spaces');
+		$this->form_validation->set_rules('apellido', 'Apellido', 'trim|required|min_length[2]|max_length[20]|alpha_numeric_spaces');
+		$this->form_validation->set_rules('email', 'Correo', 'trim|required|valid_email|max_length[40]|is_unique[usuario.email]');
 
 		//Mensajes de error
 		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s characters.');
@@ -56,6 +56,7 @@ class Registro extends CI_Controller {
 		$this->form_validation->set_message('matches', 'La contraseñas no coinciden.');
 		$this->form_validation->set_message('alpha', 'El campo %s solo puede contener caracteres alfabéticos.');
 		$this->form_validation->set_message('alpha_dash','El campo %s solo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
+		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s solo puede contener caracteres alfanuméricos, números y espacios');
 		$this->form_validation->set_message('is_unique','Ya existe un usuario con ese %s');
 		
 

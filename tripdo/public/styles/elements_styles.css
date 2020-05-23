@@ -361,6 +361,9 @@ section
 {
 	margin: 5 px;
 }
+.buttons:hover{
+	cursor: pointer ;
+}
 
 
 /*********************************

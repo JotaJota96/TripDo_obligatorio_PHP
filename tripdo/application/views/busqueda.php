@@ -27,13 +27,18 @@
                     <div class="items item_grid clearfix">
                         <!-- muestra el listado de los resultados de la busqueda -->
                         <?php 
+                            $a = 0;
                             foreach ($viajes as $v) {
                             $v->valoracion = (int) $v->valoracion;
+                            $a ++;
+                            if($a == 5){
+                                $a = 1;
+                            }
                         ?>
 
                         <div class="item clearfix rating_<?= $v->valoracion ?>">
                             <div class="item_image">
-                                <img src="<?= base_url()?>/public/images/default_photo.jpg" alt="Imagen del viaje <?= $v->nombre ?>">
+                                <img src="<?= base_url()?>public/images/top_<?= $a?>.jpg" alt="Imagen del viaje <?= $v->nombre ?>">
                             </div>
                             <div class="item_content">
                                 <div class="item_title"> <?= $v->nombre ?> </div>

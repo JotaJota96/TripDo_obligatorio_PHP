@@ -54,8 +54,9 @@
 	<script src="<?= base_url()?>public/plugins/easing/easing.js"></script>
 	<script src="<?= base_url()?>public/plugins/progressbar/progressbar.min.js"></script>
 	<script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="<?= base_url()?>public/js/elements_custom.js"></script>
 
-	<script src="<?= base_url()?>/public/js/custom.js"></script>
+	<script src="<?= base_url()?>public/js/custom.js"></script>
 </body>
 
 </html>

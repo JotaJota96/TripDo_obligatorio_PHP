@@ -530,4 +530,13 @@
 }
 .LikeandDislike:hover {
 	color:  #fe3c52;
-  }
+}
+
+.log-list{
+	height: 250px;
+	overflow: auto;
+}
+
+b{
+	color: #494343;
+}

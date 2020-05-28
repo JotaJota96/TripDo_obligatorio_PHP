@@ -1,0 +1,152 @@
+/*********************************
+7. News
+*********************************/
+
+.news
+{
+    margin-top:    5%;
+	padding-top: 104px;
+	padding-bottom: 120px;
+}
+.news_post
+{
+	width: 100%;
+	margin-bottom: 59px;
+}
+.news_post:last-child
+{
+	margin-bottom: 0;
+}
+.post_title
+{
+
+}
+.post_title a
+{
+	font-size: 40px;
+	font-weight: 300;
+	color: #131a2f;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.post_title a:hover
+{
+	color: #fe3c52;
+}
+.post_meta
+{
+	margin-top: 12px;
+}
+.post_meta ul li
+{
+	display: inline-block;
+	position: relative;
+	font-size: 12px;
+	font-weight: 600;
+	color: #7d8293;
+	text-transform: uppercase;
+	padding-right: 26px;
+}
+.post_meta ul li::after
+{
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	content: '|';
+}
+.post_meta ul li:last-child::after
+{
+	display: none;
+}
+.post_meta ul li a
+{
+	font-size: 12px;
+	font-weight: 600;
+	color: #7d8293;
+	text-transform: uppercase;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.post_meta ul li a:hover
+{
+	color: #fe3c52;
+}
+.post_image
+{
+	margin-top: 28px;
+}
+.post_image img
+{
+	max-width: 100%;
+}
+.post_image_box
+{
+	display: block;
+	position: absolute;
+	right: 18px;
+	bottom: 18px;
+	width: 41px;
+	height: 41px;
+	line-height: 41px;
+	font-size: 30px;
+	font-weight: 400;
+	color: #FFFFFF;
+	background: #fe3c52;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.post_image_box:hover
+{
+	opacity: 0.8;
+}
+.post_text
+{
+	margin-top: 40px;
+}
+.post_text p:last-of-type
+{
+	margin-bottom: 0;
+}
+
+img {
+	width: 100%;
+}
+
+._button{
+	width: 161px;
+	height: 56px;
+	vertical-align: top;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	background: #fe364a;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 500;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+._button:hover{
+	opacity: 0.8;
+}
+
+._button{
+	width: 100%;
+}
+
+h2{
+	text-align: center;
+}

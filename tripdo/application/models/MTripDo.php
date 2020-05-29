@@ -47,6 +47,22 @@ class mTripDo extends CI_Model {
     }
 
     //--------------------------------------------------------------------------------
+
+    public function validarUsuario($idUsuario){
+        if ( ! isset($idUsuario)) {
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con id");
+        }
+        
+        $this->db
+            ->set('verificado', true)
+            ->where('nickname', $idUsuario)
+            ->update('usuario');
+    }
+
+    //--------------------------------------------------------------------------------
     /**
     * iniciar secion valida el inicio de secion de un usuario. Si los datos son correctos retorna su nickname, de lo contrario NULL
     * @param string $id puede ser el nickname o el correo
@@ -64,7 +80,8 @@ class mTripDo extends CI_Model {
                 ->where('u.nickname', $id)
                 ->or_where('u.email', $id)
             ->group_end()
-            ->where('u.contrasenia', $contrasenia);
+            ->where('u.contrasenia', $contrasenia)
+            ->where('u.verificado', true);
         // ejecuto la query
         $result = $this->db->get();
 

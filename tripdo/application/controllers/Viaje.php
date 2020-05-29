@@ -88,8 +88,8 @@ class Viaje extends CI_Controller {
 		}
 		
 		// ----- FALTA ESTO ------------ //
-		//$viajeros = $this->MTripDo->obtenerViajerosDeViaje(.....);
-		//$colaboradores = $this->MTripDo->obtenerColaboradoresDeViaje(.....);
+		$viajeros = $this->MTripDo->obtenerViajerosDeViaje($idViaje);
+		$colaboradores = $this->MTripDo->obtenerColaboradoresDeViaje($idViaje);
 
 		// ordeno el log
 		ordenarLog($log);
@@ -100,6 +100,8 @@ class Viaje extends CI_Controller {
 		$this->data['planes'] = $planes;
 		$this->data['rol'] = $rol;
 		$this->data['log'] = $log;
+		$this->data['viajeros'] = $viajeros;
+		$this->data['colaboradores'] = $colaboradores;
 
 		$this->load->view('viaje', $this->data);
 	}

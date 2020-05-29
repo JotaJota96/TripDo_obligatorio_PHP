@@ -335,20 +335,19 @@
 									<input type="search" class="menu_search_input menu_mm" value= "http://TripDo/viaje/873838" disabled>
 								</div>	
 								<br>
+								<?php 
+									foreach($viajeros as $v){
+								?>
 								<ul class="list-group">
 									<li class="list-group-item">
 										<img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px" class="rounded-circle">
-										Cras justo odio
-									</li>
-									<li class="list-group-item">
-										<img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px" class="rounded-circle">
-										Cras justo odio
-									</li>
-									<li class="list-group-item">
-										<img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px" class="rounded-circle">
-										Cras justo odio
+										<?="$v->nombre $v->apellido ($v->nickname)"?>
 									</li>
 								</ul>	
+								<?php 
+									}
+								?>
+								<hr>
 								<p>¿Quieres invitar a alguien mas?</p> 
 								<div class="container p-1 m-0">
 									<div class="menu_search_form_container row">
@@ -371,18 +370,17 @@
 								</div>	
 								<br>
 								<ul class="list-group">
+									<?php 
+										foreach($colaboradores as $c){
+									?>
 									<li class="list-group-item">
 										<img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px" class="rounded-circle">
-										Cras justo odio
+										<?="$c->nombre $c->apellido ($c->nickname)"?>
 									</li>
-									<li class="list-group-item">
-										<img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px" class="rounded-circle">
-										Cras justo odio
-									</li>
-									<li class="list-group-item">
-										<img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px" class="rounded-circle">
-										Cras justo odio
-									</li>
+									<?php 
+										}
+									?>
+									<hr>
 									<p>¿Quieres invitar a alguien mas?</p> 
 									<div class="container p-1 m-0">
 										<div class="menu_search_form_container row">
@@ -403,7 +401,7 @@
 							<div class="buttons m-5">
 								<div class="buttons h-100 w-100">
 									<div class="buttons_container h-100 w-100">
-										<div class="button button_1 elements_button" data-toggle="modal">Guardar</div>
+										<div class="button button_1 elements_button" data-toggle="modal">Finalizar viaje</div>
 									</div>
 								</div>
 							</div>

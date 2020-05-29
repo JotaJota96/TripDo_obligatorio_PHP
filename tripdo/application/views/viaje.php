@@ -166,7 +166,11 @@
 							<!-- Featured Post -->
 							<div class="sidebar_featured_post">
 								<div class="tab_panels">
-									<div class="sidebar_featured_image"><img src="<?= base_url()?>/public/images/mapa.png" alt=""></div>
+									<!-- mapa -->
+									<div id='map' style='width: 400; height: 300px;'>
+										
+									</div>
+									<pre id='coordenadas'></pre>
 								</div>
 
 								<!-- Actividad reciente / log -->

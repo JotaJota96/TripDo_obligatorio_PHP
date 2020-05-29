@@ -1,6 +1,6 @@
 	<!-- Heder  -->
 	<?php echo $header;	?>
-
+	
 	<!-- news -->
 	<div class="news">
 		<div class="container">
@@ -15,7 +15,6 @@
 							<div class="post_title">
 								<h2><?= $viaje->nombre ?></h2>
 							</div>
-
 							<!-- imagen -->
 							<div class="post_image">
 								<img src="<?= base_url()?>public/images/news_1.jpg">
@@ -150,6 +149,20 @@
 					<div class="sidebar">
 						<!-- Featured Posts -->
 						<div class="sidebar_featured">
+							<div class="conteiner">
+								<div class="row redesSociales">
+									<div class="w-100 h-100 col text-right redSociales fb-share-button" 
+										data-href="http://localhost/laboratorio-php/tripdo/" 
+										data-layout="button_count">
+									</div>
+									<div class=" redSociales">
+										<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="w-100 h-100 twitter-share-button" data-show-count="false">
+											Tweet
+										</a>
+									</div>
+								</div>
+							</div>
+						
 							<!-- Featured Post -->
 							<div class="sidebar_featured_post">
 								<div class="tab_panels">

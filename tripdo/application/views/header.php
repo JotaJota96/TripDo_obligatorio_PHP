@@ -6,11 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html lang="es">
 
-<script>
-	function myFunction(x) {
-  		x.classList.toggle("fa-thumbs-down");
-	}
-</script>
 
 <head>
 	<title><?php echo $title ?></title>    
@@ -18,7 +13,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Registro de usuario">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
+	<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Your Website Title" />
+	<meta property="og:description"   content="Your description" />
+	<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+		
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.css">
 	<link href="<?= base_url()?>public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/main_styles.css">
@@ -30,6 +31,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  
+	<script>
+		function myFunction(x) {
+			x.classList.toggle("fa-thumbs-down");
+		}
+	</script>
+	
 	<!-- Header -->
 	<header class="header">
 		<div class="container">

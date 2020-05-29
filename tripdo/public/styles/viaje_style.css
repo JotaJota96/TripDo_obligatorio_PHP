@@ -137,7 +137,7 @@
 
 .sidebar
 {
-	margin-top: 110px;
+	margin-top: 70px;
 	width: 100%;
 }
 .sidebar_search
@@ -199,8 +199,7 @@
 }
 .sidebar_featured
 {
-	
-	margin-top: 85px;
+	margin-top: 83px;
 }
 .sidebar_featured_post
 {
@@ -539,4 +538,14 @@
 
 b{
 	color: #494343;
+}
+
+.redesSociales{
+	margin: 5px;
+}
+.redSociales{
+	margin-right: 5px;
+	width: 77px;
+    height: 20px;
+
 }

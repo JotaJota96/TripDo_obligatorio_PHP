@@ -167,8 +167,7 @@
 							<div class="sidebar_featured_post">
 								<div class="tab_panels">
 									<!-- mapa -->
-									<div id='map' style='width: 400; height: 300px;'>
-										
+									<div id='map' style='width: 100%; height: 300px;'>
 									</div>
 									<pre id='coordenadas'></pre>
 								</div>
@@ -270,34 +269,40 @@
 			<div class="modal-content">
 			<div class="modal-body">
 				<form>
-					<div class="form-group">
-						<label for="exampleFormControlSelect1">Selecione el destino del plan</label>
-						<select class="form-control" id="exampleFormControlSelect1">
-							<option>Destino 1</option>
-							<option>Destino 2</option>
-						</select>
+					<div class = "conteiner">
+						<div class="row">
+							<div class ="col-6">
+								<div class="form-group">
+									<label for="exampleFormControlSelect1">Selecione el destino del plan</label>
+									<select name="SelectDestinos" class="form-control" id="SelectDestinos">
+										<?php 
+											foreach($destinos as $d){
+										?>
+											<option value="<?= $d->id ?>"> <?=" $d->ciudad ($d->pais)"?> </option>
+										<?php 
+											}
+										?>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Titulo del plan</label>
+									<input class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="exampleFormControlTextarea1">Descripcion</label>
+									<textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">¿Algun link para que podamos encontrar mas info?</label>
+									<input class="form-control">
+								</div>
+							</div>
+							<div class ="col-6">
+							<div id='map' style='width: 40; height: 300px;'>
+									</div>
+							</div>
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="exampleInputEmail1">Titulo del plan</label>
-						<input class="form-control">
-					</div>
-					<div class="form-group">
-						<label for="exampleFormControlTextarea1">Descripcion</label>
-						<textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">Latitud</label>
-						<input class="form-control">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">Longitud</label>
-						<input class="form-control">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">¿Algun link para que podamos encontrar mas info?</label>
-						<input class="form-control">
-					</div>
-
 					<div class="modal-footer">
 						<div class="buttons h-100 w-100">
 							<div class="buttons_container h-100 w-100">

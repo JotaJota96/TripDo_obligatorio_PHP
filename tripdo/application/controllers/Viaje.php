@@ -10,6 +10,7 @@ class Viaje extends CI_Controller {
         $this->load->model('MTripDo');
         $this->load->library(array('DtViaje', 'DtDestino', 'DtPlan', 'DtTag'));
 		$this->load->helper(array('main_menu', 'footer', 'viaje', 'url'));				
+		$this->data['mapa'] = true;
 		$this->data['title'] = 'Viaje';
 		$this->data['style'] = 'viaje_style.css';
 		$this->data['responsive'] = 'viaje_reponsive.css';

@@ -9,6 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <head>
 	<title><?php echo $title ?></title>
+	<?php
+		if(isset($mapa)){
+	?>
 	<!-- Links para mapbox -->
 	<script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
@@ -18,7 +21,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<!-- Links para Buscar Rutas -->
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css' type='text/css'/>   
+	<?php
+		}
+	?>
 
+	
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Registro de usuario">
@@ -36,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/elements_styles.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $style ?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $style?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $responsive ?>">
 </head>
 

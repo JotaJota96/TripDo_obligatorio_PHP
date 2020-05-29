@@ -229,6 +229,7 @@
 
 
 	<!-- Ventanas emergentes -->
+
 	<!-- Ventana modal Agregar Destino -->
 	<div class="modal fade" id="agregarDestino" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -240,23 +241,21 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form>
+				<form action="<?= base_url('viaje/sugerirDestino') ?>" method="POST">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Pais</label>
-						<input class="form-control">
+						<input name="Pais" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Ciudad</label>
-						<input class="form-control">
+						<input name="Ciudad" class="form-control">
 					</div>
-
-					<div class="modal-footer">
-						<div class="buttons h-100 w-100">
-							<div class="buttons_container h-100 w-100">
-								<div class="button button_1 elements_button" data-toggle="modal">Guardar</div>
-							</div>
+					<input type="hidden" id="idViaje" name="idViaje" value="<?= $id ?>"> 								
+					<div class="form-goup row">
+						<div class="col-md-12 mx-auto">
+							<button type="submit" name="btnAgregarDestino" class="_button btn-block">Enviar sugerencia</button>
 						</div>
-					</div>
+                    </div>
 				</form>
 			</div>
 			</div>

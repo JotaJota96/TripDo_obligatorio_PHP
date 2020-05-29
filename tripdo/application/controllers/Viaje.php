@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Viaje extends CI_Controller {
-
+	
 	public $data = array();
 
 	function __construct(){
         parent:: __construct();
         $this->load->model('MTripDo');
-        $this->load->library(array('DtViaje', 'DtDestino', 'DtPlan', 'DtTag'));
+        $this->load->library(array('DtUsuario','DtViaje', 'DtDestino', 'DtPlan', 'DtTag'));
 		$this->load->helper(array('main_menu', 'footer', 'viaje', 'url'));				
 		$this->data['mapa'] = true;
 		$this->data['title'] = 'Viaje';
@@ -87,8 +87,7 @@ class Viaje extends CI_Controller {
 				array_push($log, array("elem" => $p, "tipo" => "plan"));
 			}
 		}
-		
-		// ----- FALTA ESTO ------------ //
+
 		$viajeros = $this->MTripDo->obtenerViajerosDeViaje($idViaje);
 		$colaboradores = $this->MTripDo->obtenerColaboradoresDeViaje($idViaje);
 
@@ -96,6 +95,7 @@ class Viaje extends CI_Controller {
 		ordenarLog($log);
 
 		// paso las variables a la vista
+		$this->data['id'] = $idViaje;
 		$this->data['viaje'] = $viaje;
 		$this->data['destinos'] = $destinos;
 		$this->data['planes'] = $planes;
@@ -107,5 +107,27 @@ class Viaje extends CI_Controller {
 		$this->load->view('viaje', $this->data);
 	}
 
+	public function sugerirDestino(){
+		$redirigir = $this->input->post('btnAgregarDestino');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		$dtD = new DtDestino;
+		$dtD->pais = $this->input->post('Pais');
+		$dtD->ciudad = $this->input->post('Ciudad');
+		$dtD->idViaje = $this->input->post('idViaje');
+		$dtD->agregadoPor = $this->session->userdata('nickname');
+
+		$tags = array();
+
+		try {
+			$this->MTripDo->agregarDestinoAViaje($dtD, $dtD->idViaje, $dtD->agregadoPor, $tags);
+		
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		$this->ver($this->input->post('idViaje'));
+	}	
 
 }

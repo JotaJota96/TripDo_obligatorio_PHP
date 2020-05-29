@@ -972,15 +972,17 @@ class mTripDo extends CI_Model {
         foreach ($filas as $row){
             // para cada fila se crea un DtViaje y se le rellenan los datos
             $dtv = new DtViaje();
-            $dtv->id = $row['id'];
-            $dtv->nombre = $row['nombre'];
-            $dtv->descripcion = $row['descripcion'];
-            $dtv->publico = $row['publico'];
-            $dtv->realizado = $row['realizado'];
-            $dtv->idUsuario = $row['idUsuario'];
-            $dtv->valoracion = $row['valoracion'];
-            // se agrega el DT al array de resultados
-            array_push($ret, $dtv);
+            $dtv->id          = (int)   $row['id'];
+            $dtv->nombre      = (string) $row['nombre'];
+            $dtv->descripcion = (string) $row['descripcion'];
+            $dtv->publico     = (bool)   $row['publico'];
+            $dtv->realizado   = (bool)   $row['realizado'];
+            $dtv->idUsuario   = (string) $row['idUsuario'];
+            $dtv->valoracion  = (float)  $row['valoracion'];
+            // se agrega el DT al array de resultados SI ES PUBLICO
+            if ($dtv->publico){
+                array_push($ret, $dtv);
+            }
         }
         return $ret;
     }

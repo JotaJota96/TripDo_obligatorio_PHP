@@ -790,6 +790,87 @@ class mTripDo extends CI_Model {
         }
         return $ret;
     }
+
+    //--------------------------------------------------------------------------------
+    /**
+     * Devuelve un array de DtUsuario de los viajeros del viaje
+     * @param int $idViaje ID del viaje del que se desea obtener la lista de viajeros
+     * @return array
+     */
+    public function obtenerViajerosDeViaje($idViaje){
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un destino con ese id");
+        }
+        $filas = $this->db
+            ->select('u.*')
+            ->from('viajero v')
+            ->join('usuario u', 'u.nickname = v.idUsuario')
+            ->where('v.idViaje', $idViaje)
+            ->get()->result_array();
+        
+        // convierto los arrays obtenidos a objetos
+        $ret = array();
+        foreach ($filas as $row){
+            $dtu = new DtUsuario();
+
+            $dtu->nickname    = (string) $row['nickname'];
+            $dtu->email       = (string) $row['email'];
+            $dtu->contrasenia = (string) $row['contrasenia'];
+            $dtu->nombre      = (string) $row['nombre'];
+            $dtu->apellido    = (string) $row['apellido'];
+            $dtu->telefono    = (string) $row['telefono'];
+            $dtu->biografia   = (string) $row['biografia'];
+            $dtu->imagen      = (string) $row['imagen'];
+            $dtu->verificado  = (bool)   $row['verificado'];
+
+            array_push($ret, $dtu);
+        }
+        return $ret;
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+     * Devuelve un array de DtUsuario de los colaboradores del viaje
+     * @param int $idViaje ID del viaje del que se desea obtener la lista de colaboradores
+     * @return array
+     */
+    public function obtenerColaboradoresDeViaje($idViaje){
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un destino con ese id");
+        }
+        $filas = $this->db
+            ->select('u.*')
+            ->from('colaborador c')
+            ->join('usuario u', 'u.nickname = c.idUsuario')
+            ->where('c.idViaje', $idViaje)
+            ->get()->result_array();
+        
+        // convierto los arrays obtenidos a objetos
+        $ret = array();
+        foreach ($filas as $row){
+            $dtu = new DtUsuario();
+
+            $dtu->nickname    = (string) $row['nickname'];
+            $dtu->email       = (string) $row['email'];
+            $dtu->contrasenia = (string) $row['contrasenia'];
+            $dtu->nombre      = (string) $row['nombre'];
+            $dtu->apellido    = (string) $row['apellido'];
+            $dtu->telefono    = (string) $row['telefono'];
+            $dtu->biografia   = (string) $row['biografia'];
+            $dtu->imagen      = (string) $row['imagen'];
+            $dtu->verificado  = (bool)   $row['verificado'];
+
+            array_push($ret, $dtu);
+        }
+        return $ret;
+    }
+
     //--------------------------------------------------------------------------------
     /**
      * Devuelve un array de strings con cierta cantidad de tags ordenados de mayor a menor cantidad de apariciones

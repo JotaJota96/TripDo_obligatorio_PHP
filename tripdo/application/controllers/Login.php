@@ -25,7 +25,7 @@ class Login extends CI_Controller {
         }
         // sino redirijo al login
         $this->data['mensaje'] = "";
-		$this->load->view('login', $this->data);
+        $this->load->view('login', $this->data);
     }
 
     public function ingresar(){

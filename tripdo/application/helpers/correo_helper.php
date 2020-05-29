@@ -1,4 +1,16 @@
 <?php
+/**
+ * envia un correo para validar el registro
+ * @param string $nickname nickname del usuario, contrasenia $contrasenia del usuario
+ * @return string
+ */
+ function encryptar($nickname, $contrasenia){
+	$retorno="";
+    $retorno=$nickname.$contrasenia;
+    $retorno = sha1($retorno);
+    $retorno = substr($retorno, 0, -1*strlen($retorno)+10);
+    return $retorno;
+}
 
 /**
  * envia un correo para validar el registro
@@ -17,6 +29,7 @@
     $asunto="Confirmar registro";
 
     //***********---------------Mensaje del correo---------------***********
+   
     $mensaje = '
     <html>
     <body>
@@ -44,8 +57,8 @@
 							<p>Presione <strong style="color: rgb(224, 73, 73);">Confirmar</strong> para continuar.</p>
                             <div class="column-top">&nbsp;</div>
                             <p style="text-align:center;">
-                                <a href="base_url('.'/login/validar'.')" class="strong">
-                                    <button style=" background-color: rgb(216, 64, 64); /* Green */
+                                <a href="'.base_url('/loginValidar').'" class="strong">
+                                    <button style=" background-color: rgb(216, 64, 64);
                                     border: none;
                                     color: white;
                                     padding: 15px 32px;

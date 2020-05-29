@@ -136,6 +136,30 @@ class Viaje extends CI_Controller {
 			$this->data['exception'] = $e;
 		}
 		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
-	}	
+	}
 
+	public function sugerirPlan(){
+		$redirigir = $this->input->post('btnSugerirPlan');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		$dtp = new DtPlan();
+		$dtp->nombre      = $this->input->post('titulo');
+		$dtp->descripcion = $this->input->post('descripcion');
+		$dtp->latitud     = $this->input->post('latitud');
+		$dtp->longitud    = $this->input->post('longitud');
+		$dtp->link        = $this->input->post('link');
+		$dtp->idDestino   = $this->input->post('idDestino');
+		$dtp->agregadoPor = $this->session->userdata('nickname');
+		
+		$idViaje = $this->input->post('idViaje');
+		
+		try {
+			$this->MTripDo->agregarPlanADestino($dtp, $dtp->idDestino, $dtp->agregadoPor);
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
+	}
 }

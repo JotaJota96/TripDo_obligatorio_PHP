@@ -108,7 +108,11 @@
 	                                                        <div class="row justify-content-between">
 	                                                            <!-- descripcion -->
 	                                                            <div class="<?= $col_plan ?>">
-	                                                                <P class="pt-0"><?= $p->descripcion ?></P>
+																	<P class="pt-0"><?= $p->descripcion ?></P>
+																	<?php if (isset($p->link) && strcmp($p->link, "") != 0) { ?>
+																	<a href="<?= $p->link ?>">Más información</a>
+																	<br>
+																	<?php } ?>
 	                                                                <a href="#">Ver en el mapa</a>
 	                                                            </div>
 	                                                            <?php if ($mostrarVotarPlan){ ?>
@@ -272,8 +276,7 @@
 	                    <input type="hidden" id="idViaje" name="idViaje" value="<?= $id ?>">
 	                    <div class="form-goup row">
 	                        <div class="col-md-12 mx-auto">
-	                            <button type="submit" name="btnAgregarDestino" class="_button btn-block">Enviar
-	                                sugerencia</button>
+	                            <button type="submit" name="btnAgregarDestino" class="_button btn-block">Enviar sugerencia</button>
 	                        </div>
 	                    </div>
 	                </form>
@@ -288,13 +291,14 @@
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-body">
-	                <form>
+					<form action="<?= base_url('viaje/sugerirPlan') ?>" method="POST">
 	                    <div class="conteiner">
 	                        <div class="row">
 	                            <div class="col-6">
+									<!-- Drop down de destinos-->
 	                                <div class="form-group">
 	                                    <label for="exampleFormControlSelect1">Selecione el destino del plan</label>
-	                                    <select name="SelectDestinos" class="form-control" id="SelectDestinos">
+	                                    <select name="idDestino" class="form-control" id="SelectDestinos">
 	                                        <?php 
 											foreach($destinos as $d){
 										?>
@@ -305,31 +309,34 @@
 	                                    </select>
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="exampleInputEmail1">Titulo del plan</label>
-	                                    <input class="form-control">
+	                                    <label for="titulo">Titulo del plan</label>
+	                                    <input name="titulo" class="form-control">
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="exampleFormControlTextarea1">Descripcion</label>
-	                                    <textarea class="form-control" id="exampleFormControlTextarea1"
-	                                        rows="1"></textarea>
+	                                    <label for="descripcion">Descripcion</label>
+	                                    <textarea name="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="exampleInputPassword1">¿Algun link para que podamos encontrar mas
-	                                        info?</label>
-	                                    <input class="form-control">
+	                                    <label for="link">¿Algun link para que podamos encontrar más info?</label>
+	                                    <input name="link" class="form-control">
 	                                </div>
-	                            </div>
+								</div>
+								<!-- campos ocultos para coordenadas del mapa -->
+								<input type="hidden" id="input-latitud"  name="latitud"  value="0">
+								<input type="hidden" id="input-longitud" name="longitud" value="0">
+								
+								<input type="hidden" name="idViaje" value="<?= $id ?>">
+
+								<!-- div para el mapa -->
 	                            <div class="col-6">
 	                                <div id='map' style='width: 40; height: 300px;'>
 	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="modal-footer">
-	                        <div class="buttons h-100 w-100">
-	                            <div class="buttons_container h-100 w-100">
-	                                <div class="button button_1 elements_button" data-toggle="modal">Guardar</div>
-	                            </div>
+						<div class="form-goup row">
+	                        <div class="col-md-12 mx-auto">
+	                            <button type="submit" name="btnSugerirPlan" class="_button btn-block">Enviar sugerencia</button>
 	                        </div>
 	                    </div>
 	                </form>

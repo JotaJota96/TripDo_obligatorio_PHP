@@ -40,7 +40,7 @@
 
                             <div class="form-group row col-md-9 mx-auto justify-content-center">
                                 <?php if (isset($loginFailed) && $loginFailed){ ?>
-                                <span class="text-danger text-center"><?= "El usuario o la contraseña son incorrectos" ?></span>	
+                                <span class="text-danger text-center">Los datos ingresados son incorrectos, por favor vuelva a ingresarlos</span>	
                                 <?php } ?>
                             </div>                        
 

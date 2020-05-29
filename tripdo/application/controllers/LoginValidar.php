@@ -40,6 +40,9 @@ class LoginValidar extends CI_Controller {
         $preCodigo=encryptar($nickname,$contrasenia);
 
         if(strcmp($preCodigo, $codigo)==0){
+
+            $this->MTripDo->validarUsuario($nickname);
+
             $nick = $this->MTripDo->iniciarSesion($nickname, $contrasenia);
 
             if ($nick == null){
@@ -58,6 +61,10 @@ class LoginValidar extends CI_Controller {
     }
 
     public function validate(){
+        $redirigir = $this->input->post('login_validar');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+        }
 		//$rules = getRegisterRules();
 		//Validaciones
 		$this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|min_length[5]|max_length[25]');

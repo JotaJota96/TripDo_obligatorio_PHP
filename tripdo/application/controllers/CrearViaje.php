@@ -30,8 +30,8 @@ class CrearViaje extends CI_Controller {
 		}
 		$this->load->view('crear_viaje', $this->data);		
 	}
+
 	public function crear_Viaje(){
-		
 		$redirigir = $this->input->post('btncrearViaje');
         if ( ! isset($redirigir)) {
             redirect(base_url());
@@ -66,6 +66,10 @@ class CrearViaje extends CI_Controller {
 	}
 
 	public function validate(){
+		$redirigir = $this->input->post('btncrearViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
 
 		//Validaciones
 		$this->form_validation->set_rules('nombreViaje', 'Nombre Viaje', 'trim|required|min_length[5]|max_length[50]|alpha_numeric_spaces');

@@ -11,7 +11,7 @@ class Registro extends CI_Controller {
 		$this->load->model('MTripDo');
 		$this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
 		$this->load->library('DtUsuario');
-		$this->load->helper(array('main_menu', 'footer', 'url','html'));		
+		$this->load->helper(array('main_menu', 'footer', 'url','html', 'correo'));		
 		$this->data['title'] = 'Registro';
 		$this->data['style'] = 'registro_style.css';
 		$this->data['responsive'] = 'registro_reponsive.css';
@@ -29,16 +29,21 @@ class Registro extends CI_Controller {
 
     }
 
-	public function index(){	
+	public function index(){
 		// si hay una sesion iniciada, redirige a la pagina de inicio
         if ($this->session->has_userdata('nickname')){
             redirect(base_url());
         }
         // sino redirijo al registro	
-		$this->load->view('registro', $this->data);		
+		$this->load->view('registro', $this->data);
+	
 	}
 
 	public function validate(){
+		$redirigir = $this->input->post('btnregistrar');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
 		//$rules = getRegisterRules();
 		//Validaciones
 		$this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|min_length[5]|max_length[20]|alpha_dash|is_unique[usuario.nickname]');
@@ -59,8 +64,6 @@ class Registro extends CI_Controller {
 		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s solo puede contener caracteres alfanuméricos, números y espacios');
 		$this->form_validation->set_message('is_unique','Ya existe un usuario con ese %s');
 		
-
-
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('registro', $this->data);
 		}else{
@@ -69,7 +72,6 @@ class Registro extends CI_Controller {
 	}
 
 	public function registrar(){
-
 		$redirigir = $this->input->post('btnregistrar');
         if ( ! isset($redirigir)) {
             redirect(base_url());
@@ -88,10 +90,17 @@ class Registro extends CI_Controller {
 		//$dtusuario->imagen = $this->input->post('imagen');
 
 		try {
+			//generar el codigo 
+			$codigo = encryptar($nick,$pass);
 
-			$this->MTripDo->registrarUsuario($dtusuario);
-			$this->session->set_userdata('nickname', $nick);
-			redirect(base_url());
+			//registrar en la bd
+			$this->MTripDo->registrarUsuario($dtusuario); //<---descomentame
+
+			//mandar el correo
+			enviarCorreoValidar($dtusuario->email, $codigo);
+
+			//redirigir a login validar
+			redirect(base_url('/loginValidar'));
 
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;

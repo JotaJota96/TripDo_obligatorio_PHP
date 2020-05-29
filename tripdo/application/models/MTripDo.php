@@ -47,6 +47,22 @@ class mTripDo extends CI_Model {
     }
 
     //--------------------------------------------------------------------------------
+
+    public function validarUsuario($idUsuario){
+        if ( ! isset($idUsuario)) {
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeNickname($idUsuario)){
+            throw new Exception("No existe un usuario con id");
+        }
+        
+        $this->db
+            ->set('verificado', true)
+            ->where('nickname', $idUsuario)
+            ->update('usuario');
+    }
+
+    //--------------------------------------------------------------------------------
     /**
     * iniciar secion valida el inicio de secion de un usuario. Si los datos son correctos retorna su nickname, de lo contrario NULL
     * @param string $id puede ser el nickname o el correo
@@ -64,7 +80,8 @@ class mTripDo extends CI_Model {
                 ->where('u.nickname', $id)
                 ->or_where('u.email', $id)
             ->group_end()
-            ->where('u.contrasenia', $contrasenia);
+            ->where('u.contrasenia', $contrasenia)
+            ->where('u.verificado', true);
         // ejecuto la query
         $result = $this->db->get();
 
@@ -790,6 +807,87 @@ class mTripDo extends CI_Model {
         }
         return $ret;
     }
+
+    //--------------------------------------------------------------------------------
+    /**
+     * Devuelve un array de DtUsuario de los viajeros del viaje
+     * @param int $idViaje ID del viaje del que se desea obtener la lista de viajeros
+     * @return array
+     */
+    public function obtenerViajerosDeViaje($idViaje){
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un destino con ese id");
+        }
+        $filas = $this->db
+            ->select('u.*')
+            ->from('viajero v')
+            ->join('usuario u', 'u.nickname = v.idUsuario')
+            ->where('v.idViaje', $idViaje)
+            ->get()->result_array();
+        
+        // convierto los arrays obtenidos a objetos
+        $ret = array();
+        foreach ($filas as $row){
+            $dtu = new DtUsuario();
+
+            $dtu->nickname    = (string) $row['nickname'];
+            $dtu->email       = (string) $row['email'];
+            $dtu->contrasenia = (string) $row['contrasenia'];
+            $dtu->nombre      = (string) $row['nombre'];
+            $dtu->apellido    = (string) $row['apellido'];
+            $dtu->telefono    = (string) $row['telefono'];
+            $dtu->biografia   = (string) $row['biografia'];
+            $dtu->imagen      = (string) $row['imagen'];
+            $dtu->verificado  = (bool)   $row['verificado'];
+
+            array_push($ret, $dtu);
+        }
+        return $ret;
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+     * Devuelve un array de DtUsuario de los colaboradores del viaje
+     * @param int $idViaje ID del viaje del que se desea obtener la lista de colaboradores
+     * @return array
+     */
+    public function obtenerColaboradoresDeViaje($idViaje){
+        if (!isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un destino con ese id");
+        }
+        $filas = $this->db
+            ->select('u.*')
+            ->from('colaborador c')
+            ->join('usuario u', 'u.nickname = c.idUsuario')
+            ->where('c.idViaje', $idViaje)
+            ->get()->result_array();
+        
+        // convierto los arrays obtenidos a objetos
+        $ret = array();
+        foreach ($filas as $row){
+            $dtu = new DtUsuario();
+
+            $dtu->nickname    = (string) $row['nickname'];
+            $dtu->email       = (string) $row['email'];
+            $dtu->contrasenia = (string) $row['contrasenia'];
+            $dtu->nombre      = (string) $row['nombre'];
+            $dtu->apellido    = (string) $row['apellido'];
+            $dtu->telefono    = (string) $row['telefono'];
+            $dtu->biografia   = (string) $row['biografia'];
+            $dtu->imagen      = (string) $row['imagen'];
+            $dtu->verificado  = (bool)   $row['verificado'];
+
+            array_push($ret, $dtu);
+        }
+        return $ret;
+    }
+
     //--------------------------------------------------------------------------------
     /**
      * Devuelve un array de strings con cierta cantidad de tags ordenados de mayor a menor cantidad de apariciones
@@ -874,15 +972,17 @@ class mTripDo extends CI_Model {
         foreach ($filas as $row){
             // para cada fila se crea un DtViaje y se le rellenan los datos
             $dtv = new DtViaje();
-            $dtv->id = $row['id'];
-            $dtv->nombre = $row['nombre'];
-            $dtv->descripcion = $row['descripcion'];
-            $dtv->publico = $row['publico'];
-            $dtv->realizado = $row['realizado'];
-            $dtv->idUsuario = $row['idUsuario'];
-            $dtv->valoracion = $row['valoracion'];
-            // se agrega el DT al array de resultados
-            array_push($ret, $dtv);
+            $dtv->id          = (int)   $row['id'];
+            $dtv->nombre      = (string) $row['nombre'];
+            $dtv->descripcion = (string) $row['descripcion'];
+            $dtv->publico     = (bool)   $row['publico'];
+            $dtv->realizado   = (bool)   $row['realizado'];
+            $dtv->idUsuario   = (string) $row['idUsuario'];
+            $dtv->valoracion  = (float)  $row['valoracion'];
+            // se agrega el DT al array de resultados SI ES PUBLICO
+            if ($dtv->publico){
+                array_push($ret, $dtv);
+            }
         }
         return $ret;
     }
@@ -1018,6 +1118,27 @@ class mTripDo extends CI_Model {
         $this->db->from('usuario u');
         $this->db->where('u.email', $email);
         $result = $this->db->get();
+        return ($result->num_rows() == 1);
+    }
+
+    //--------------------------------------------------------------------------------
+    /**
+    * Devuelve true si existe un usuario con el ID especificado y ademas su cuenta esta verificada, de lo contrario False
+    * @param string $id ID (nickname o correo) del usuario del que se desea saber si tiene la cuenta verificada
+    * @return boolean
+    */
+    public function usuarioVerificado($id){
+        // Genero la consulta
+        // SELECT u.nickname FROM usuario u WHERE ( u.nickname = $id OR u.email = $id ) AND u.verificado = true 
+        $this->db->select('u.nickname')->from('usuario u')
+            ->group_start()
+                ->where('u.nickname', $id)
+                ->or_where('u.email', $id)
+            ->group_end()
+            ->where('u.verificado', true);
+        // ejecuto la query
+        $result = $this->db->get();
+
         return ($result->num_rows() == 1);
     }
 

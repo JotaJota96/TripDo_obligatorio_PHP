@@ -6,30 +6,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html lang="es">
 
-<script>
-	function myFunction(x) {
-  		x.classList.toggle("fa-thumbs-down");
-	}
-</script>
 
 <head>
-	<title><?php echo $title ?></title>    
+	<title><?php echo $title ?></title>
+	<?php
+		if(isset($mapa)){
+	?>
+	<!-- Links para mapbox -->
+	<script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+    <!-- Links para Geocoder -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+	<!-- Links para Buscar Rutas -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css' type='text/css'/>   
+	<?php
+		}
+	?>
+
+	
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Registro de usuario">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
+	<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Your Website Title" />
+	<meta property="og:description"   content="Your description" />
+	<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+		
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.css">
 	<link href="<?= base_url()?>public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/main_styles.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/elements_styles.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $style ?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $style?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $responsive ?>">
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  
+	<script>
+		function myFunction(x) {
+			x.classList.toggle("fa-thumbs-down");
+		}
+	</script>
+	
 	<!-- Header -->
 	<header class="header">
 		<div class="container">

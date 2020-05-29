@@ -30,8 +30,8 @@ class CrearViaje extends CI_Controller {
 		}
 		$this->load->view('crear_viaje', $this->data);		
 	}
+
 	public function crear_Viaje(){
-		
 		$redirigir = $this->input->post('btncrearViaje');
         if ( ! isset($redirigir)) {
             redirect(base_url());
@@ -51,12 +51,10 @@ class CrearViaje extends CI_Controller {
 
 		try {
 			$idUsuario = $this->session->userdata('nickname');
-			
-			$this->MTripDo->crearViaje($dtviaje, $idUsuario);
+			// manda a persistir el viaje y obtengo lo persistido con el ID que le fue asignado
+			$dtviaje = $this->MTripDo->crearViaje($dtviaje, $idUsuario);
 
-			//$this->load->view('iiiiiiiiiiiiiiiiiii'); //con esto de-Bugeo!!!
-
-			redirect(base_url());
+			redirect(base_url('/viaje/ver/'.$dtviaje->id));
 
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;
@@ -66,6 +64,10 @@ class CrearViaje extends CI_Controller {
 	}
 
 	public function validate(){
+		$redirigir = $this->input->post('btncrearViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
 
 		//Validaciones
 		$this->form_validation->set_rules('nombreViaje', 'Nombre Viaje', 'trim|required|min_length[5]|max_length[50]|alpha_numeric_spaces');

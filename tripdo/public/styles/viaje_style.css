@@ -137,7 +137,7 @@
 
 .sidebar
 {
-	margin-top: 110px;
+	margin-top: 70px;
 	width: 100%;
 }
 .sidebar_search
@@ -199,8 +199,7 @@
 }
 .sidebar_featured
 {
-	
-	margin-top: 85px;
+	margin-top: 83px;
 }
 .sidebar_featured_post
 {
@@ -539,4 +538,39 @@
 
 b{
 	color: #494343;
+}
+
+.redesSociales{
+	margin: 5px;
+}
+.redSociales{
+	margin-right: 5px;
+	width: 77px;
+    height: 20px;
+
+}
+
+._button{
+	width: 161px;
+	height: 56px;
+	vertical-align: top;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	background: #fe364a;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 500;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+._button:hover{
+	opacity: 0.8;
+}
+
+._button{
+	width: 100%;
 }

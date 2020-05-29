@@ -2,14 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Viaje extends CI_Controller {
-
+	
 	public $data = array();
 
 	function __construct(){
         parent:: __construct();
         $this->load->model('MTripDo');
-        $this->load->library(array('DtViaje', 'DtDestino', 'DtPlan', 'DtTag'));
+        $this->load->library(array('DtUsuario','DtViaje', 'DtDestino', 'DtPlan', 'DtTag'));
 		$this->load->helper(array('main_menu', 'footer', 'viaje', 'url'));				
+		$this->data['mapa'] = true;
 		$this->data['title'] = 'Viaje';
 		$this->data['style'] = 'viaje_style.css';
 		$this->data['responsive'] = 'viaje_reponsive.css';
@@ -86,23 +87,79 @@ class Viaje extends CI_Controller {
 				array_push($log, array("elem" => $p, "tipo" => "plan"));
 			}
 		}
-		
-		// ----- FALTA ESTO ------------ //
-		//$viajeros = $this->MTripDo->obtenerViajerosDeViaje(.....);
-		//$colaboradores = $this->MTripDo->obtenerColaboradoresDeViaje(.....);
+
+		$viajeros = $this->MTripDo->obtenerViajerosDeViaje($idViaje);
+		$colaboradores = $this->MTripDo->obtenerColaboradoresDeViaje($idViaje);
 
 		// ordeno el log
 		ordenarLog($log);
 
 		// paso las variables a la vista
+		$this->data['id'] = $idViaje;
 		$this->data['viaje'] = $viaje;
 		$this->data['destinos'] = $destinos;
 		$this->data['planes'] = $planes;
 		$this->data['rol'] = $rol;
 		$this->data['log'] = $log;
+		$this->data['viajeros'] = $viajeros;
+		$this->data['colaboradores'] = $colaboradores;
 
 		$this->load->view('viaje', $this->data);
 	}
 
+	public function sugerirDestino(){
+		$redirigir = $this->input->post('btnAgregarDestino');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
 
+		$dtD = new DtDestino;
+		$dtD->pais = $this->input->post('Pais');
+		$dtD->ciudad = $this->input->post('Ciudad');
+		$dtD->idViaje = $this->input->post('idViaje');
+		$dtD->agregadoPor = $this->session->userdata('nickname');
+
+		$tags = array();
+
+		// String con todos los tags separados por coma
+		$strTags = $this->input->post('Tags');
+		if (isset($strTags) && strcmp($strTags, "") != 0){
+			// obtengo los tags como un array de strings
+			$tags = explode(",", $strTags);
+			// a todos los elementos del array, se le aplica la funcion trim (quita espacios al principio y al final)
+			$tags = array_map('trim', $tags);
+		}
+		
+		try {
+			$this->MTripDo->agregarDestinoAViaje($dtD, $dtD->idViaje, $dtD->agregadoPor, $tags);
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
+	}
+
+	public function sugerirPlan(){
+		$redirigir = $this->input->post('btnSugerirPlan');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		$dtp = new DtPlan();
+		$dtp->nombre      = $this->input->post('titulo');
+		$dtp->descripcion = $this->input->post('descripcion');
+		$dtp->latitud     = $this->input->post('latitud');
+		$dtp->longitud    = $this->input->post('longitud');
+		$dtp->link        = $this->input->post('link');
+		$dtp->idDestino   = $this->input->post('idDestino');
+		$dtp->agregadoPor = $this->session->userdata('nickname');
+		
+		$idViaje = $this->input->post('idViaje');
+		
+		try {
+			$this->MTripDo->agregarPlanADestino($dtp, $dtp->idDestino, $dtp->agregadoPor);
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
+	}
 }

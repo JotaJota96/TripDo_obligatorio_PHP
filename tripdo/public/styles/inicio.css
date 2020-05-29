@@ -4,68 +4,11 @@
 /******************************
 
 [Table of Contents]
-
-1. Popular
-2. Home
+1. Home
 
 ******************************/
-
 /*********************************
-2. Popular
-*********************************/
-
-.popular
-{
-	
-	margin-top: 5%;
-	margin-bottom: 5%;
-	width: 100%;
-	background: #FFFFFF;
-}
-.popular_content
-{
-	width: 100%;
-	margin-top: 82px;
-}
-.popular_item
-{
-	width: calc((100% - 90px) / 4);
-	margin-bottom: 26px;
-}
-.popular_item:nth-last-child(-n+4)
-{
-	margin-bottom: 0px;
-}
-.popular_item a
-{
-	display: block;
-}
-.popular_item img
-{
-	max-width: 100%;
-}
-.popular_item_content
-{
-	position: absolute;
-	left: 28px;
-	bottom: 27px;
-	z-index: 10;
-}
-.popular_item_price
-{
-	font-size: 14px;
-	font-weight: 400;
-	color: #FFFFFF;
-}
-.popular_item_title
-{
-	font-size: 20px;
-	font-weight: 400;
-	color: #FFFFFF;
-}
-
-/*********************************
-3. Home
+1. Home
 *********************************/
 
 .home

@@ -46,7 +46,7 @@ En las siguientes instrucciones se utilizará a modo de ejemplo el correo `ejemp
 
 ## Configuracion para Linux
 
-1. Instalar algo de certificacion de SMTP
+1. Instalar un paquete para enviar mails y otro de certificados para SMTP
 	```
 	sudo apt-get install msmtp ca-certificates
 	```
@@ -54,7 +54,8 @@ En las siguientes instrucciones se utilizará a modo de ejemplo el correo `ejemp
 2. Crear y abrir el archivo `/etc/msmtprc`
 
 
-3. Completar el archivo anterior con: (reemplazar el correo y contraseña por el que corresponda)
+3. Completar el archivo anterior con lo siguiente:   
+	**Nota:** reemplazar el correo y contraseña por el que corresponda
 	```
 	defaults
 	tls on
@@ -71,19 +72,42 @@ En las siguientes instrucciones se utilizará a modo de ejemplo el correo `ejemp
 	logfile /var/log/msmtp.log
 	```
 
-4. Crear el archivo y cambiarle los permisos:
+4. Crear el archivo de logs y cambiarle los permisos a el y al archivo de configuracion anterior:
 	```
 	sudo touch /var/log/msmtp.log
 	sudo chmod 0644 /etc/msmtprc
-	```
-
-5. Cambiarle los permisos a este otro archivo:
-	```
 	sudo chmod 0777 /var/log/msmtp.log
 	```
 
-7. Con eso ya queda configurado, para probar ejecutar el comando (reemplazar **MY_GMAIL_ID** por tu correo)
+6. Para probar si la configuracion viene bien, ejecutar el siguiente comando  
+	**Nota:** reemplazar **MY_GMAIL_ID** por el correo a donde se enviará la prueba
 	```
 	echo -e "Subject: Test Mail\r\n\r\nThis is my first test email." |msmtp --debug --from=default -t MY_GMAIL_ID@gmail.com
 	```
+
+7. Para el siguiente paso hay que saber donde está el ejecutable de `msmtp`, para saberlo ejecutar:
+	```
+	which msmtp
+	```
+
+8. Abrir el archivo `php.ini` que está ubicado en `/opt/lampp/etc/php.ini`
+
+9. Buscar la linea que dice `;sendmail_path = `  
+	9.1. descomentarla (quitando `;`)  
+	9.2. agregarle la ruta obtenida  en el paso **7**  
+	9.3. agregarle la opcion `-t`  
+	Debe quedar algo asi:
+	```
+	# Antes
+	;sendmail_path = 
+	# Despues
+	sendmail_path = /usr/bin/msmtp -t
+	```
+
+10. Reiniciar el servidor **Xampp**
+
+
+
+
+
 

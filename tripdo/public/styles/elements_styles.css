@@ -296,6 +296,7 @@ section
 
 .buttons{
 	margin: 5px;
+	height: 63px;
 }
 
 
@@ -393,7 +394,7 @@ section
 }
 .accordion
 {
-	height: 53px;
+	height: 63px;
 	width: 100%;
 	border: solid 2px #dbdbdb;
 	background: #FFFFFF;

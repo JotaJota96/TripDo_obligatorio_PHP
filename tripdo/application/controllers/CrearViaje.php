@@ -51,12 +51,10 @@ class CrearViaje extends CI_Controller {
 
 		try {
 			$idUsuario = $this->session->userdata('nickname');
-			
-			$this->MTripDo->crearViaje($dtviaje, $idUsuario);
+			// manda a persistir el viaje y obtengo lo persistido con el ID que le fue asignado
+			$dtviaje = $this->MTripDo->crearViaje($dtviaje, $idUsuario);
 
-			//$this->load->view('iiiiiiiiiiiiiiiiiii'); //con esto de-Bugeo!!!
-
-			redirect(base_url());
+			redirect(base_url('/viaje/ver/'.$dtviaje->id));
 
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;

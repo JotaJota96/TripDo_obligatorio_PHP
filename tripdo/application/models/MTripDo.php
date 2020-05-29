@@ -1119,6 +1119,27 @@ class mTripDo extends CI_Model {
         return ($result->num_rows() == 1);
     }
 
+    //--------------------------------------------------------------------------------
+    /**
+    * Devuelve true si existe un usuario con el ID especificado y ademas su cuenta esta verificada, de lo contrario False
+    * @param string $id ID (nickname o correo) del usuario del que se desea saber si tiene la cuenta verificada
+    * @return boolean
+    */
+    public function usuarioVerificado($id){
+        // Genero la consulta
+        // SELECT u.nickname FROM usuario u WHERE ( u.nickname = $id OR u.email = $id ) AND u.verificado = true 
+        $this->db->select('u.nickname')->from('usuario u')
+            ->group_start()
+                ->where('u.nickname', $id)
+                ->or_where('u.email', $id)
+            ->group_end()
+            ->where('u.verificado', true);
+        // ejecuto la query
+        $result = $this->db->get();
+
+        return ($result->num_rows() == 1);
+    }
+
     //**********************************************************************************************
     private function validarObjeto($ingresado, $esperado){
         if (is_null($ingresado) || strcmp(gettype($ingresado), "object") != 0){

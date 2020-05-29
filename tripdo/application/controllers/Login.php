@@ -33,17 +33,35 @@ class Login extends CI_Controller {
         if ( ! isset($redirigir)) {
             redirect(base_url());
         }
-        $nickname = $this->input->post('nickname');
+        // se extraen los datos del formulario
+        $nickname = $this->input->post('nickname'); // nickname o correo
         $contrasenia = $this->input->post('contrasenia');
 
+        // se intenta iniciar sesion con esos datos
         $nick = $this->MTripDo->iniciarSesion($nickname, $contrasenia);
 
+        // segun si se pudo iniciar sesion...
         if ($nick == null){
-            $this->data['loginFailed'] = true;
-            $this->load->view('login', $this->data);
-            return;
+            // si no se pudo iniciar sesion
+            // puede que los datos esten mal, o que esten bien pero la cuenta no este verificada
+
+            $existeUsuario = $this->MTripDo->existeNickname($nickname) || $this->MTripDo->existeEmail($nickname);
+            $cuentaVerificada = $this->MTripDo->usuarioVerificado($nickname);
+
+            // decido si recargar el login, o enviar a pagina de verificacion de cuenta
+            if ($existeUsuario && ! $cuentaVerificada){
+                // el usuario existe pero no esta verificado
+                redirect(base_url('/loginValidar'));
+            }else{
+                // si los datos son incorrectos
+                $this->data['loginFailed'] = true;
+                $this->load->view('login', $this->data);
+            }
         }else{
+            // si se puede iniciar sesion
+            // guarda el nickname en la sesion
             $this->session->set_userdata('nickname', $nick);
+            // redirige a la pagina de inicio
             redirect(base_url());
         }
         

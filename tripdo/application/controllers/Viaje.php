@@ -121,13 +121,21 @@ class Viaje extends CI_Controller {
 
 		$tags = array();
 
+		// String con todos los tags separados por coma
+		$strTags = $this->input->post('Tags');
+		if (isset($strTags) && strcmp($strTags, "") != 0){
+			// obtengo los tags como un array de strings
+			$tags = explode(",", $strTags);
+			// a todos los elementos del array, se le aplica la funcion trim (quita espacios al principio y al final)
+			$tags = array_map('trim', $tags);
+		}
+		
 		try {
 			$this->MTripDo->agregarDestinoAViaje($dtD, $dtD->idViaje, $dtD->agregadoPor, $tags);
-		
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;
 		}
-		$this->ver($this->input->post('idViaje'));
+		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
 	}	
 
 }

@@ -7,7 +7,7 @@ class Inicio extends CI_Controller {
 
 	public function __construct(){
         parent:: __construct();
-		$this->load->helper(array('main_menu', 'footer', 'url'));				
+		$this->load->helper(array('main_menu', 'footer', 'url', 'correo'));				
 		$this->data['title'] = 'Incio';
 		$this->data['style'] = 'inicio_style.css';
 		$this->data['responsive'] = 'inicio_reponsive.css';
@@ -21,8 +21,8 @@ class Inicio extends CI_Controller {
 	/**
 	 
 	 */
-	public function index()
-	{
+	public function index(){
+
 		$this->load->view('inicio', $this->data);
 	}
 }

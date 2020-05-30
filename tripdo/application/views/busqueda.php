@@ -33,25 +33,27 @@
 
                         <div class="item clearfix rating_<?= $v->valoracion ?>">
                             <a href="<?= base_url('/viaje/ver/'.$v->id) ?>">
-                                <div class="item_image">
-                                    <img src="<?= $v->imagen ?>" alt="Imagen del viaje <?= $v->nombre ?>">
-                                </div>
-                                <div class="item_content">
-                                    <div class="item_title"> <?= $v->nombre ?> </div>
-                                    <div class="rating rating_<?= $v->valoracion ?>" data-rating="<?= $v->valoracion ?>">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                <div class="row">
+                                    <div class="item_image col-12 col-md-4">
+                                        <img src="<?= $v->imagen ?>" alt="Imagen del viaje <?= $v->nombre ?>">
                                     </div>
-                                    
-                                    <div class="item_text">
-                                        Organizado por: <?= $v->idUsuario ?>
-                                    </div>
-                                    
-                                    <div class="item_text">
-                                        <?= $v->descripcion ?>
+                                    <div class="item_content col-12 col-md-8">
+                                        <div class="item_title"> <?= $v->nombre ?> </div>
+                                        <div class="rating rating_<?= $v->valoracion ?>" data-rating="<?= $v->valoracion ?>">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        
+                                        <div class="item_text">
+                                            Organizado por: <?= $v->idUsuario ?>
+                                        </div>
+                                        
+                                        <div class="item_text">
+                                            <?= $v->descripcion ?>
+                                        </div>
                                     </div>
                                 </div>
                             </a>

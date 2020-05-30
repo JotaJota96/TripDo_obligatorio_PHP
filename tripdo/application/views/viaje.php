@@ -27,7 +27,7 @@
 	                        </div>
 
 	                        <!-- Botones de control -->
-	                        <?php 
+	                        <?php
 								if (strcmp($rol, "") != 0){ 
 									$col_md = "col-md-6";
 									if(strcmp($rol, "duenio") == 0) $col_md = "col-md-4";
@@ -72,6 +72,15 @@
 	                        <?php } ?>
 
 	                        <hr>
+							
+	                        <div class="container p-1 m-0">
+	                            <div class="justify-content-between row ">
+									<h6 class="col-12">Descripción:</h6>
+									<p class="col-12"><?= $viaje->descripcion ?></p>
+								</div>
+							</div>
+
+							<hr>
 							
 	                        <!-- Listado de Destinos y planes -->
 	                        <div class="post_text">

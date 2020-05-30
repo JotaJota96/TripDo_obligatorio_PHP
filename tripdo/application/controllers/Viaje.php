@@ -59,7 +59,6 @@ class Viaje extends CI_Controller {
 				$rol = "viajero";
 			} 
 		}
-
 		// obtengo el viaje
 		$viaje = $this->MTripDo->obtenerViaje($idViaje);
 

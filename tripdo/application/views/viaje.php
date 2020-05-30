@@ -28,7 +28,7 @@
 
 	                        <!-- Botones de control -->
 	                        <?php
-								if (strcmp($rol, "") != 0){ 
+								if ( !$viaje->realizado && strcmp($rol, "") != 0){ 
 									$col_md = "col-md-6";
 									if(strcmp($rol, "duenio") == 0) $col_md = "col-md-4";
 							?>
@@ -65,12 +65,26 @@
 	                                        </div>
 	                                    </div>
 	                                </div>
-	                                <?php } ?>
-
+									<?php } ?>
 	                            </div>
 	                        </div>
 	                        <?php } ?>
 
+							<?php if ($viaje->realizado && (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0)){ ?>
+	             	           <div class="container p-1 m-0">
+	                         	   <div class="justify-content-between row ">
+										<!-- Calificar viaje -->
+										<div class="col-12">
+											<div class="buttons">
+												<div class="buttons_container">
+													<div class="button button_1 elements_button" data-toggle="modal"
+														data-target="#calificarViaje">Calificar viaje</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php } ?>
 	                        <hr>
 							
 	                        <div class="container p-1 m-0">
@@ -205,7 +219,6 @@
 	                                <!-- mapa -->
 	                                <div id="map" style='width: 100%; height: 300px;'>
 	                                </div>
-	                                <pre id='coordenadas'></pre>
 	                            </div>
 
 	                            <!-- Actividad reciente / log -->

@@ -193,4 +193,26 @@ class Viaje extends CI_Controller {
 		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
 	}
 
+
+	public function marcarComoRealizado(){
+		$redirigir = $this->input->post('btnMarcarComoRealizado');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		// obtengo los datos del form
+		$idViaje   = $this->input->post('idViaje');
+		$idUsuario = $this->session->userdata('nickname');
+		
+		try {
+			$nuevoViaje = $this->MTripDo->marcarViajeComoRealizado($idUsuario, $idViaje);
+			redirect(base_url('/viaje/ver/'.$idViaje));
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+			echo $e;
+		}
+		redirect(base_url('/viaje/ver/'.$idViaje));
+
+	}
+
 }

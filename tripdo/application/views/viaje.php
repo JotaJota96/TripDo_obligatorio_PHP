@@ -212,10 +212,10 @@
 															$fecha = date('d/m/Y', strtotime($elem->fechaAgregado));
 
 															if (strcmp($l['tipo'], 'destino') == 0){
-																// pepe ha agregado un nuevo destino: Roma (Italia)
-																$texto = "<b>$elem->agregadoPor</b> ha agregado un nuevo destino: <b>$elem->ciudad ($elem->pais)</b><br>$fecha";
+																// pepe ha sugerido un nuevo destino: Roma (Italia)
+																$texto = "<b>$elem->agregadoPor</b> ha sugerido un nuevo destino: <b>$elem->ciudad ($elem->pais)</b><br>$fecha";
 															} elseif (strcmp($l['tipo'], 'plan') == 0){
-																$texto = "<b>$elem->agregadoPor</b> ha agregado un nuevo plan: <b>$elem->nombre</b><br>$fecha";
+																$texto = "<b>$elem->agregadoPor</b> ha sugerido un nuevo plan: <b>$elem->nombre</b><br>$fecha";
 															}
 															
 													?>
@@ -447,12 +447,14 @@
 	                        </div>
 	                        <div class="tab_panel">
 	                            <div class="buttons m-5">
-	                                <div class="buttons h-100 w-100">
-	                                    <div class="buttons_container h-100 w-100">
-	                                        <div class="button button_1 elements_button" data-toggle="modal">Finalizar
-	                                            viaje</div>
-	                                    </div>
-	                                </div>
+									<form action="<?= base_url('viaje/marcarComoRealizado') ?>" method="POST">
+										<input type="hidden" id="idViaje" name="idViaje" value="<?= $id ?>">
+										<div class="form-goup row">
+											<div class="col-md-12 mx-auto">
+												<button type="submit" name="btnMarcarComoRealizado" class="_button btn-block">Marcar como realizado</button>
+											</div>
+										</div>
+									</form>
 	                            </div>
 	                        </div>
 	                    </div>

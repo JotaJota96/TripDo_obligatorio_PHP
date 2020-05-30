@@ -17,10 +17,16 @@
 	                        </div>
 	                        <!-- imagen -->
 	                        <div class="post_image">
-	                            <img src="<?= base_url()?>public/images/news_1.jpg">
+								<img src="<?= base_url()?>public/images/news_1.jpg">
+								<form action="<?= base_url('/viaje/copiar') ?>" method="POST">
+									<input type="hidden" name="idViaje" value="<?= $id ?>" >
+									<button type="submit" name="copiarViaje" class="boton-copiar text-center p-0 px-1">Copiar</button>
+								</form>
+								<!-- 
 	                            <a>
-	                                <div class="post_image_box text-center">+</div>
-	                            </a>
+	                                <div class="post_image_box text-center">Copiar</div>
+								</a>
+								-->
 	                        </div>
 
 	                        <!-- Botones de control -->
@@ -74,7 +80,7 @@
 	                        <div class="post_text">
 	                            <!-- Destinos -->
 	                            <?php 
-									if (count($log) > 0){
+									if (count($destinos) > 0){
 										foreach($destinos as $d){
 											// modificar la linea para decidir si el destino ya fue votado por el usuario o no
 											$mostrarVotarDestino = (strcmp($rol, "viajero") == 0 || strcmp($rol, "duenio") == 0 );

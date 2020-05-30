@@ -93,6 +93,17 @@ class Viaje extends CI_Controller {
 
 		// ordeno el log
 		ordenarLog($log);
+		
+		// limpio el log (sirve cuando el viaje es copiado)
+		$logLimpio = array();
+		foreach ($log as $l){
+			if (strcmp($l['elem']->agregadoPor, "") != 0){
+				array_push($logLimpio, $l);
+			}
+		}
+		$log = $logLimpio;
+		
+
 
 		// paso las variables a la vista
 		$this->data['id'] = $idViaje;
@@ -162,4 +173,24 @@ class Viaje extends CI_Controller {
 		}
 		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
 	}
+
+	public function copiar(){
+		$redirigir = $this->input->post('copiarViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		// obtengo los datos del form
+		$idViaje   = $this->input->post('idViaje');
+		$idUsuario = $this->session->userdata('nickname');
+		
+		try {
+			$nuevoViaje = $this->MTripDo->copiarViaje($idUsuario, $idViaje);
+			redirect(base_url('/viaje/ver/'.$nuevoViaje->id));
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
+	}
+
 }

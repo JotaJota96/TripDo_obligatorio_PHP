@@ -7,8 +7,8 @@
                             <!-- Logo -->
                             <div class="logo_container">
                                 <div class="logo">
-                                    <div>destino</div>
-                                    <div>travel agency</div>
+                                    <div>TripDo</div>
+                                    <div>Planea tu viaje</div>
                                     <div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                     <!-- Footer Column -->
                     <div class="col-lg-4 footer_col">
                         <div class="tags footer_tags">
-                            <div class="footer_title">Tags</div>
+                            <div class="footer_title">Tags populares</div>
                             <ul class="tags_content d-flex flex-row flex-wrap align-items-start justify-content-start">
                                 <?php //Muestro cada tag y pongo el enlace a una busqueda por ese tag. Le pongo el urlencode() para evitar problemas con los espacios
                                     foreach ($footerTags as $t){

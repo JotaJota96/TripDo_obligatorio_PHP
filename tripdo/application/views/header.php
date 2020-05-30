@@ -79,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <a href="<?= base_url() ?>">
                                 <div class="logo">
                                     <div>TripDo</div>
-                                    <div>Agencia de viajes</div>
+                                    <div>Planea tu viaje</div>
                                     <div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
                                 </div>
                             </a>
@@ -97,17 +97,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</ul>
 						</nav>
 
-						<!-- Main Navigation -->
-						<!-- <nav class="main_nav ml-auto ">
-							<ul class="main_nav_list ">
-								<li class="main_nav_item active"><a href="index.html">Inicio</a></li>
-								<li class="main_nav_item"><a href="#">About us</a></li>
-								<li class="main_nav_item"><a href="busqueda.html">Buscar</a></li>
-								<li class="main_nav_item"><a href="viaje.html">Viaje</a></li>
-								<li class="main_nav_item"><a href="#">Contact</a></li>
-							</ul>
-						</nav> -->
-						<!-- Hamburger -->
 						<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
 					</div>
 				</div>
@@ -117,24 +106,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<!-- Menu aside -->
 	<div class="menu_container menu_mm" style="background-color:rgb(14, 14, 31);color: rgb(255, 255, 255);">
-		<!-- Menu Close Button -->
-		<div class="menu_close_container">
-			<div class="menu_close"></div>
-		</div>
-
+		
 		<!-- Menu Items -->
 		<div class="menu_inner menu_mm">
-			<div class="menu menu_mm">
-			
-				<ul class="menu_list menu_mm">
-					<?php foreach($main_menu as $item): ?>
-					<li class="menu_item menu_mm">
-						<a href="<?= $item['url'] ?>" style="color: rgb(255, 255, 255);"><?= $item['title'] ?></a>
-					</li>
-					<?php endforeach ?>									
-				</ul>
+			<div class="container">
+				<div class="row">
+					<div class=" header_container fixed-top d-flex flex-row align-items-center justify-content-start">
+						<!-- Logo -->
+						<div class="logo_container ">
+							<a href="<?= base_url() ?>">
+								<div class="logo">
+									<div>TripDo</div>
+									<div>Planea tu viaje</div>
+									<div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
+								</div>
+							</a>
+						</div>
+						<!-- Menu Close Button -->
+						<div class="menu_close_container">
+							<div class="menu_close"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="menu menu_mm">
+					
+						<ul class="menu_list menu_mm">
+							<?php foreach($main_menu as $item): ?>
+							<li class="menu_item menu_mm">
+								<a href="<?= $item['url'] ?>" style="color: rgb(255, 255, 255);"><?= $item['title'] ?></a>
+							</li>
+							<?php endforeach ?>									
+						</ul>
 
-				<div class="menu_copyright menu_mm">TripDo todos los derechos reservados.</div>
+						<div class="menu_copyright menu_mm">TripDo todos los derechos reservados.</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

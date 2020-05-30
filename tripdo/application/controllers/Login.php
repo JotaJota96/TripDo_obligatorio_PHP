@@ -82,8 +82,8 @@ class Login extends CI_Controller {
 		//$this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
 
 		//Mensajes de error
-		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s characters.');
-		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s characters.');
+		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');
+		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s caracteres.');
 		$this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 		
 		if($this->form_validation->run() === FALSE){

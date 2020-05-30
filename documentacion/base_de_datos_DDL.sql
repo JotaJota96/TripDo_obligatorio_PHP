@@ -135,6 +135,7 @@ CREATE TABLE `viaje` (
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish2_ci NOT NULL,
   `publico` tinyint(1) NOT NULL,
+  `imagen` text COLLATE utf8_spanish2_ci NOT NULL,
   `realizado` tinyint(1) NOT NULL DEFAULT 0,
   `idUsuario` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;

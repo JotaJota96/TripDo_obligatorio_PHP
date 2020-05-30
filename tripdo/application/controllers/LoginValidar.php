@@ -74,10 +74,10 @@ class LoginValidar extends CI_Controller {
 		//$this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
 
 		//Mensajes de error
-		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s characters.');
-		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s characters.');
+		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');
+		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s caracteres.');
         $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
-        $this->form_validation->set_message('exact_length', 'El largo del campo %s debe ser 10.');
+        $this->form_validation->set_message('exact_length', 'El largo del campo %s debe ser de %s caracteres.');
 		
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('login_validar', $this->data);

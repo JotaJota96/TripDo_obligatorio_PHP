@@ -80,6 +80,7 @@
 									<label class="col-md-3" for="foto">Subir Foto *</label>
 									<div class="col-md-9 ">
 										<input type="file" class="form-control-file" id="foto" name="photo">
+										<span class="mt-2 text-danger"><?php echo $msgFoto; ?></span>
 									</div>
 								</div>	
 								

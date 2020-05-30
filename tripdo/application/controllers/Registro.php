@@ -27,6 +27,8 @@ class Registro extends CI_Controller {
 		$this->data['defEmail'] =$this->input->post('email');
 		$this->data['defNick'] =$this->input->post('nickname');
 
+		$this->data['msgFoto'] ="";
+
     }
 
 	public function index(){
@@ -99,27 +101,33 @@ class Registro extends CI_Controller {
 		
 			// Verify file extension
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			if(!array_key_exists($ext, $allowed)) die("Error: Please select a valid file format.");
+			if(!array_key_exists($ext, $allowed)){
+				$this->data['msgFoto'] ="El archivo debe tener alguno de estos formatos (jpg, jpeg, gif, png)";
+				$this->load->view('registro', $this->data);
+				return;
+				//die("Error: Please select a valid file format.");
+			} 
 		
 			// Verify file size - 5MB maximum
 			//$maxsize = 5 * 1024 * 1024;
 			$maxsize = 10 * 5000 * 5000; //yo lo cambie para que aguante mas
-			if($filesize > $maxsize) die("Error: File size is larger than the allowed limit.");
+			if($filesize > $maxsize){
+				$this->data['msgFoto'] ="El archivo exede los 5MB";
+				$this->load->view('registro', $this->data);
+				//die("Error: File size is larger than the allowed limit.");
+				return;
+			} 
 		
 			// Verify MYME type of the file
 			if(in_array($filetype, $allowed)){
 
 				move_uploaded_file($_FILES["photo"]["tmp_name"], "public/perfiles/" . $nick . "." . $ext);
-				echo "Your file was uploaded successfully.";
 				$dtusuario->imagen = $this->input->post($nick . "." . $ext);
 				
 			} else{
 				echo "Error: There was a problem uploading your file. Please try again."; 
 			}
-		} else{
-			echo "Error: " . $_FILES["photo"]["error"];
 		}
-
         
 		//-------------------termina imagen--------------------------
 

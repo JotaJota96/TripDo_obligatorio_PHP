@@ -120,15 +120,13 @@ class Registro extends CI_Controller {
 		
 			// Verify MYME type of the file
 			if(in_array($filetype, $allowed)){
-
 				move_uploaded_file($_FILES["photo"]["tmp_name"], "public/perfiles/" . $nick );
-				$dtusuario->imagen = $this->input->post($nick);
-				
-			} else{
-				echo "Error: There was a problem uploading your file. Please try again."; 
-			}
+				$dtusuario->imagen = $nick;
+			} 
+			
 		}else{
-			$dtusuario->imagen = $this->input->post("UKM");
+			$dtusuario->imagen = $nick;
+			copy("public/perfiles/UKM", "public/perfiles/" . $nick);
 		}
         
 		//-------------------termina imagen--------------------------

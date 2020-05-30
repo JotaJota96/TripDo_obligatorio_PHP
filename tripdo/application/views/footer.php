@@ -60,5 +60,6 @@
         <script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
         <script src="<?= base_url()?>public/js/elements_custom.js"></script>
         <script src="<?= base_url()?>public/js/custom.js"></script>
+        <script src="<?= base_url()?>public/js/news_custom.js"></script>
     </body>
 </html>

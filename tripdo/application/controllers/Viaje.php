@@ -13,7 +13,7 @@ class Viaje extends CI_Controller {
 		$this->data['mapa'] = true;
 		$this->data['title'] = 'Viaje';
 		$this->data['style'] = 'viaje_style.css';
-		$this->data['responsive'] = 'viaje_reponsive.css';
+		$this->data['responsive'] = 'viaje_responsive.css';
 		$this->data['main_menu'] = mainMenu();
 		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);

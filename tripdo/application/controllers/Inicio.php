@@ -10,7 +10,7 @@ class Inicio extends CI_Controller {
 		$this->load->helper(array('main_menu', 'footer', 'url', 'correo'));				
 		$this->data['title'] = 'Incio';
 		$this->data['style'] = 'inicio_style.css';
-		$this->data['responsive'] = 'inicio_reponsive.css';
+		$this->data['responsive'] = 'inicio_responsive.css';
 		$this->data['main_menu'] = mainMenu();
 		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);

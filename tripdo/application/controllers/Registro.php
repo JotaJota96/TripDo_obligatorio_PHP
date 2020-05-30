@@ -14,7 +14,7 @@ class Registro extends CI_Controller {
 		$this->load->helper(array('main_menu', 'footer', 'url','html', 'correo'));		
 		$this->data['title'] = 'Registro';
 		$this->data['style'] = 'registro_style.css';
-		$this->data['responsive'] = 'registro_reponsive.css';
+		$this->data['responsive'] = 'registro_responsive.css';
 		$this->data['main_menu'] = mainMenu();
 		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);

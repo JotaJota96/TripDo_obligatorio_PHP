@@ -693,7 +693,9 @@ class mTripDo extends CI_Model {
             $dtp->idDestino     = (int)    $r->idDestino;
             $dtp->agregadoPor   = (string) $r->agregadoPor;
             $dtp->fechaAgregado = (string) $r->fechaAgregado;
-
+            if (strcmp($dtp->link, 'null') == 0){
+                $dtp->link = null;
+            }
             return $dtp;
         }
     }
@@ -802,7 +804,9 @@ class mTripDo extends CI_Model {
             $dtp->idDestino     = (int)    $row['idDestino'];
             $dtp->agregadoPor   = (string) $row['agregadoPor'];
             $dtp->fechaAgregado = (string) $row['fechaAgregado'];
-
+            if (strcmp($dtp->link, 'null') == 0){
+                $dtp->link = null;
+            }
             array_push($ret, $dtp);
         }
         return $ret;

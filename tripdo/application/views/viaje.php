@@ -17,10 +17,16 @@
 	                        </div>
 	                        <!-- imagen -->
 	                        <div class="post_image">
-	                            <img src="<?= base_url()?>public/images/news_1.jpg">
+								<img src="<?= base_url()?>public/images/news_1.jpg">
+								<form action="<?= base_url('/viaje/copiar') ?>" method="POST">
+									<input type="hidden" name="idViaje" value="<?= $id ?>" >
+									<button type="submit" name="copiarViaje" class="boton-copiar text-center p-0 px-1">Copiar</button>
+								</form>
+								<!-- 
 	                            <a>
-	                                <div class="post_image_box text-center">+</div>
-	                            </a>
+	                                <div class="post_image_box text-center">Copiar</div>
+								</a>
+								-->
 	                        </div>
 
 	                        <!-- Botones de control -->
@@ -74,7 +80,7 @@
 	                        <div class="post_text">
 	                            <!-- Destinos -->
 	                            <?php 
-									if (count($log) > 0){
+									if (count($destinos) > 0){
 										foreach($destinos as $d){
 											// modificar la linea para decidir si el destino ya fue votado por el usuario o no
 											$mostrarVotarDestino = (strcmp($rol, "viajero") == 0 || strcmp($rol, "duenio") == 0 );
@@ -206,17 +212,17 @@
 															$fecha = date('d/m/Y', strtotime($elem->fechaAgregado));
 
 															if (strcmp($l['tipo'], 'destino') == 0){
-																// pepe ha agregado un nuevo destino: Roma (Italia)
-																$texto = "<b>$elem->agregadoPor</b> ha agregado un nuevo destino: <b>$elem->ciudad ($elem->pais)</b><br>$fecha";
+																// pepe ha sugerido un nuevo destino: Roma (Italia)
+																$texto = "<b>$elem->agregadoPor</b> ha sugerido un nuevo destino: <b>$elem->ciudad ($elem->pais)</b><br>$fecha";
 															} elseif (strcmp($l['tipo'], 'plan') == 0){
-																$texto = "<b>$elem->agregadoPor</b> ha agregado un nuevo plan: <b>$elem->nombre</b><br>$fecha";
+																$texto = "<b>$elem->agregadoPor</b> ha sugerido un nuevo plan: <b>$elem->nombre</b><br>$fecha";
 															}
 															
 													?>
 	                                                <li class="list-group-item">
 	                                                    <div class="row">
 	                                                        <div class="col-1 my-2 d-flex align-content-center">
-	                                                            <img src="<?= base_url()?>/public/images/news_1.jpg"
+	                                                            <img src="<?= base_url("public/perfiles/" . $elem->agregadoPor)?>"
 	                                                                width="30px" height="30px" class="rounded-circle">
 	                                                        </div>
 	                                                        <div class="col-11">
@@ -383,7 +389,7 @@
 								?>
 	                                <ul class="list-group">
 	                                    <li class="list-group-item">
-	                                        <img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px"
+	                                        <img src="<?= base_url("public/perfiles/" . $v->nickname)?>" width="40px" height="40px"
 	                                            class="rounded-circle">
 	                                        <?="$v->nombre $v->apellido ($v->nickname)"?>
 	                                    </li>
@@ -420,7 +426,7 @@
 										foreach($colaboradores as $c){
 									?>
 	                                    <li class="list-group-item">
-	                                        <img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px"
+	                                        <img src="<?= base_url("public/perfiles/" . $c->nickname)?>" width="40px" height="40px"
 	                                            class="rounded-circle">
 	                                        <?="$c->nombre $c->apellido ($c->nickname)"?>
 	                                    </li>
@@ -448,12 +454,14 @@
 	                        </div>
 	                        <div class="tab_panel">
 	                            <div class="buttons m-5">
-	                                <div class="buttons h-100 w-100">
-	                                    <div class="buttons_container h-100 w-100">
-	                                        <div class="button button_1 elements_button" data-toggle="modal">Finalizar
-	                                            viaje</div>
-	                                    </div>
-	                                </div>
+									<form action="<?= base_url('viaje/marcarComoRealizado') ?>" method="POST">
+										<input type="hidden" id="idViaje" name="idViaje" value="<?= $id ?>">
+										<div class="form-goup row">
+											<div class="col-md-12 mx-auto">
+												<button type="submit" name="btnMarcarComoRealizado" class="_button btn-block">Marcar como realizado</button>
+											</div>
+										</div>
+									</form>
 	                            </div>
 	                        </div>
 	                    </div>

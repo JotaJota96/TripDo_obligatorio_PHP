@@ -56,14 +56,14 @@ class Registro extends CI_Controller {
 		$this->form_validation->set_rules('email', 'Correo', 'trim|required|valid_email|max_length[40]|is_unique[usuario.email]');
 
 		//Mensajes de error
-		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s characters.');
-		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s characters.');
+		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');
+		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s caracteres.');
 		$this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 		$this->form_validation->set_message('valid_email', 'El correo no es válido.');
-		$this->form_validation->set_message('matches', 'La contraseñas no coinciden.');
-		$this->form_validation->set_message('alpha', 'El campo %s solo puede contener caracteres alfabéticos.');
-		$this->form_validation->set_message('alpha_dash','El campo %s solo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
-		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s solo puede contener caracteres alfanuméricos, números y espacios');
+		$this->form_validation->set_message('matches', 'Las contraseñas no coinciden.');
+		$this->form_validation->set_message('alpha', 'El campo %s sólo puede contener caracteres alfabéticos.');
+		$this->form_validation->set_message('alpha_dash','El campo %s sólo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
+		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s sólo puede contener caracteres alfanuméricos, números y espacios');
 		$this->form_validation->set_message('is_unique','Ya existe un usuario con ese %s');
 		
 		if($this->form_validation->run() === FALSE){

@@ -43,7 +43,7 @@
 	                                    <div class="buttons">
 	                                        <div class="buttons_container">
 	                                            <div class="button button_1 elements_button" data-toggle="modal"
-	                                                data-target="#agregarDestino">Agregar destino</div>
+	                                                data-target="#agregarDestino">Sugerir destino</div>
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -53,7 +53,7 @@
 	                                    <div class="buttons">
 	                                        <div class="buttons_container">
 	                                            <div class="button button_1 elements_button" data-toggle="modal"
-	                                                data-target="#agregarPlan">Agregar plan</div>
+	                                                data-target="#agregarPlan">Sugerir plan</div>
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -195,9 +195,9 @@
 
 	                        <!-- Featured Post -->
 	                        <div class="sidebar_featured_post">
-	                            <div class="tab_panels">
+	                            <div id="map-div-container" class="tab_panels">
 	                                <!-- mapa -->
-	                                <div id='map' style='width: 100%; height: 300px;'>
+	                                <div id="map" style='width: 100%; height: 300px;'>
 	                                </div>
 	                                <pre id='coordenadas'></pre>
 	                            </div>
@@ -261,13 +261,13 @@
 
 	<!-- Ventanas emergentes -->
 
-	<!-- Ventana modal Agregar Destino -->
+	<!-- Ventana modal Sugerir Destino -->
 	<div class="modal fade" id="agregarDestino" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	    aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h5 class="modal-title" id="exampleModalLabel">Agregar destino</h5>
+	                <h5 class="modal-title" id="exampleModalLabel">Sugerir destino</h5>
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                    <span aria-hidden="true">&times;</span>
 	                </button>
@@ -275,7 +275,7 @@
 	            <div class="modal-body">
 	                <form action="<?= base_url('viaje/sugerirDestino') ?>" method="POST">
 	                    <div class="form-group">
-	                        <label for="Pais">Pais</label>
+	                        <label for="Pais">País</label>
 	                        <input name="Pais" class="form-control">
 	                    </div>
 	                    <div class="form-group">
@@ -299,7 +299,7 @@
 	    </div>
 	</div>
 
-	<!-- Ventana modal Agregar Plan -->
+	<!-- Ventana modal Sugerir Plan -->
 	<div class="modal fade" id="agregarPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	    aria-hidden="true">
 	    <div class="modal-dialog">												
@@ -314,10 +314,10 @@
 					<form action="<?= base_url('viaje/sugerirPlan') ?>" method="POST">
 	                    <div class="conteiner">
 	                        <div class="row">
-	                            <div class="col-6">
+	                            <div class="col-12 col-md-6">
 									<!-- Drop down de destinos-->
 	                                <div class="form-group">
-	                                    <label for="exampleFormControlSelect1">Selecione el destino del plan</label>
+	                                    <label for="exampleFormControlSelect1">Selecione el destino</label>
 	                                    <select name="idDestino" class="form-control" id="SelectDestinos">
 	                                        <?php 
 											foreach($destinos as $d){
@@ -329,27 +329,29 @@
 	                                    </select>
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="titulo">Titulo del plan</label>
+	                                    <label for="titulo">Título del plan</label>
 	                                    <input name="titulo" class="form-control">
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="descripcion">Descripcion</label>
+	                                    <label for="descripcion">Descripción</label>
 	                                    <textarea name="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
 	                                </div>
 	                                <div class="form-group">
-	                                    <label for="link">¿Algun link para que podamos encontrar más info?</label>
+	                                    <label for="link">¿Algún link para encontrar más info?</label>
 	                                    <input name="link" class="form-control">
 	                                </div>
-								</div>
-								<!-- campos ocultos para coordenadas del mapa -->
-								<input type="hidden"  id="input-latitud"  name="latitud"  value="0">
-								<input type="hidden"  id="input-longitud" name="longitud" value="0">
-								
-								<input type="hidden" name="idViaje" value="<?= $id ?>">
 
+									<!-- campos ocultos para coordenadas del mapa -->
+									<input type="hidden"  id="input-latitud"  name="latitud"  value="0">
+									<input type="hidden"  id="input-longitud" name="longitud" value="0">
+									
+									<!-- campo oculto para el ID del viaje-->
+									<input type="hidden" name="idViaje" value="<?= $id ?>">
+								</div>
 								<!-- div para el mapa -->
-	                            <div class="col-6">
-	                                <div id='map2' style='width: 40; height: 300px;'>
+	                            <div class="col-12 col-md-6">
+									<label>Ubicación en el mapa</label>
+	                                <div id='map2' class="m-1 p-0" style='width: 40; height: 300px;'>
 	                                </div>
 									<pre id='coordenadas2'></pre>
 	                            </div>
@@ -382,12 +384,13 @@
 	                    <div class="tabs d-flex flex-row align-items-center justify-content-around">
 	                        <div class="tab active">Viajeros</div>
 	                        <div class="tab">Colaboradores</div>
-	                        <div class="tab">Mas</div>
+	                        <div class="tab">Más</div>
 	                    </div>
 	                    <div class="tab_panels">
 	                        <div class="tab_panel active">
 	                            <div class="tab_panel_content">
 	                                <div class="menu_search_form_container">
+										<label>Comparte este enlace para agregar viajeros</label>
 	                                    <input type="search" class="menu_search_input menu_mm"
 	                                        value="<?= $linkAgregarViajero ?>" disabled>
 	                                </div>
@@ -406,12 +409,12 @@
 									}
 								?>
 	                                <hr>
-	                                <p>¿Quieres invitar a alguien mas?</p>
+	                                <p>Enviar invitacion por correo</p>
 	                                <div class="container p-1 m-0">
 										<form action="<?= base_url('/viaje/enviarInvitacion') ?>" method="POST">
 											<div class="menu_search_form_container row">
 												<div class="col-9 pt-2">
-													<input type="email" name="destinatario" class="form-control" class="menu_search_input menu_mm">
+													<input type="email" name="destinatario" placeholder="ejemplo@email.com" class="form-control" >
 												</div>
 												<input type="hidden" name="enlace" value="<?= $linkAgregarViajero ?>">
 												<input type="hidden" name="id" value="<?= $id ?>">
@@ -428,6 +431,7 @@
 	                        <div class="tab_panel">
 	                            <div class="tab_panel_content">
 	                                <div class="menu_search_form_container">
+										<label>Comparte este enlace para agregar colaboradores</label>
 	                                    <input type="search" class="menu_search_input menu_mm"
 	                                        value="<?= $linkAgregarColaborador ?>" disabled>
 	                                </div>
@@ -445,12 +449,12 @@
 										}
 									?>
 	                                    <hr>
-	                                    <p>¿Quieres invitar a alguien mas?</p>
+	                                    <pEnviar invitacion por correo</p>
 	                                    <div class="container p-1 m-0">
 											<form action="<?= base_url('/viaje/enviarInvitacion') ?>" method="POST">
 												<div class="menu_search_form_container row">
 													<div class="col-9 pt-2">
-														<input type="email" name="destinatario" class="form-control" class="menu_search_input menu_mm">
+														<input type="email" name="destinatario" placeholder="ejemplo@email.com" class="form-control">
 													</div>
 													<input type="hidden" name="enlace" value="<?= $linkAgregarColaborador ?>">
 													<input type="hidden" name="id" value="<?= $id ?>">
@@ -531,6 +535,8 @@
 						.addTo(map); 
 			map.setCenter([longitud, latitud]);
 			map.setZoom(12);
+			// esto scrolea la pagina hasta mostrar el mapa pero el menu lo tapa y queda feo
+			//document.getElementById('map-div-container').scrollIntoView();
 		}
 
 

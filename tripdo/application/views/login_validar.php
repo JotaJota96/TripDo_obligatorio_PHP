@@ -10,12 +10,12 @@
                     <div class="form_registro">
                         <form action="<?= base_url('loginValidar/validate')?>" method="POST" >
                             <div class="form-group row col-md-9 mx-auto">
-                                <h2 class="col-md-9">Valída tu registro</h2>
-                                <p class="col-md-9">Te hemos enviado un correo con el codigo de validacion a tu direccion de correo.</p>
+                                <h2 class="col-md-9">Valida tu registro</h2>
+                                <p class="col-md-9">Te hemos enviado un código de validación a tu direccion de correo.</p>
                             </div>
 
                             <div class="form-group row col-md-9 mx-auto">
-                                <label class="col-md-3" for="nickname">Ninckname</label>
+                                <label class="col-md-3" for="nickname">Nickname</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="ninckname" name="nickname">
                                     <span><?= form_error('nickname'); ?></span>	

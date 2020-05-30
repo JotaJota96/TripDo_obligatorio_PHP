@@ -32,7 +32,7 @@ function mainMenu(){
         // si NO hay usuario logueado, agrego opciones de login, registro, etc
         array_push($menu, 
             array(
-                'title'=> 'Iniciar Sessión',
+                'title'=> 'Iniciar sesión',
                 'url' => base_url('/login')
             ),
             array(

@@ -15,7 +15,7 @@
 								<h2 class="col-md-9">Registro</h2>
 							</div>							
 							<div class="form-group row col-md-9 mx-auto">
-								<label class="col-md-3" for="nickname">Ninckname</label>
+								<label class="col-md-3" for="nickname">Nickname</label>
 								<div class="col-md-9 mx-auto">
 									<input type="text" class="form-control" id="ninckname" name="nickname" value="<?= $defNick?>">
 									<span><?= form_error('nickname'); ?></span>	
@@ -77,7 +77,7 @@
 								</div>	
 
 								<div class="form-group row col-md-9 mx-auto">
-									<label class="col-md-3" for="foto">Subir Foto *</label>
+									<label class="col-md-3" for="foto">Foto *</label>
 									<div class="col-md-9 ">
 										<input type="file" class="form-control-file" id="foto" name="photo">
 										<span class="mt-2 text-danger"><?php echo $msgFoto; ?></span>

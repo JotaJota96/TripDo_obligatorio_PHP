@@ -14,7 +14,7 @@
                             </div>
 
                             <div class="form-group row col-md-9 mx-auto">
-                                <label class="col-md-3" for="nickname">Ninckname o Correo</label>
+                                <label class="col-md-3" for="nickname">Nickname o Correo</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="ninckname" name="nickname">
                                     <span><?= form_error('nickname'); ?></span>	

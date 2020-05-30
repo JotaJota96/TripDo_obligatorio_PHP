@@ -216,7 +216,7 @@
 	                                                <li class="list-group-item">
 	                                                    <div class="row">
 	                                                        <div class="col-1 my-2 d-flex align-content-center">
-	                                                            <img src="<?= base_url()?>/public/images/news_1.jpg"
+	                                                            <img src="<?= base_url("public/perfiles/" . $elem->agregadoPor)?>"
 	                                                                width="30px" height="30px" class="rounded-circle">
 	                                                        </div>
 	                                                        <div class="col-11">
@@ -376,7 +376,7 @@
 								?>
 	                                <ul class="list-group">
 	                                    <li class="list-group-item">
-	                                        <img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px"
+	                                        <img src="<?= base_url("public/perfiles/" . $v->nickname)?>" width="40px" height="40px"
 	                                            class="rounded-circle">
 	                                        <?="$v->nombre $v->apellido ($v->nickname)"?>
 	                                    </li>
@@ -413,7 +413,7 @@
 										foreach($colaboradores as $c){
 									?>
 	                                    <li class="list-group-item">
-	                                        <img src="<?= base_url()?>/public/images/news_1.jpg" width="40px" height="40px"
+	                                        <img src="<?= base_url("public/perfiles/" . $c->nickname)?>" width="40px" height="40px"
 	                                            class="rounded-circle">
 	                                        <?="$c->nombre $c->apellido ($c->nickname)"?>
 	                                    </li>

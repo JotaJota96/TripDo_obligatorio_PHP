@@ -1,5 +1,9 @@
 **.directory
 
+# ignorar fotos de perfil excepto la por defecto
+tripdo/public/perfiles/*
+!tripdo/public/perfiles/UKM
+
 tripdo/.DS_Store
 
 tripdo/application/cache/*

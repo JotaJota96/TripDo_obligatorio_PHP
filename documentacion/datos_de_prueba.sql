@@ -42,22 +42,22 @@ INSERT INTO `tag` (`id`, `texto`, `idDestino`) VALUES
 (16, 'Paseos.', 8);
 
 INSERT INTO `plan` (`id`, `nombre`, `descripcion`, `latitud`, `longitud`, `link`, `idDestino`, `agregadoPor`, `fechaAgregado`) VALUES 
-(1, 'Degustación de vinos.', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', -64.45312858, 50.66033345, 'http://www.ejemplo.com/plan-1', 1, 'antonio57', '2020-04-18'),
-(2, 'Almuerzo con copa de vino.', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', 5.85937142, 17.21588078, 'http://www.ejemplo.com/plan-2', 1, 'maria98', '2020-04-19'),
-(3, 'Visita a bodega Hum. ', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', 100.07812142, 17.21588078, 'null', 2, 'francisco91', '2020-04-20'),
-(4, 'Recreación de la vendimia.', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', 138.04687142, 17.21588078, 'http://www.ejemplo.com/plan-4', 2, 'maria98', '2020-04-21'),
-(5, 'Termas de Daymán.', 'Dos días de piscinas termales. ', 138.04687142, 44.00512491, 'null', 3, 'jose57', '2020-04-22'),
-(6, 'Aquagame Daymán.', 'Dos días con entrada incluída al parque de juegos.', 5.85937142, 50.66033345, 'http://www.ejemplo.com/plan-6', 3, 'josefa84', '2020-04-23'),
-(7, 'Termas Colón. ', 'Dos días de piscinas termales.', 100.07812142, 50.66033345, 'http://www.ejemplo.com/plan-7', 4, 'maria98', '2020-04-24'),
-(8, 'Rambla de artesanos.', 'Tour de compras.', 138.04687142, 50.66033345, 'http://www.ejemplo.com/plan-8', 4, 'maria98', '2020-04-25'),
-(9, 'Cerro Pan de Azúcar.', 'Escalada al cerro a cargo de especialistas.', -64.45312858, 17.21588078, 'null', 5, 'josefa84', '2020-04-26'),
-(10, 'Playa.', 'Arena, sol y agua.', 100.07812142, 44.00512491, 'null', 5, 'antonio57', '2020-04-27'),
-(11, 'Cerro Arequita.', 'Reconocimiento de flora y fauna.', -64.45312858, -25.2312458, 'http://www.ejemplo.com/plan-11', 6, 'maria98', '2020-04-28'),
-(12, 'Cerro Artigas.', 'Noche de los fogones.', 100.07812142, -25.2312458, 'http://www.ejemplo.com/plan-12', 6, 'josefa84', '2020-04-29'),
-(13, 'Teatro Plaza.', 'Les Luthiers.', 5.85937142, 44.00512491, 'http://www.ejemplo.com/plan-13', 7, 'francisco91', '2020-04-30'),
-(14, 'Cena con amigos.', 'Restoran Los luteros.', 5.85937142, -25.2312458, 'http://www.ejemplo.com/plan-14', 7, 'maria98', '2020-05-01'),
-(15, 'Ubicación en hospedaje.', 'Hostel del delta.', -64.45312858, 44.00512491, 'http://www.ejemplo.com/plan-15', 8, 'maria98', '2020-05-02'),
-(16, 'Navegación por canales.', 'Navegación por los canales y paseo de compras.', 138.04687142, -25.2312458, 'null', 8, 'francisco91', '2020-05-03');
+(1, 'Degustación de vinos.', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ',  -32.8897294, -68.8442956, 'http://www.ejemplo.com/plan-1', 1, 'antonio57', '2020-04-18'),
+(2, 'Almuerzo con copa de vino.', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', -32.87514591, -68.80044937 , 'http://www.ejemplo.com/plan-2', 1, 'maria98', '2020-04-19'),
+(3, 'Visita a bodega Hum. ', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', -33.4377968, -70.6504451 , 'null', 2, 'francisco91', '2020-04-20'),
+(4, 'Recreación de la vendimia.', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. ', -33.40064762, -70.55082321 , 'http://www.ejemplo.com/plan-4', 2, 'maria98', '2020-04-21'),
+(5, 'Termas de Daymán.', 'Dos días de piscinas termales. ', -31.38889, -57.9608876 , 'null', 3, 'jose57', '2020-04-22'),
+(6, 'Aquagame Daymán.', 'Dos días con entrada incluída al parque de juegos.', -31.39439117, -57.94135094 , 'http://www.ejemplo.com/plan-6', 3, 'josefa84', '2020-04-23'),
+(7, 'Termas Colón. ', 'Dos días de piscinas termales.', -31.39120778, -58.02452088 , 'http://www.ejemplo.com/plan-7', 4, 'maria98', '2020-04-24'),
+(8, 'Rambla de artesanos.', 'Tour de compras.', -31.36186053, -58.03576469 , 'http://www.ejemplo.com/plan-8', 4, 'maria98', '2020-04-25'),
+(9, 'Cerro Pan de Azúcar.', 'Escalada al cerro a cargo de especialistas.',  -34.8689037, -55.2724472, 'null', 5, 'josefa84', '2020-04-26'),
+(10, 'Playa.', 'Arena, sol y agua.', -34.8268486, -55.30403137 , 'null', 5, 'antonio57', '2020-04-27'),
+(11, 'Cerro Arequita.', 'Reconocimiento de flora y fauna.',  -34.3773987, -55.2382144, 'http://www.ejemplo.com/plan-11', 6, 'maria98', '2020-04-28'),
+(12, 'Cerro Artigas.', 'Noche de los fogones.', -34.36407248, -55.22180557 , 'http://www.ejemplo.com/plan-12', 6, 'josefa84', '2020-04-29'),
+(13, 'Teatro Plaza.', 'Les Luthiers.', -34.6075682, -58.4370894 , 'http://www.ejemplo.com/plan-13', 7, 'francisco91', '2020-04-30'),
+(14, 'Cena con amigos.', 'Restoran Los luteros.', -34.55804539, -58.43539238 , 'http://www.ejemplo.com/plan-14', 7, 'maria98', '2020-05-01'),
+(15, 'Ubicación en hospedaje.', 'Hostel del delta.',  -34.4226513, -58.5808967, 'http://www.ejemplo.com/plan-15', 8, 'maria98', '2020-05-02'),
+(16, 'Navegación por canales.', 'Navegación por los canales y paseo de compras.', -34.4651764, -58.52937698 , 'null', 8, 'francisco91', '2020-05-03');
 
 INSERT INTO `viajero` (`idUsuario`, `idViaje`, `valoracion`, `texto`) VALUES 
 ('marianela42', 1, 5, 'La verdad que un viaje muy recomendable'),

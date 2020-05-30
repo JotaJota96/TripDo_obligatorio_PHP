@@ -127,6 +127,8 @@ class Registro extends CI_Controller {
 			} else{
 				echo "Error: There was a problem uploading your file. Please try again."; 
 			}
+		}else{
+			$dtusuario->imagen = $this->input->post("UKM");
 		}
         
 		//-------------------termina imagen--------------------------

@@ -103,8 +103,6 @@ class Viaje extends CI_Controller {
 		}
 		$log = $logLimpio;
 		
-
-
 		// paso las variables a la vista
 		$this->data['id'] = $idViaje;
 		$this->data['viaje'] = $viaje;
@@ -114,6 +112,8 @@ class Viaje extends CI_Controller {
 		$this->data['log'] = $log;
 		$this->data['viajeros'] = $viajeros;
 		$this->data['colaboradores'] = $colaboradores;
+		$this->data['linkAgregarViajero'] = $this->generarEnlaceInvitacion("v", $idViaje);
+		$this->data['linkAgregarColaborador'] = $this->generarEnlaceInvitacion("c", $idViaje);
 
 		$this->load->view('viaje', $this->data);
 	}
@@ -209,10 +209,42 @@ class Viaje extends CI_Controller {
 			redirect(base_url('/viaje/ver/'.$idViaje));
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;
-			echo $e;
 		}
 		redirect(base_url('/viaje/ver/'.$idViaje));
-
 	}
 
+	public function agregarRol($rol = "", $idViaje = 0, $verificacion = ""){
+		// si no viene con parametro
+		if ($idViaje == 0 || (strcmp($rol, "v") != 0 && strcmp($rol, "c") != 0) || strcmp($verificacion, "") == 0) {
+            redirect(base_url());
+		}
+		// si no hay usuario logueado
+		if ( ! $this->session->has_userdata('nickname')){
+			redirect(base_url('/login'));
+		}
+		// verifico el hash
+		if (strcmp(generarHash($rol, $idViaje), $verificacion) != 0){
+            redirect(base_url());
+		}
+
+		try {
+			$this->MTripDo->agregarViajeroAViaje($idViaje, $idUsuario);
+			redirect(base_url('/viaje/ver/'.$idViaje));
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+            redirect(base_url());
+		}
+	}
+
+	private function generarEnlaceInvitacion($rol, $idViaje){
+		$jash = $this->generarHash($rol, $idViaje);
+		if (strcmp($rol, "v")){
+			return base_url('/viaje/agregarRol/c/'.$idViaje.'/'.$jash);
+		}elseif (strcmp($rol, "c")){
+			return base_url('/viaje/agregarRol/v/'.$idViaje.'/'.$jash);
+		}
+	}
+	private function generarHash($rol, $idViaje){
+		return sha1(sha1($rol.$idViaje).sha1("Esto es para hacerlo mas seguro"));
+	}
 }

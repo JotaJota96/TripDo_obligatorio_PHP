@@ -381,7 +381,7 @@
 	                            <div class="tab_panel_content">
 	                                <div class="menu_search_form_container">
 	                                    <input type="search" class="menu_search_input menu_mm"
-	                                        value="http://TripDo/viaje/873838" disabled>
+	                                        value="<?= $linkAgregarViajero ?>" disabled>
 	                                </div>
 	                                <br>
 	                                <?php 
@@ -418,7 +418,7 @@
 	                            <div class="tab_panel_content">
 	                                <div class="menu_search_form_container">
 	                                    <input type="search" class="menu_search_input menu_mm"
-	                                        value="http://TripDo/viaje/873838" disabled>
+	                                        value="<?= $linkAgregarViajero ?>" disabled>
 	                                </div>
 	                                <br>
 	                                <ul class="list-group">

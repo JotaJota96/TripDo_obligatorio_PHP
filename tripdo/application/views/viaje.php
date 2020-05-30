@@ -322,15 +322,16 @@
 	                                </div>
 								</div>
 								<!-- campos ocultos para coordenadas del mapa -->
-								<input type="hidden" id="input-latitud"  name="latitud"  value="0">
-								<input type="hidden" id="input-longitud" name="longitud" value="0">
+								<input type="hidden"  id="input-latitud"  name="latitud"  value="0">
+								<input type="hidden"  id="input-longitud" name="longitud" value="0">
 								
 								<input type="hidden" name="idViaje" value="<?= $id ?>">
 
 								<!-- div para el mapa -->
 	                            <div class="col-6">
-	                                <div id='map' style='width: 40; height: 300px;'>
+	                                <div id='map2' style='width: 40; height: 300px;'>
 	                                </div>
+									<pre id='coordenadas2'></pre
 	                            </div>
 	                        </div>
 	                    </div>

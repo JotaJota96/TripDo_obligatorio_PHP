@@ -42,20 +42,8 @@
             </div>
         </footer>
 
-        <script src="<?= base_url()?>public/js/jquery-3.2.1.min.js"></script>
-        <script src="<?= base_url()?>public/styles/bootstrap4/popper.js"></script>
-        <script src="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.js"></script>
-
-        <script src="<?= base_url()?>public/plugins/greensock/TweenMax.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/greensock/TimelineMax.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/scrollmagic/ScrollMagic.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/greensock/animation.gsap.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/greensock/ScrollToPlugin.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/easing/easing.js"></script>
-        <script src="<?= base_url()?>public/plugins/progressbar/progressbar.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
-        <script src="<?= base_url()?>public/js/elements_custom.js"></script>
-        <script src="<?= base_url()?>public/js/custom.js"></script>
+        
+       
 
         <?php
             if(isset($mapa)){
@@ -85,11 +73,26 @@
                             .setPopup(popup)
                             .addTo(map);
 
-            //Capturar las coordenadas del puntero del raton
-            map.on('mousemove', function (e) {
-                document.getElementById('coordenadas').innerHTML =
-                    JSON.stringify(e.lngLat);
+            
+
+            var map2 = new mapboxgl.Map({
+                container: 'map2',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                antialias: true,
+                center: [longitud, latitud],
+                zoom: 8
             });
+
+            
+
+
+            //Capturar las coordenadas del puntero del raton
+            map2.on('click', function (e) {          
+                document.getElementById('input-latitud').value = e.lngLat.lat;
+                document.getElementById('input-longitud').value = e.lngLat.lng;                
+            });
+
+
 
             //Agregar control de geocoder para hacer busquedas en el mapa
             // map.addControl(new MapboxGeocoder({
@@ -211,11 +214,20 @@
                     accessToken: mapboxgl.accessToken,
                     localGeocoder: forwardGeocoder,
                     zoom: 14,
-                    placeholder: 'Ingresa casa dominga',
+                    placeholder: 'Buscar ciudad',
                     mapboxgl: mapboxgl
                 })
             );
-
+            
+            map2.addControl(
+                new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken,
+                    localGeocoder: forwardGeocoder,
+                    zoom: 14,
+                    placeholder: 'Buscar ciudad',
+                    mapboxgl: mapboxgl
+                })
+            );
             //Agregar controles al mapa con geolocalización y la opcion de pantalla completa
             map.addControl(new mapboxgl.NavigationControl());
             map.addControl(new mapboxgl.FullscreenControl());
@@ -224,6 +236,20 @@
 
         <?php
             }
-        ?>
+            ?>
+            <script src="<?= base_url()?>public/js/jquery-3.2.1.min.js"></script>
+            <script src="<?= base_url()?>public/styles/bootstrap4/popper.js"></script>
+        <script src="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.js"></script>
+
+        <script src="<?= base_url()?>public/plugins/greensock/TweenMax.min.js"></script>
+        <script src="<?= base_url()?>public/plugins/greensock/TimelineMax.min.js"></script>
+        <script src="<?= base_url()?>public/plugins/scrollmagic/ScrollMagic.min.js"></script>
+        <script src="<?= base_url()?>public/plugins/greensock/animation.gsap.min.js"></script>
+        <script src="<?= base_url()?>public/plugins/greensock/ScrollToPlugin.min.js"></script>
+        <script src="<?= base_url()?>public/plugins/easing/easing.js"></script>
+        <script src="<?= base_url()?>public/plugins/progressbar/progressbar.min.js"></script>
+        <script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
+        <script src="<?= base_url()?>public/js/elements_custom.js"></script>
+        <script src="<?= base_url()?>public/js/custom.js"></script>
     </body>
 </html>

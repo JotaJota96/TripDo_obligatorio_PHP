@@ -494,8 +494,42 @@
 	    </div>
 	</div>
 
+	<!-- Ventana modal Calificar -->
+	<div class="modal fade" id="calificarViaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	    aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="exampleModalLabel">Calificar Viaje</h5>
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <div class="modal-body">
+	                <form action="<?= base_url('viaje/sugerirDestino') ?>" method="POST">
+	                    <div class="form-group">
+	                        <label class="form-control" for="slider" id="labelid">Valoracion: 5 estrellas</label>
+	                        <input type="range" max="5" min="1" step="1" value="5" id="slider" class="form-control-range w-100" onchange="actualizarSlider(this.value)" >
+	                    </div>
+
+	                    <div class="form-goup row">
+	                        <div class="col-md-12 mx-auto">
+	                            <button type="submit" name="btnAgregarDestino" class="_button btn-block">Calificar</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+						
 	<!-- Footer -->
 	<script>
+		//esto actualiza el valor del label valoracion 5 estrellas, en el model calificar
+		function actualizarSlider(val){
+			document.getElementById("labelid").innerHTML = "Valoracion: "+val+" estrellas";
+		}
+
 		var longitud = -56.732051948450575;
 		var latitud = -34.33235873819117;
 		var zoom = 5;

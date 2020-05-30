@@ -45,6 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $style?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $responsive ?>">
+	<script>
+		
+	</script>
 </head>
 
 <body>

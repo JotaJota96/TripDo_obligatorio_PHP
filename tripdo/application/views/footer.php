@@ -51,8 +51,11 @@
         <script>
             var longitud = -56.732051948450575;
             var latitud = -34.33235873819117;
-            var zoom = 14;
+            var zoom = 5;
+            var markerModal;
+            var markerMapaPrincipal;
 
+            // Crea el mapa principal
             mapboxgl.accessToken = 'pk.eyJ1IjoidHJpcGRvIiwiYSI6ImNrYWpuOG5iYTAzeDEycG4xcTg0Y2N0YjMifQ.iZfqiqKWwbtqynAoSICDEw';
             var map = new mapboxgl.Map({
                 container: 'map',
@@ -62,19 +65,7 @@
                 zoom: zoom
             });
             
-
-            //Crear un popup para usar en el marcador
-            var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-                '<a href="http://localhost/laboratorio-php/tripdo"><img src="http://localhost/test-mapa/public/imagen.jpg" width="200" alt="Locomotora" /><h5 style="text-align: center">Hola mundo</h5></a>'
-            );
-
-            //Crear y agregar al mapa un marcador con el popup 
-            var marker = new mapboxgl.Marker({draggable: false}).setLngLat([longitud, latitud])
-                            .setPopup(popup)
-                            .addTo(map);
-
-            
-
+            // Crea el mapa del modal
             var map2 = new mapboxgl.Map({
                 container: 'map2',
                 style: 'mapbox://styles/mapbox/streets-v11',
@@ -83,132 +74,29 @@
                 zoom: 8
             });
 
-            
-
-
             //Capturar las coordenadas del puntero del raton
             map2.on('click', function (e) {          
                 document.getElementById('input-latitud').value = e.lngLat.lat;
-                document.getElementById('input-longitud').value = e.lngLat.lng;                
+                document.getElementById('input-longitud').value = e.lngLat.lng;
+                if(markerModal != null){
+                    markerModal.remove();
+                }                
+                markerModal = new mapboxgl.Marker({draggable: false}).setLngLat([e.lngLat.lng, e.lngLat.lat])                            
+                            .addTo(map2);                               
             });
 
-
-
-            //Agregar control de geocoder para hacer busquedas en el mapa
-            // map.addControl(new MapboxGeocoder({
-            //     accessToken: mapboxgl.accessToken
-            // }));
-
-            // map.addControl(
-            //     new MapboxGeocoder({
-            //         accessToken: mapboxgl.accessToken,
-            //         localGeocoder: forwardGeocoder,
-            //         zoom: 14,
-            //         placeholder: 'Enter search e.g. Lincoln Park',
-            //         mapboxgl: mapboxgl
-            //     })
-            // );       
-                        
-            var customData = {
-                    'features': [
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Casa Dominga, San José de Mayo, Uruguay',
-                                'description': 'Somos una institución que busca promover la cultura en el sentido más amplio.'
-                            },
-                            'geometry': {
-                                'coordinates': [-56.7145, -34.340007],
-                                'type': 'Point'
-                            }
-                        },
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Mal Abrigo, Uruguay',
-                                'description': "En el año 2015, Mal Abrigo es seleccionado por el Ministerio de Turismo para el Premio Pueblo Turístico, el cual apunta al desarrollo local."
-                            },
-                            'geometry': {
-                                'coordinates': [-56.952087, -34.147616],
-                                'type': 'Point'
-                            }
-                        },
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Parque Rodó, San José de Mayo, Uruguay',
-                                'description': "Inaugurado el 25 de agosto de 1903 con el nombre de «Parque Mario» por iniciativa del doctor italiano Francisco Giampietro haciendo honor a su hermano sacerdote."
-                            },
-                            'geometry': {
-                                'coordinates': [-56.730451, -34.331115],
-                                'type': 'Point'
-                            }
-                        },
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Finca Piedra, San José, Uruguay',
-                                'description': "Una exclusiva estancia eco-turística, donde las 20 hectáreas de selectos viñedos son su mayor encanto."
-                            },
-                            'geometry': {
-                                'coordinates': [-56.9549075, -34.1374848],
-                                'type': 'Point'
-                            }                
-                        },
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Barras de Mahoma, San José, Uruguay',
-                                'description': "Un lugar para vivir en armonía con una naturaleza que te invita a producir y soñar."
-                            },
-                            'geometry': {
-                                'coordinates': [-56.88552, -34.060117],
-                                'type': 'Point'
-                            }                
-                        },
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Museo de San José, Uruguay',
-                                'description': "Construido en la primera década del S XIX. Fue declarado monumento histórico el 21 de noviembre de 1989."
-                            },
-                            'geometry': {
-                                'coordinates': [-56.714387, -34.337911],
-                                'type': 'Point'
-                            }                
-                        },
-                        {
-                            'type': 'Feature',
-                            'properties': {
-                                'title': 'Basílica Catedral, San José de Mayo, Uruguay',
-                                'description': "Bendecida el 24 de marzo de 1875 La obra se inició en el año 1857 y finalizó en 1874 Fue declarada monumento histórico el 24 de octubre de 1990."
-                            },
-                            'geometry': {
-                                'coordinates': [-56.713478, -34.340111],
-                                'type': 'Point'
-                            }                
-                        }
-                ],
-                'type': 'FeatureCollection'
-            };
-
-            function forwardGeocoder(query) {
-                var matchingFeatures = [];
-                for (var i = 0; i < customData.features.length; i++) {
-                    var feature = customData.features[i];
-                    // handle queries with different capitalization than the source data by calling toLowerCase()
-                    if (feature.properties.title.toLowerCase().search(query.toLowerCase()) !== -1 ) {
-                        // add a tree emoji as a prefix for custom data results
-                        // using carmen geojson format: https://github.com/mapbox/carmen/blob/master/carmen-geojson.md
-                        feature['place_name'] = '🌲 ' + feature.properties.title;
-                        feature['center'] = feature.geometry.coordinates;
-                        feature['place_type'] = ['park'];
-                        matchingFeatures.push(feature);
-                    }
-                }
-                return matchingFeatures;
+            // Agrega un marcador al hacer click en "ver en el mapa"
+            function verMarcador(longitud, latitud){
+                if(markerMapaPrincipal != null){
+                    markerMapaPrincipal.remove();
+                }                
+                markerMapaPrincipal = new mapboxgl.Marker({draggable: false}).setLngLat([longitud, latitud])                            
+                            .addTo(map); 
+                map.setCenter([longitud, latitud]);
+                map.setZoom(12);
             }
 
+            //Agrega el cuadro de buscar en el mapa principal
             map.addControl(
                 new MapboxGeocoder({
                     accessToken: mapboxgl.accessToken,
@@ -219,6 +107,7 @@
                 })
             );
             
+            // Agrega el cuadro de busqueda en el mapa del modal
             map2.addControl(
                 new MapboxGeocoder({
                     accessToken: mapboxgl.accessToken,
@@ -228,6 +117,7 @@
                     mapboxgl: mapboxgl
                 })
             );
+
             //Agregar controles al mapa con geolocalización y la opcion de pantalla completa
             map.addControl(new mapboxgl.NavigationControl());
             map.addControl(new mapboxgl.FullscreenControl());

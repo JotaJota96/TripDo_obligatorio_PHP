@@ -113,7 +113,7 @@
 																	<a href="<?= $p->link ?>">Más información</a>
 																	<br>
 																	<?php } ?>
-	                                                                <a href="#">Ver en el mapa</a>
+	                                                                <a  href="javascript:verMarcador(<?= $p->longitud.",".$p->latitud;?>)">Ver en el mapa</a>
 	                                                            </div>
 	                                                            <?php if ($mostrarVotarPlan){ ?>
 	                                                            <div class="col-2">
@@ -288,8 +288,14 @@
 	<!-- Ventana modal Agregar Plan -->
 	<div class="modal fade" id="agregarPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	    aria-hidden="true">
-	    <div class="modal-dialog">
+	    <div class="modal-dialog">												
 	        <div class="modal-content">
+				<div class="modal-header">
+	                <h5 class="modal-title" id="exampleModalLabel">Sugerir Plan</h5>
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
 	            <div class="modal-body">
 					<form action="<?= base_url('viaje/sugerirPlan') ?>" method="POST">
 	                    <div class="conteiner">
@@ -331,7 +337,7 @@
 	                            <div class="col-6">
 	                                <div id='map2' style='width: 40; height: 300px;'>
 	                                </div>
-									<pre id='coordenadas2'></pre
+									<pre id='coordenadas2'></pre>
 	                            </div>
 	                        </div>
 	                    </div>

@@ -21,6 +21,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<!-- Links para Buscar Rutas -->
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css' type='text/css'/>   
+	
+	<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Your Website Title" />
+	<meta property="og:description"   content="Your description" />
+	<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
 	<?php
 		}
 	?>
@@ -31,12 +37,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="description" content="Registro de usuario">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
-	<meta property="og:type"          content="website" />
-	<meta property="og:title"         content="Your Website Title" />
-	<meta property="og:description"   content="Your description" />
-	<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
-		
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.css">
 	<link href="<?= base_url()?>public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/main_styles.css">

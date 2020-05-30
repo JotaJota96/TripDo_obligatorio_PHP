@@ -13,7 +13,7 @@ class CrearViaje extends CI_Controller {
 		$this->load->helper(array('main_menu', 'footer', 'url','html'));		
 		$this->data['title'] = 'Crear Viaje';
 		$this->data['style'] = 'crear_viaje_style.css';
-		$this->data['responsive'] = 'crear_viaje_reponsive.css';
+		$this->data['responsive'] = 'crear_viaje_responsive.css';
 		$this->data['main_menu'] = mainMenu();
 		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);

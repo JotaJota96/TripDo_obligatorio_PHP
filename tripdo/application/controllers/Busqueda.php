@@ -12,7 +12,7 @@ class Busqueda extends CI_Controller {
 		$this->load->helper(array('main_menu', 'footer', 'url'));				
 		$this->data['title'] = 'Buscar';
 		$this->data['style'] = 'busqueda_style.css';
-		$this->data['responsive'] = 'busqueda_reponsive.css';
+		$this->data['responsive'] = 'busqueda_responsive.css';
 		$this->data['main_menu'] = mainMenu();
 		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);

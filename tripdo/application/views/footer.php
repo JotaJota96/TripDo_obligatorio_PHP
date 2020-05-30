@@ -45,90 +45,9 @@
         
        
 
-        <?php
-            if(isset($mapa)){
-        ?>
-        <script>
-            var longitud = -56.732051948450575;
-            var latitud = -34.33235873819117;
-            var zoom = 5;
-            var markerModal;
-            var markerMapaPrincipal;
-
-            // Crea el mapa principal
-            mapboxgl.accessToken = 'pk.eyJ1IjoidHJpcGRvIiwiYSI6ImNrYWpuOG5iYTAzeDEycG4xcTg0Y2N0YjMifQ.iZfqiqKWwbtqynAoSICDEw';
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                antialias: true,
-                center: [longitud, latitud],
-                zoom: zoom
-            });
-            
-            // Crea el mapa del modal
-            var map2 = new mapboxgl.Map({
-                container: 'map2',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                antialias: true,
-                center: [longitud, latitud],
-                zoom: 8
-            });
-
-            //Capturar las coordenadas del puntero del raton
-            map2.on('click', function (e) {          
-                document.getElementById('input-latitud').value = e.lngLat.lat;
-                document.getElementById('input-longitud').value = e.lngLat.lng;
-                if(markerModal != null){
-                    markerModal.remove();
-                }                
-                markerModal = new mapboxgl.Marker({draggable: false}).setLngLat([e.lngLat.lng, e.lngLat.lat])                            
-                            .addTo(map2);                               
-            });
-
-            // Agrega un marcador al hacer click en "ver en el mapa"
-            function verMarcador(longitud, latitud){
-                if(markerMapaPrincipal != null){
-                    markerMapaPrincipal.remove();
-                }                
-                markerMapaPrincipal = new mapboxgl.Marker({draggable: false}).setLngLat([longitud, latitud])                            
-                            .addTo(map); 
-                map.setCenter([longitud, latitud]);
-                map.setZoom(12);
-            }
-
-            //Agrega el cuadro de buscar en el mapa principal
-            map.addControl(
-                new MapboxGeocoder({
-                    accessToken: mapboxgl.accessToken,
-                    localGeocoder: forwardGeocoder,
-                    zoom: 14,
-                    placeholder: 'Buscar ciudad',
-                    mapboxgl: mapboxgl
-                })
-            );
-            
-            // Agrega el cuadro de busqueda en el mapa del modal
-            map2.addControl(
-                new MapboxGeocoder({
-                    accessToken: mapboxgl.accessToken,
-                    localGeocoder: forwardGeocoder,
-                    zoom: 14,
-                    placeholder: 'Buscar ciudad',
-                    mapboxgl: mapboxgl
-                })
-            );
-
-            //Agregar controles al mapa con geolocalización y la opcion de pantalla completa
-            map.addControl(new mapboxgl.NavigationControl());
-            map.addControl(new mapboxgl.FullscreenControl());
-         
-        </script> 
-
-        <?php
-            }
-            ?>
-            <script src="<?= base_url()?>public/js/jquery-3.2.1.min.js"></script>
-            <script src="<?= base_url()?>public/styles/bootstrap4/popper.js"></script>
+     
+        <script src="<?= base_url()?>public/js/jquery-3.2.1.min.js"></script>
+        <script src="<?= base_url()?>public/styles/bootstrap4/popper.js"></script>
         <script src="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.js"></script>
 
         <script src="<?= base_url()?>public/plugins/greensock/TweenMax.min.js"></script>
@@ -141,5 +60,6 @@
         <script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
         <script src="<?= base_url()?>public/js/elements_custom.js"></script>
         <script src="<?= base_url()?>public/js/custom.js"></script>
+        <script src="<?= base_url()?>public/js/news_custom.js"></script>
     </body>
 </html>

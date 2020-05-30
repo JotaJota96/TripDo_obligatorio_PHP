@@ -10,7 +10,7 @@
 					<!-- News Posts -->
 					<div class="col-lg-8">
 						<div class="form_registro">
-						<form action="<?= base_url('registro/validate')?>" method="POST" >
+						<form action="<?= base_url('registro/validate')?>" method="POST" enctype="multipart/form-data">
 							<div class="form-group">
 								<h2 class="col-md-9">Registro</h2>
 							</div>							
@@ -79,7 +79,8 @@
 								<div class="form-group row col-md-9 mx-auto">
 									<label class="col-md-3" for="foto">Subir Foto *</label>
 									<div class="col-md-9 ">
-										<input type="file" class="form-control-file" id="foto">
+										<input type="file" class="form-control-file" id="foto" name="photo">
+										<span class="mt-2 text-danger"><?php echo $msgFoto; ?></span>
 									</div>
 								</div>	
 								

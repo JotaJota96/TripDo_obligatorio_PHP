@@ -17,7 +17,7 @@
  * @param string $destinatario correo del usuario que se quiere registrar, $codigo codigo para la validacion
  * @return 
  */
-  function enviarCorreoValidar($destinatario, $codigo){
+function enviarCorreoValidar($destinatario, $codigo){
 
     //***********----------------Cabeza del correo---------------***********
     $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
@@ -83,14 +83,16 @@
     //***********---------------llamada de la funcion enviar correo---------------***********
     mail($destinatario,$asunto,$mensaje,$cabeceras);
 
-  }
+}
 
   /**
  * envia un correo al usuario que se desea agregar como colavorador
  * @param string $destinatario correo del usuario que se desea agregar como colavorador, $codigo codigo para la validacion
  * @return 
  */
-    function enviarCorreoAgregarColaborador($destinatario, $codigo){
+
+function enviarCorreoImbitacion($destinatario, $rol, $link){
+
     //***********----------------Cabeza del correo---------------***********
     $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
     $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -98,7 +100,7 @@
     $cabeceras .= 'From: Recordatorio <tripdo.uy@gmail.com>' . "\r\n";
 
     //***********----------------Asunto del correo---------------***********
-    $asunto="Confirmar registro";
+    $asunto="Te han invitado como $rol";
 
     //***********---------------Mensaje del correo---------------***********
 
@@ -122,14 +124,13 @@
                         <tbody>
                         <tr>
                             <td style="color: white;">
-                            <h1>Confirmacion de Colaborador</h1>
-                            <p>Este correo ha sido enviado por <strong style="color: rgb(224, 73, 73);">TripDo</strong> para confirmar Colaborador.</p>
+                            <h1>Has sido invitado como '.$rol.' en Trip</h1>
+                            <p>Este correo ha sido enviado por <strong style="color: rgb(224, 73, 73);">TripDo</strong> para invitarte como '.$rol.' de un viaje.</p>
                             <p><strong style="color: rgb(224, 73, 73);">TripDo</strong> es un sitio destinado a la planeacion de viajes nacionales e internacionales.</p>
-                            <p>Copie el siguiente codigo <strong style="color: rgb(224, 73, 73);">'. $codigo .'</strong></p>
-                            <p>Presione <strong style="color: rgb(224, 73, 73);">Confirmar</strong> para continuar.</p>
+                            <p>Presione <strong style="color: rgb(224, 73, 73);">Aceptar</strong> para continuar.</p>
                             <div class="column-top">&nbsp;</div>
                             <p style="text-align:center;">
-                                <a href="'.base_url('/ColaboradorValidar').'" class="strong">
+                                <a href="'.$link.'" class="strong">
                                     <button style=" background-color: rgb(216, 64, 64);
                                     border: none;
                                     color: white;
@@ -137,7 +138,7 @@
                                     text-align: center;
                                     text-decoration: none;
                                     display: inline-block;
-                                    font-size: 16px;"><strong>Confirmar</strong></button>
+                                    font-size: 16px;"><strong>Aceptar</strong></button>
                                 </a>
                             </p>
                             </td>
@@ -155,76 +156,5 @@
     //***********---------------llamada de la funcion enviar correo---------------***********
     mail($destinatario,$asunto,$mensaje,$cabeceras);
 
-    }
+}
 
-  /**
- * envia un correo para agregar viajero
- * @param string $destinatario correo del usuario que se desea agregar, $codigo codigo para la validacion
- * @return 
- */
-    function enviarCorreoAgregarViajero($destinatario, $codigo){
-        //***********----------------Cabeza del correo---------------***********
-        $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
-        $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        $cabeceras .= 'To: Usuario <'.$destinatario.'>. "\r\n"';
-        $cabeceras .= 'From: Recordatorio <tripdo.uy@gmail.com>' . "\r\n";
-
-        //***********----------------Asunto del correo---------------***********
-        $asunto="Confirmar registro";
-
-        //***********---------------Mensaje del correo---------------***********
-    
-        $mensaje = '
-        <html>
-        <body>
-        <center class="wrapper">
-            <div class="spacer">&nbsp;</div>
-
-            <table style="font-family: Arial, Helvetica, sans-serif;
-            background-color: rgb(15, 15, 39);
-            color: white;
-            padding: 20px;
-            padding-bottom: 25px;
-            border-radius: 1px;">
-                <tbody>
-                <tr>
-                    <td class="column">
-                        
-                        <table class="content">
-                            <tbody>
-                            <tr>
-                                <td style="color: white;">
-                                <h1>Confirmacion de Viajero</h1>
-                                <p>Este correo ha sido enviado por <strong style="color: rgb(224, 73, 73);">TripDo</strong> para confirmar Viajero.</p>
-                                <p><strong style="color: rgb(224, 73, 73);">TripDo</strong> es un sitio destinado a la planeacion de viajes nacionales e internacionales.</p>
-                                <p>Copie el siguiente codigo <strong style="color: rgb(224, 73, 73);">'. $codigo .'</strong></p>
-                                <p>Presione <strong style="color: rgb(224, 73, 73);">Confirmar</strong> para continuar.</p>
-                                <div class="column-top">&nbsp;</div>
-                                <p style="text-align:center;">
-                                    <a href="'.base_url('/ViajeroValidar').'" class="strong">
-                                        <button style=" background-color: rgb(216, 64, 64);
-                                        border: none;
-                                        color: white;
-                                        padding: 15px 32px;
-                                        text-align: center;
-                                        text-decoration: none;
-                                        display: inline-block;
-                                        font-size: 16px;"><strong>Confirmar</strong></button>
-                                    </a>
-                                </p>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </center>
-        </body>
-        </html>
-        ';
-        //***********---------------llamada de la funcion enviar correo---------------***********
-        mail($destinatario,$asunto,$mensaje,$cabeceras);
-
-    }

@@ -115,8 +115,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 	</header>
 
-	<!-- Menu -->
-	<div class="menu_container menu_mm">
+	<!-- Menu aside -->
+	<div class="menu_container menu_mm" style="background-color:rgb(14, 14, 31);color: rgb(255, 255, 255);">
 		<!-- Menu Close Button -->
 		<div class="menu_close_container">
 			<div class="menu_close"></div>
@@ -125,38 +125,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Menu Items -->
 		<div class="menu_inner menu_mm">
 			<div class="menu menu_mm">
-				<div class="menu_search_form_container">
-					<form action="#" id="menu_search_form">
-						<input type="search" class="menu_search_input menu_mm">
-						<button id="menu_search_submit" class="menu_search_submit" type="submit"><img
-								src="<?= base_url()?>/public/images/search_2.png" alt=""></button>
-					</form>
-				</div>
+			
 				<ul class="menu_list menu_mm">
-					<li class="menu_item menu_mm"><a href="#">Home</a></li>
-					<li class="menu_item menu_mm"><a href="about.html">About us</a></li>
-					<li class="menu_item menu_mm"><a href="offers.html">Offers</a></li>
-					<li class="menu_item menu_mm"><a href="news.html">News</a></li>
-					<li class="menu_item menu_mm"><a href="contact.html">Contact</a></li>
+					<?php foreach($main_menu as $item): ?>
+					<li class="menu_item menu_mm">
+						<a href="<?= $item['url'] ?>" style="color: rgb(255, 255, 255);"><?= $item['title'] ?></a>
+					</li>
+					<?php endforeach ?>									
 				</ul>
 
-				<!-- Menu Social -->
-
-				<div class="menu_social_container menu_mm">
-					<ul class="menu_social menu_mm">
-						<li class="menu_social_item menu_mm"><a href="#"><i class="fa fa-pinterest"
-									aria-hidden="true"></i></a></li>
-						<li class="menu_social_item menu_mm"><a href="#"><i class="fa fa-linkedin"
-									aria-hidden="true"></i></a></li>
-						<li class="menu_social_item menu_mm"><a href="#"><i class="fa fa-instagram"
-									aria-hidden="true"></i></a></li>
-						<li class="menu_social_item menu_mm"><a href="#"><i class="fa fa-facebook"
-									aria-hidden="true"></i></a></li>
-						<li class="menu_social_item menu_mm"><a href="#"><i class="fa fa-twitter"
-									aria-hidden="true"></i></a></li>
-					</ul>
-				</div>
-				<div class="menu_copyright menu_mm">Colorlib All rights reserved</div>
+				<div class="menu_copyright menu_mm">TripDo todos los derechos reservados.</div>
 			</div>
 		</div>
 	</div>

@@ -18,15 +18,12 @@
 	                        <!-- imagen -->
 	                        <div class="post_image">
 								<img src="<?= $viaje->imagen ?>">
+								<?php if (strcmp($rol, "") != 0){  ?>
 								<form action="<?= base_url('/viaje/copiar') ?>" method="POST">
 									<input type="hidden" name="idViaje" value="<?= $id ?>" >
 									<button type="submit" name="copiarViaje" class="boton-copiar text-center p-0 px-1">Copiar</button>
 								</form>
-								<!-- 
-	                            <a>
-	                                <div class="post_image_box text-center">Copiar</div>
-								</a>
-								-->
+								<?php } ?>
 	                        </div>
 
 	                        <!-- Botones de control -->

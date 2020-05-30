@@ -113,6 +113,8 @@ class mTripDo extends CI_Model {
             strcmp($dtViaje->nombre, "") == 0 ||
             ! isset($dtViaje->descripcion) ||
             strcmp($dtViaje->descripcion, "") == 0 ||
+            ! isset($dtViaje->imagen) ||
+            strcmp($dtViaje->imagen, "") == 0 ||
             ! isset($dtViaje->publico)){
                 throw new Exception("Hay datos obligatorios sin completar");
         }
@@ -617,6 +619,7 @@ class mTripDo extends CI_Model {
             $dtv->nombre      = (string) $r->nombre;
             $dtv->descripcion = (string) $r->descripcion;
             $dtv->publico     = (bool)   $r->publico;
+            $dtv->imagen      = (string) $r->imagen;
             $dtv->realizado   = (bool)   $r->realizado;
             $dtv->idUsuario   = (string) $r->idUsuario;
             $dtv->valoracion  = (bool)   $r->valoracion;
@@ -980,6 +983,7 @@ class mTripDo extends CI_Model {
             $dtv->nombre      = (string) $row['nombre'];
             $dtv->descripcion = (string) $row['descripcion'];
             $dtv->publico     = (bool)   $row['publico'];
+            $dtv->imagen      = (string) $row['imagen'];
             $dtv->realizado   = (bool)   $row['realizado'];
             $dtv->idUsuario   = (string) $row['idUsuario'];
             $dtv->valoracion  = (float)  $row['valoracion'];

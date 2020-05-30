@@ -30,7 +30,15 @@
                             </div>  
                             
                             <div class="form-group row col-md-9 mx-auto">
-                                <label class="col-md-3" for="descripcion">Privacidad</label>
+                                <label class="col-md-3" for="linkImagen">URL de imagen</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="linkImagen" name="linkImagen" value="<?= $defLinkImagen?>">
+                                    <span><?= form_error('linkImagen'); ?></span>	
+                                </div>																
+                            </div>
+                            
+                            <div class="form-group row col-md-9 mx-auto">
+                                <label class="col-md-3" for="publico">Privacidad</label>
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="form-check col-6 text-center">

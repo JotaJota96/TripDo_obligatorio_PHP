@@ -18,9 +18,10 @@ class CrearViaje extends CI_Controller {
 		$this->data['footerTags'] = footerTags();
 		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
 		$this->data['footer'] = $this->load->view('footer', '', TRUE);
-
-		$this->data['defNombre'] =$this->input->post('nombreViaje');
-		$this->data['defDescripcion'] =$this->input->post('descripcion');
+		
+		$this->data['defNombre']      = $this->input->post('nombreViaje');
+		$this->data['defDescripcion'] = $this->input->post('descripcion');
+		$this->data['defLinkImagen']  = $this->input->post('linkImagen');
     }
 
 	public function index(){	
@@ -38,10 +39,10 @@ class CrearViaje extends CI_Controller {
 		}
 
 		$dtviaje = new DtViaje();
-		$dtviaje->nombre = $this->input->post('nombreViaje');
+		$dtviaje->nombre      = $this->input->post('nombreViaje');
 		$dtviaje->descripcion = $this->input->post('descripcion');
- 
-		$publico = $this->input->post('publico');
+		$dtviaje->imagen      = $this->input->post('linkImagen');
+		$publico              = $this->input->post('publico');
 
 		if($publico=='option1'){
 			$dtviaje->publico = false;
@@ -72,6 +73,7 @@ class CrearViaje extends CI_Controller {
 		//Validaciones
 		$this->form_validation->set_rules('nombreViaje', 'Nombre del viaje', 'trim|required|min_length[5]|max_length[50]|alpha_numeric_spaces');
 		$this->form_validation->set_rules('descripcion', 'Descripción', 'trim|required');
+		$this->form_validation->set_rules('linkImagen', 'URL de imagen', 'trim|required|min_length[10]|valid_url');
 
 		//Mensajes de error
 		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');
@@ -79,6 +81,7 @@ class CrearViaje extends CI_Controller {
 		$this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 		$this->form_validation->set_message('alpha_dash','El campo %s solo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
 		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s solo puede contener caracteres alfanuméricos, números y espacios');
+		$this->form_validation->set_message('valid_url','El campo %s debe ser una URL a una imagen');
 
 		if($this->form_validation->run() === FALSE){
 			$this->load->view('crear_viaje', $this->data);

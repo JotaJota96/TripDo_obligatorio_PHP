@@ -17,7 +17,7 @@
 	                        </div>
 	                        <!-- imagen -->
 	                        <div class="post_image">
-								<img src="<?= base_url()?>public/images/news_1.jpg">
+								<img src="<?= $viaje->imagen ?>">
 								<form action="<?= base_url('/viaje/copiar') ?>" method="POST">
 									<input type="hidden" name="idViaje" value="<?= $id ?>" >
 									<button type="submit" name="copiarViaje" class="boton-copiar text-center p-0 px-1">Copiar</button>

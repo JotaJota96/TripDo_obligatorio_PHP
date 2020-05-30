@@ -100,7 +100,7 @@ function enviarCorreoImbitacion($destinatario, $rol, $link){
     $cabeceras .= 'From: Recordatorio <tripdo.uy@gmail.com>' . "\r\n";
 
     //***********----------------Asunto del correo---------------***********
-    $asunto="Confirmar registro";
+    $asunto="Te han invitado como $rol";
 
     //***********---------------Mensaje del correo---------------***********
 
@@ -124,11 +124,10 @@ function enviarCorreoImbitacion($destinatario, $rol, $link){
                         <tbody>
                         <tr>
                             <td style="color: white;">
-                            <h1>Confirmacion de Colaborador</h1>
-                            <p>Este correo ha sido enviado por <strong style="color: rgb(224, 73, 73);">TripDo</strong> para confirmar '.$rol.'.</p>
+                            <h1>Has sido invitado como '.$rol.' en Trip</h1>
+                            <p>Este correo ha sido enviado por <strong style="color: rgb(224, 73, 73);">TripDo</strong> para invitarte como '.$rol.' de un viaje.</p>
                             <p><strong style="color: rgb(224, 73, 73);">TripDo</strong> es un sitio destinado a la planeacion de viajes nacionales e internacionales.</p>
-                            <p>Copie el siguiente codigo <strong style="color: rgb(224, 73, 73);">'. $codigo .'</strong></p>
-                            <p>Presione <strong style="color: rgb(224, 73, 73);">Confirmar</strong> para continuar.</p>
+                            <p>Presione <strong style="color: rgb(224, 73, 73);">Aceptar</strong> para continuar.</p>
                             <div class="column-top">&nbsp;</div>
                             <p style="text-align:center;">
                                 <a href="'.$link.'" class="strong">
@@ -139,7 +138,7 @@ function enviarCorreoImbitacion($destinatario, $rol, $link){
                                     text-align: center;
                                     text-decoration: none;
                                     display: inline-block;
-                                    font-size: 16px;"><strong>Confirmar</strong></button>
+                                    font-size: 16px;"><strong>Aceptar</strong></button>
                                 </a>
                             </p>
                             </td>

@@ -400,17 +400,20 @@
 	                                <hr>
 	                                <p>¿Quieres invitar a alguien mas?</p>
 	                                <div class="container p-1 m-0">
-	                                    <div class="menu_search_form_container row">
-	                                        <div class="col-9 pt-2">
-	                                            <input type="email" class="form-control" class="menu_search_input menu_mm">
-	                                        </div>
-	                                        <div class="col-3  p-0 m-0">
-	                                            <div class="buttons_container w-75 h-75 p-0 m-0">
-	                                                <div class="pb-3 button button_1 elements_button" data-toggle="modal">
-	                                                    Enviar</div>
-	                                            </div>
-	                                        </div>
-	                                    </div>
+										<form action="<?= base_url('/viaje/enviarInvitacion') ?>" method="POST">
+											<div class="menu_search_form_container row">
+												<div class="col-9 pt-2">
+													<input type="email" name="destinatario" class="form-control" class="menu_search_input menu_mm">
+												</div>
+												<input type="hidden" name="enlace" value="<?= $linkAgregarViajero ?>">
+												<input type="hidden" name="id" value="<?= $id ?>">
+												<div class="col-3  p-0 m-0">
+													<div class="buttons_container w-75 h-75 p-0 m-0">
+														<button type="submit" name="btnEnviarInvitacion" class="_button btn-block">Enviar</button>
+													</div>
+												</div>
+											</div>
+										</form>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -418,7 +421,7 @@
 	                            <div class="tab_panel_content">
 	                                <div class="menu_search_form_container">
 	                                    <input type="search" class="menu_search_input menu_mm"
-	                                        value="<?= $linkAgregarViajero ?>" disabled>
+	                                        value="<?= $linkAgregarColaborador ?>" disabled>
 	                                </div>
 	                                <br>
 	                                <ul class="list-group">
@@ -436,18 +439,20 @@
 	                                    <hr>
 	                                    <p>¿Quieres invitar a alguien mas?</p>
 	                                    <div class="container p-1 m-0">
-	                                        <div class="menu_search_form_container row">
-	                                            <div class="col-9 pt-2">
-	                                                <input type="email" class="form-control"
-	                                                    class="menu_search_input menu_mm">
-	                                            </div>
-	                                            <div class="col-3  p-0 m-0">
-	                                                <div class="buttons_container w-75 h-75 p-0 m-0">
-	                                                    <div class="pb-3 button button_1 elements_button"
-	                                                        data-toggle="modal">Enviar</div>
-	                                                </div>
-	                                            </div>
-	                                        </div>
+											<form action="<?= base_url('/viaje/enviarInvitacion') ?>" method="POST">
+												<div class="menu_search_form_container row">
+													<div class="col-9 pt-2">
+														<input type="email" name="destinatario" class="form-control" class="menu_search_input menu_mm">
+													</div>
+													<input type="hidden" name="enlace" value="<?= $linkAgregarColaborador ?>">
+													<input type="hidden" name="id" value="<?= $id ?>">
+													<div class="col-3  p-0 m-0">
+														<div class="buttons_container w-75 h-75 p-0 m-0">
+															<button type="submit" name="btnEnviarInvitacion" class="_button btn-block">Enviar</button>
+														</div>
+													</div>
+												</div>
+											</form>
 	                                    </div>
 	                                </ul>
 	                            </div>

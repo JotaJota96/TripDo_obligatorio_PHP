@@ -9,7 +9,7 @@ class Viaje extends CI_Controller {
         parent:: __construct();
         $this->load->model('MTripDo');
         $this->load->library(array('DtUsuario','DtViaje', 'DtDestino', 'DtPlan', 'DtTag'));
-		$this->load->helper(array('main_menu', 'footer', 'viaje', 'url'));				
+		$this->load->helper(array('main_menu', 'footer', 'correo', 'viaje', 'url'));				
 		$this->data['mapa'] = true;
 		$this->data['title'] = 'Viaje';
 		$this->data['style'] = 'viaje_style.css';
@@ -223,19 +223,44 @@ class Viaje extends CI_Controller {
 			redirect(base_url('/login'));
 		}
 		// verifico el hash
-		if (strcmp(generarHash($rol, $idViaje), $verificacion) != 0){
+		if (strcmp($this->generarHash($rol, $idViaje), $verificacion) != 0){
             redirect(base_url());
 		}
-
+		$idUsuario = $this->session->userdata('nickname');
 		try {
-			$this->MTripDo->agregarViajeroAViaje($idViaje, $idUsuario);
+			if (strcmp($rol, "v") == 0){
+				$this->MTripDo->agregarViajeroAViaje($idViaje, $idUsuario);
+			}elseif (strcmp($rol, "c") == 0){
+				$this->MTripDo->agregarColaboradorAViaje($idViaje, $idUsuario);
+			}
 			redirect(base_url('/viaje/ver/'.$idViaje));
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;
-            redirect(base_url());
+			echo $e;
+            //redirect(base_url());
 		}
 	}
 
+	public function enviarInvitacion(){
+		$redirigir = $this->input->post('btnEnviarInvitacion');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		// obtengo los datos del form
+		$enlace       = $this->input->post('enlace');
+		$idViaje      = $this->input->post('id');
+		$destinatario = $this->input->post('destinatario');;
+
+		if (strpos($enlace, "/v/") > 0){
+			enviarCorreoImbitacion($destinatario, "viajero", $enlace);
+		}elseif (strpos($enlace, "/c/") > 0) {
+			enviarCorreoImbitacion($destinatario, "colaborador", $enlace);
+		}
+		redirect(base_url('/viaje/ver/'.$idViaje));
+	}
+
+	//------------------------------------------------------------------------------
 	private function generarEnlaceInvitacion($rol, $idViaje){
 		$jash = $this->generarHash($rol, $idViaje);
 		if (strcmp($rol, "v")){

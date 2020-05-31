@@ -102,25 +102,35 @@ class Viaje extends CI_Controller {
 		}
 		$log = $logLimpio;
 		
+		$idPlanesVotados = array();
+		$idDestinosVotados = array();
+
 		$permitirCalificar = true;
 		if (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0){
 			$idUsuario = $this->session->userdata('nickname');
 			$permitirCalificar = ! $this->MTripDo->viajeValorado($idUsuario, $idViaje);
+
+			$idDestinosVotados = $this->MTripDo->obtenerMisDestinosVotados($idUsuario, $idViaje);
+			$idPlanesVotados = $this->MTripDo->obtenerMisPlanesVotados($idUsuario, $idViaje);
 		}
+
 		
 		// paso las variables a la vista
-		$this->data['id'] = $idViaje;
-		$this->data['viaje'] = $viaje;
-		$this->data['destinos'] = $destinos;
-		$this->data['planes'] = $planes;
-		$this->data['rol'] = $rol;
-		$this->data['log'] = $log;
-		$this->data['viajeros'] = $viajeros;
-		$this->data['colaboradores'] = $colaboradores;
-		$this->data['linkAgregarViajero'] = $this->generarEnlaceInvitacion("v", $idViaje);
+		$this->data['id']                     = $idViaje;
+		$this->data['viaje']                  = $viaje;
+		$this->data['destinos']               = $destinos;
+		$this->data['planes']                 = $planes;
+		$this->data['rol']                    = $rol;
+		$this->data['log']                    = $log;
+		$this->data['viajeros']               = $viajeros;
+		$this->data['colaboradores']          = $colaboradores;
+		$this->data['linkAgregarViajero']     = $this->generarEnlaceInvitacion("v", $idViaje);
 		$this->data['linkAgregarColaborador'] = $this->generarEnlaceInvitacion("c", $idViaje);
-		$this->data['permitirCalificar'] = $permitirCalificar;
+		$this->data['permitirCalificar']      = $permitirCalificar;
+		$this->data['idPlanesVotados']        = $idPlanesVotados;
+		$this->data['idDestinosVotados']      = $idDestinosVotados;
 
+	
 		$this->load->view('viaje', $this->data);
 	}
 
@@ -198,7 +208,6 @@ class Viaje extends CI_Controller {
 		}
 		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
 	}
-
 
 	public function marcarComoRealizado(){
 		$redirigir = $this->input->post('btnMarcarComoRealizado');
@@ -285,7 +294,6 @@ class Viaje extends CI_Controller {
 		redirect(base_url('/viaje/ver/'.$idViaje));
 	}
 
-
 	//------------------------------------------------------------------------------
 	private function generarEnlaceInvitacion($rol, $idViaje){
 		$jash = $this->generarHash($rol, $idViaje);
@@ -295,6 +303,7 @@ class Viaje extends CI_Controller {
 			return base_url('/viaje/agregarRol/v/'.$idViaje.'/'.$jash);
 		}
 	}
+
 	private function generarHash($rol, $idViaje){
 		return sha1(sha1($rol.$idViaje).sha1("Esto es para hacerlo mas seguro"));
 	}

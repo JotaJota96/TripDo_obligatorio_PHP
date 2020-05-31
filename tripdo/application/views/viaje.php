@@ -110,7 +110,7 @@
 									<?php 		
 										foreach($destinos as $d){
 											// modificar la linea para decidir si el destino ya fue votado por el usuario o no
-											$mostrarVotarDestino = (strcmp($rol, "viajero") == 0 || strcmp($rol, "duenio") == 0 );
+											$mostrarVotarDestino = !(in_array($d->id,$idDestinosVotados));
 											$col_destino = "col-10";
 											if ( ! $mostrarVotarDestino) $col_destino = "col-12";
 								?>
@@ -131,7 +131,7 @@
 	                                                <?php 
 														foreach ($planes[$d->id] as $p){
 															// Cambiar la linea siguiente y evaluar si el usuario ya voto el plan o no
-															$mostrarVotarPlan = (strcmp($rol, "viajero") == 0 || strcmp($rol, "duenio") == 0 );
+															$mostrarVotarPlan = ($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
 															$col_plan = "col-10";
 															if ( ! $mostrarVotarPlan) $col_plan = "col-12";
 													?>
@@ -166,7 +166,7 @@
 	                                            </ul>
 	                                        </div>
 	                                    </div>
-	                                    <?php if ($mostrarVotarDestino){ ?>
+	                                    <?php if ($mostrarVotarDestino ){ ?>
 	                                    <!-- Boton para votar -->
 	                                    <div class="col-2 p-0 m-0">
 	                                        <div class="buttons w-100">

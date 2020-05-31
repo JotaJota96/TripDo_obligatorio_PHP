@@ -1,0 +1,93 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class CrearViaje extends CI_Controller {
+ 
+	public $data = array();
+
+    function __construct(){
+		parent::__construct();
+		$this->load->model('MTripDo');
+		$this->load->library('DtViaje');
+		$this->load->library(array('form_validation')); //Carga la libreria para trabajar con formularios
+		$this->load->helper(array('main_menu', 'footer', 'url','html'));		
+		$this->data['title'] = 'Crear Viaje';
+		$this->data['style'] = 'crear_viaje_style.css';
+		$this->data['responsive'] = 'crear_viaje_responsive.css';
+		$this->data['main_menu'] = mainMenu();
+		$this->data['footerTags'] = footerTags();
+		$this->data['header'] = $this->load->view('header', $this->data, TRUE);
+		$this->data['footer'] = $this->load->view('footer', '', TRUE);
+		
+		$this->data['defNombre']      = $this->input->post('nombreViaje');
+		$this->data['defDescripcion'] = $this->input->post('descripcion');
+		$this->data['defLinkImagen']  = $this->input->post('linkImagen');
+    }
+
+	public function index(){	
+		// si hay una sesion iniciada, redirige a la pagina de inicio
+        if (!$this->session->has_userdata('nickname')){
+            redirect(base_url());
+		}
+		$this->load->view('crear_viaje', $this->data);		
+	}
+
+	public function crear_Viaje(){
+		$redirigir = $this->input->post('btncrearViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		$dtviaje = new DtViaje();
+		$dtviaje->nombre      = $this->input->post('nombreViaje');
+		$dtviaje->descripcion = $this->input->post('descripcion');
+		$dtviaje->imagen      = $this->input->post('linkImagen');
+		$publico              = $this->input->post('publico');
+
+		if($publico=='option1'){
+			$dtviaje->publico = false;
+		}else{
+			$dtviaje->publico = true;
+		}
+
+		try {
+			$idUsuario = $this->session->userdata('nickname');
+			// manda a persistir el viaje y obtengo lo persistido con el ID que le fue asignado
+			$dtviaje = $this->MTripDo->crearViaje($dtviaje, $idUsuario);
+
+			redirect(base_url('/viaje/ver/'.$dtviaje->id));
+
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+			$this->load->view('crear_viaje', $this->data);
+		}
+	
+	}
+
+	public function validate(){
+		$redirigir = $this->input->post('btncrearViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+
+		//Validaciones
+		$this->form_validation->set_rules('nombreViaje', 'Nombre del viaje', 'trim|required|min_length[5]|max_length[50]|alpha_numeric_spaces');
+		$this->form_validation->set_rules('descripcion', 'Descripción', 'trim|required');
+		$this->form_validation->set_rules('linkImagen', 'URL de imagen', 'trim|required|min_length[10]|valid_url');
+
+		//Mensajes de error
+		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');
+		$this->form_validation->set_message('max_length', 'El campo %s no debe superar los %s caracteres.');
+		$this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+		$this->form_validation->set_message('alpha_dash','El campo %s solo puede contener caracteres alfanuméricos, guiones bajos y guiones.');
+		$this->form_validation->set_message('alpha_numeric_spaces','El campo %s solo puede contener caracteres alfanuméricos, números y espacios');
+		$this->form_validation->set_message('valid_url','El campo %s debe ser una URL a una imagen');
+
+		if($this->form_validation->run() === FALSE){
+			$this->load->view('crear_viaje', $this->data);
+		}else{
+			$this->crear_Viaje();
+		}
+    }
+    
+}

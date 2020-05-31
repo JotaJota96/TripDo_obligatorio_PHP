@@ -1,0 +1,694 @@
+@charset "utf-8";
+/* CSS Document */
+
+/******************************
+
+[Table of Contents]
+
+1. Fonts
+2. Body and some general stuff
+3. Home
+4. Header
+	4.1 Logo
+	4.2 Navigation
+	4.3 Search
+	4.4 Hamburger
+5. Menu
+	5.1 Menu Social
+	5.2 Menu copyright
+6. Elements
+	6.1 Buttons
+	6.2 Accordions & Tabs
+		6.2.1 Accordions
+		6.2.2 Tabs
+	6.3 Loaders
+	6.4 Milestones
+	6.5 Icon Boxes
+7. Footer
+
+
+******************************/
+
+/***********
+1. Fonts
+***********/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
+
+/*********************************
+2. Body and some general stuff
+*********************************/
+
+*
+{
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+}
+body
+{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	background: #FFFFFF;
+	color: #131a2f;
+}
+div
+{
+	display: block;
+	position: relative;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+ul
+{
+	list-style: none;
+	margin-bottom: 0px;
+}
+p
+{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	line-height: 2;
+	font-weight: 400;
+	color: #7d8293;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+}
+p a
+{
+	display: inline;
+	position: relative;
+	color: inherit;
+	border-bottom: solid 1px #ffa07f;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+a, a:hover, a:visited, a:active, a:link
+{
+	text-decoration: none;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+}
+p a:active
+{
+	position: relative;
+	color: #FF6347;
+}
+p a:hover
+{
+	color: #FFFFFF;
+	background: #ffa07f;
+}
+p a:hover::after
+{
+	opacity: 0.2;
+}
+::selection
+{
+	background: rgba(254, 60, 82, 0.8);
+	color: #FFFFFF;
+}
+p::selection
+{
+	
+}
+h1{font-size: 48px;}
+h2{font-size: 40px;}
+h3{font-size: 24px;}
+h4{font-size: 18px;}
+h5{font-size: 14px;}
+h1, h2, h3, h4, h5, h6
+{
+	font-family: 'Montserrat', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+}
+h1::selection, 
+h2::selection, 
+h3::selection, 
+h4::selection, 
+h5::selection, 
+h6::selection
+{
+	
+}
+.form-control
+{
+	color: #db5246;
+}
+section
+{
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+}
+.clear
+{
+	clear: both;
+}
+.clearfix::before, .clearfix::after
+{
+	content: "";
+	display: table;
+}
+.clearfix::after
+{
+	clear: both;
+}
+.clearfix
+{
+	zoom: 1;
+}
+.float_left
+{
+	float: left;
+}
+.float_right
+{
+	float: right;
+}
+.trans_200
+{
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.trans_300
+{
+	-webkit-transition: all 300ms ease;
+	-moz-transition: all 300ms ease;
+	-ms-transition: all 300ms ease;
+	-o-transition: all 300ms ease;
+	transition: all 300ms ease;
+}
+.trans_400
+{
+	-webkit-transition: all 400ms ease;
+	-moz-transition: all 400ms ease;
+	-ms-transition: all 400ms ease;
+	-o-transition: all 400ms ease;
+	transition: all 400ms ease;
+}
+.trans_500
+{
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	transition: all 500ms ease;
+}
+.fill_height
+{
+	height: 100%;
+}
+.super_container
+{
+	width: 100%;
+	overflow: hidden;
+}
+.nopadding
+{
+	padding: 0px !important;
+}
+.parallax-window
+{
+    min-height: 400px;
+    background: transparent;
+}
+.prlx_parent
+{
+	overflow: hidden;
+}
+.prlx
+{
+	height: 130% !important;
+}
+.section_title
+{
+	padding-top: 111px;
+	line-height: 1.1;
+}
+.section_title h2
+{
+	font-weight: 300;
+	color: #131a2f;
+}
+.section_title div
+{
+	font-size: 16px;
+	font-weight: 400;
+	color: #7d8293;
+	text-transform: uppercase;
+	margin-top: 19px;
+}
+.button
+{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background: #fe3c52;
+	text-align: center;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+
+	display: block;
+	font-size: 16px;
+	color: #FFFFFF;
+	font-weight: 500;
+	line-height: 56px;
+}
+
+
+/*********************************
+6. Elements
+*********************************/
+
+.elements
+{
+	padding-top: 120px;
+	padding-bottom: 108px;
+}
+.elements_title
+{
+	font-size: 40px;
+	font-weight: 400;
+	color: #131a2f;
+}
+
+/*********************************
+6.1 Buttons
+*********************************/
+
+.buttons{
+	margin: 5px;
+	height: 63px;
+}
+
+
+.buttons_container
+{
+	margin: 5px;
+}
+.button_1
+{
+	color: #FFFFFF;
+	background: rgba(254,60,82,1);	
+}
+.button_2
+{
+	background: rgba(19,26,47,1);
+	vertical-align: middle;
+}
+.button_3
+{
+	background: transparent;
+	border: solid 2px rgba(254,60,82,1);
+	vertical-align: middle;
+}
+.button_3 a
+{
+	color: rgba(254,60,82,1);
+}
+.button_4
+{
+	background: transparent;
+	border: solid 2px rgba(19,26,47,1);
+	vertical-align: middle;
+}
+.button_4 a
+{
+	color: rgba(19,26,47,1);
+}
+.button_1:hover
+{
+	background: rgba(254,60,82,0.8);
+}
+.button_2:hover
+{
+	background: rgba(19,26,47,0.8);
+}
+.button_3:hover
+{
+	background: rgba(254,60,82,0.8);
+}
+.button_1:hover a
+{
+	color: #FFFFFF;
+}
+.button_4:hover
+{
+	background: rgba(19,26,47,0.8);
+}
+.button_4:hover 
+{
+	color: #FFFFFF;
+}
+.elements_button
+{
+	margin: 5 px;
+}
+.buttons:hover{
+	cursor: pointer ;
+}
+
+
+/*********************************
+6.2 Accordions & Tabs
+*********************************/
+
+.accordions_tabs
+{
+	margin-top: 89px;
+}
+.accordions_tabs_container
+{
+	margin-top: 74px;
+}
+
+/*********************************
+6.2.1 Accordions
+*********************************/
+
+.accordion_container
+{
+	margin-bottom: 20px;
+}
+.accordion_container:last-child
+{
+	margin-bottom: 0;
+}
+.accordion
+{
+	height: 63px;
+	width: 100%;
+	border: solid 2px #dbdbdb;
+	background: #FFFFFF;
+	padding-left: 20px;
+	cursor: pointer;
+	color: #131a2f;
+	font-size: 15px;
+	font-weight: 400;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.accordion div
+{
+	max-width: 91%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.accordion.active
+{
+	background: #fe3c52;
+	border: solid 2px #fe3c52;
+	color: #FFFFFF;
+}
+.accordion:active
+{
+	background: #fe3c52 !important;
+}
+.accordion::after
+{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	right: 13px;
+	height: 100%;
+	content: '+';
+	font-size: 16px;
+	color: #07122c;
+	font-weight: 400;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.accordion.active::after
+{
+	color: #FFFFFF;
+	content: '-';
+}
+.accordion:hover
+{
+	background: #fe3c52;
+	color: #FFFFFF;
+	border: solid 2px #fe3c52;
+}
+.accordion:hover::after
+{
+	color: #FFFFFF;
+}
+.accordion_panel
+{
+	padding-left: 15px;
+	padding-right: 15px;
+	max-height: 0px;
+	overflow: hidden;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	transition: all 500ms ease;
+}
+.accordion_panel p
+{
+	padding-top: 15px;
+}
+.accordion_panel p:last-of-type
+{
+	margin-bottom: 0;
+}
+
+/*********************************
+6.2.2 Tabs
+*********************************/
+
+.tabs_container
+{
+	width: 100%;
+}
+.tabs
+{
+	width: 100%;
+}
+.tab
+{
+	height: 50px;
+	background: transparent;
+	font-size: 15px;
+	color: #131a2f;
+	font-weight: 400;
+	line-height: 50px;
+	flex-grow: 1;
+	text-align: center;
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.tab.active,
+.tab:hover
+{
+	background: #fe3c52;
+	color: #FFFFFF;
+}
+.tab_panels
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: solid 2px #fe3c52;
+}
+.tab_panel
+{
+	display: none !important;
+	width: 100%;
+	height: 100%;
+	-webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.tab_panel.active
+{
+	display: block !important;
+}
+.tab_panel_content p:last-of-type
+{
+	margin-bottom: 0;
+}
+
+/*********************************
+6.3 Loaders
+*********************************/
+
+.loaders
+{
+	margin-top: 120px;
+}
+.loaders_container
+{
+	margin-top: 82px;
+}
+.loader
+{
+	width: 230px;
+	height: 230px;
+	margin: 0 auto;
+}
+.loader span
+{
+	position: absolute;
+	left: 50%;
+	top: 57%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transform: translateX(-50%);
+	font-size: 18px;
+	color: #7d8293;
+	margin-top: 8px;
+	white-space: nowrap;
+}
+.loader .progressbar-text
+{
+	top: 45% !important;
+}
+
+/*********************************
+6.5 Icon Boxes
+*********************************/
+
+.icon_boxes
+{
+	margin-top: 96px;
+}
+.icon_box_container
+{
+	margin-top: 74px;
+}
+.icon_box_image
+{
+	display: inline-block;
+	height: 62px;
+}
+.icon_box_image img
+{
+	max-height: 100%;
+}
+.icon_box:hover .svg path,
+.icon_box:hover .svg rect,
+.icon_box:hover .svg polygon
+{
+	fill: #fe3c52;
+}
+.icon_box svg
+{
+	height: 62px;
+	width: auto;
+}
+.icon_box_title
+{
+	display: inline-block;
+	vertical-align: bottom;
+	font-size: 24px;
+	font-weight: 300;
+	color: #131a2f;
+	padding-left: 22px;
+}
+.icon_box_text
+{
+	margin-top: 14px;
+}
+.icon_box p:last-of-type
+{
+	margin-bottom: 0;
+}
+.icon_box_more
+{
+	display: inline-block;
+	position: relative;
+	font-size: 12px;
+	font-weight: 400;
+	color: #131a2f;
+	margin-top: 35px;
+	overflow: hidden;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.icon_box_more:hover
+{
+	color: #fe3c52;
+}
+.icon_box_more::before
+{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	content: '';
+	background: #fe3c52;
+	-webkit-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
+    -moz-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
+    -ms-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
+    -o-transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
+    transition: all 0.5s cubic-bezier(0.615, 0.19, 0.305, 0.91);
+}
+.icon_box_more:hover::before
+{
+	left: 100%;
+}
+
+.tab.log,
+.tab:hover
+{
+	background: #fe3c52;
+	color: #FFFFFF;
+}
+.tab_panel.log
+{
+	display: block !important;
+}

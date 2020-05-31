@@ -135,6 +135,7 @@ CREATE TABLE `viaje` (
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish2_ci NOT NULL,
   `publico` tinyint(1) NOT NULL,
+  `imagen` text COLLATE utf8_spanish2_ci NOT NULL,
   `realizado` tinyint(1) NOT NULL DEFAULT 0,
   `idUsuario` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -152,13 +153,7 @@ CREATE TABLE `viajero` (
   `texto` varchar(300) COLLATE utf8_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Índices para tablas volcadas
---
 
---
--- Indices de la tabla `colaborador`
---
 ALTER TABLE `colaborador`
   ADD PRIMARY KEY (`idUsuario`,`idViaje`),
   ADD KEY `fk_colaborador_idviaje` (`idViaje`);
@@ -318,7 +313,10 @@ CREATE TRIGGER `tg_viaje_viajero`
   AFTER INSERT ON `viaje` FOR EACH ROW
   INSERT INTO `viajero` (`idUsuario`, `idViaje`) VALUES (NEW.idUsuario, NEW.id);
 
-
+create view viajevaloracion as
+	SELECT v.*, AVG(j.valoracion) AS valoracion
+	FROM `viaje` v JOIN `viajero` j on v.id = j.idViaje
+	GROUP BY v.id;
 
 
 

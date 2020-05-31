@@ -131,7 +131,7 @@
 	                                                <?php 
 														foreach ($planes[$d->id] as $p){
 															// Cambiar la linea siguiente y evaluar si el usuario ya voto el plan o no
-															$mostrarVotarPlan = ($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
+															$mostrarVotarPlan = !($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
 															$col_plan = "col-10";
 															if ( ! $mostrarVotarPlan) $col_plan = "col-12";
 													?>
@@ -171,10 +171,19 @@
 	                                    <div class="col-2 p-0 m-0">
 	                                        <div class="buttons w-100">
 	                                            <div class="buttons_container  h-100 w-100">
-	                                                <div
-	                                                    class="button button_1 elements_button d-flex align-content-center justify-content-center">
-	                                                    Votar</div>
-	                                            </div>
+													<form action="<?= base_url('/viaje/votar')?>" method="POST">
+														<input type="hidden" name="idViaje" value="<?= $id ?>">
+														<input type="hidden" name="idDestinoOPlan" value="<?= $d->id ?>">
+
+														<input type="hidden" name="destinoOPlan" value="destino">
+
+														<div class="form-goup row">
+															<div class="col-md-12 mx-auto">
+																<button type="submit" name="btnVotarDestino" class="_button btn-block">Votar</button>
+															</div>
+														</div>
+													</form>
+												</div>
 	                                        </div>
 	                                    </div>
 	                                    <?php } ?>

@@ -294,6 +294,29 @@ class Viaje extends CI_Controller {
 		redirect(base_url('/viaje/ver/'.$idViaje));
 	}
 
+	public function votar(){
+		$redirigir = $this->input->post('btnVotarDestino');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+		// obtengo los datos del form
+		$idViaje  		= $this->input->post('idViaje');
+		$idDestinoOPlan = $this->input->post('idDestinoOPlan');
+		$destinoOPlan 	= $this->input->post('destinoOPlan');
+		$idUsuario 		= $this->session->userdata('nickname');
+		
+
+		try {
+			if(strcmp($destinoOPlan, "destino")==0){
+				$this->MTripDo->votarDestino($idUsuario, $idViaje, $idDestinoOPlan);
+			}else if(strcmp($destinoOPlan, "plan")==0){
+				$this->MTripDo->votarPlan($idUsuario, $idViaje, $idDestinoOPlan);
+			}
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		redirect(base_url('/viaje/ver/'.$this->input->post('idViaje')));
+	}
 	//------------------------------------------------------------------------------
 	private function generarEnlaceInvitacion($rol, $idViaje){
 		$jash = $this->generarHash($rol, $idViaje);
@@ -307,4 +330,5 @@ class Viaje extends CI_Controller {
 	private function generarHash($rol, $idViaje){
 		return sha1(sha1($rol.$idViaje).sha1("Esto es para hacerlo mas seguro"));
 	}
+	
 }

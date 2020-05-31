@@ -70,11 +70,11 @@
 	                        </div>
 	                        <?php } ?>
 
-							<?php if ($viaje->realizado && (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0)){ ?>
+							<?php if ($permitirCalificar && $viaje->realizado && (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0)){ ?>
 	             	           <div class="container p-1 m-0">
 	                         	   <div class="justify-content-between row ">
 										<!-- Calificar viaje -->
-										<div class="col-12">
+										<div class="col-12 p-0">
 											<div class="buttons">
 												<div class="buttons_container">
 													<div class="button button_1 elements_button" data-toggle="modal"
@@ -468,7 +468,7 @@
 										}
 									?>
 	                                    <hr>
-	                                    <pEnviar invitacion por correo</p>
+	                                    <p>Enviar invitacion por correo</p>
 	                                    <div class="container p-1 m-0">
 											<form action="<?= base_url('/viaje/enviarInvitacion') ?>" method="POST">
 												<div class="menu_search_form_container row">
@@ -519,15 +519,21 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-	                <form action="<?= base_url('viaje/sugerirDestino') ?>" method="POST">
+	                <form action="<?= base_url('viaje/calificarViaje') ?>" method="POST">
 	                    <div class="form-group">
-	                        <label class="form-control" for="slider" id="labelid">Valoracion: 5 estrellas</label>
-	                        <input type="range" max="5" min="1" step="1" value="5" id="slider" class="form-control-range w-100" onchange="actualizarSlider(this.value)" >
-	                    </div>
+	                        <label class="form-control" for="calificacion" id="labelid">Valoracion: 5 estrellas</label>
+	                        <input name="calificacion" type="range" max="5" min="1" step="1" value="5" id="slider" class="form-control-range w-100" onchange="actualizarSlider(this.value)" >
+						</div>
+						
+						<div class="form-group">
+							<label for="texto">Comentarios sobre el viaje</label>
+							<textarea name="texto" class="form-control" rows="1"></textarea>
+						</div>
+						<input type="hidden" name="id" value="<?= $id ?>">
 
 	                    <div class="form-goup row">
 	                        <div class="col-md-12 mx-auto">
-	                            <button type="submit" name="btnAgregarDestino" class="_button btn-block">Calificar</button>
+	                            <button type="submit" name="btnCalificarViaje" class="_button btn-block">Calificar</button>
 	                        </div>
 	                    </div>
 	                </form>

@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 
 						<!-- Main Navigation -->
-						<nav class="main_nav ml-auto ">
+						<nav class="main_nav ml-auto pr-5">
 							<ul class="main_nav_list ">
 
 								<?php foreach($main_menu as $item): ?>

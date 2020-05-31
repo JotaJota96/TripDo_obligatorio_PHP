@@ -44,6 +44,10 @@ function mainMenu(){
         // si SI hay un usuario logueado, agrego opciones de crear viaje, logout, etc
         array_push($menu, 
             array(
+                'title'=> 'Mis viaje',
+                'url' => base_url('/misViajes')
+            ),
+            array(
                 'title'=> 'Crear Viaje',
                 'url' => base_url('/crearViaje')
             ),

@@ -27,8 +27,8 @@
 	                        </div>
 
 	                        <!-- Botones de control -->
-	                        <?php 
-								if (strcmp($rol, "") != 0){ 
+	                        <?php
+								if ( !$viaje->realizado && strcmp($rol, "") != 0){ 
 									$col_md = "col-md-6";
 									if(strcmp($rol, "duenio") == 0) $col_md = "col-md-4";
 							?>
@@ -65,13 +65,36 @@
 	                                        </div>
 	                                    </div>
 	                                </div>
-	                                <?php } ?>
-
+									<?php } ?>
 	                            </div>
 	                        </div>
 	                        <?php } ?>
 
+							<?php if ($permitirCalificar && $viaje->realizado && (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0)){ ?>
+	             	           <div class="container p-1 m-0">
+	                         	   <div class="justify-content-between row ">
+										<!-- Calificar viaje -->
+										<div class="col-12 p-0">
+											<div class="buttons">
+												<div class="buttons_container">
+													<div class="button button_1 elements_button" data-toggle="modal"
+														data-target="#calificarViaje">Calificar viaje</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php } ?>
 	                        <hr>
+							
+	                        <div class="container p-1 m-0">
+	                            <div class="justify-content-between row ">
+									<h6 class="col-12">Descripción:</h6>
+									<p class="col-12"><?= $viaje->descripcion ?></p>
+								</div>
+							</div>
+
+							<hr>
 							
 	                        <!-- Listado de Destinos y planes -->
 	                        <div class="post_text">
@@ -196,7 +219,6 @@
 	                                <!-- mapa -->
 	                                <div id="map" style='width: 100%; height: 300px;'>
 	                                </div>
-	                                <pre id='coordenadas'></pre>
 	                            </div>
 
 	                            <!-- Actividad reciente / log -->
@@ -446,7 +468,7 @@
 										}
 									?>
 	                                    <hr>
-	                                    <pEnviar invitacion por correo</p>
+	                                    <p>Enviar invitacion por correo</p>
 	                                    <div class="container p-1 m-0">
 											<form action="<?= base_url('/viaje/enviarInvitacion') ?>" method="POST">
 												<div class="menu_search_form_container row">
@@ -485,8 +507,48 @@
 	    </div>
 	</div>
 
+	<!-- Ventana modal Calificar -->
+	<div class="modal fade" id="calificarViaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	    aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="exampleModalLabel">Calificar Viaje</h5>
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                </button>
+	            </div>
+	            <div class="modal-body">
+	                <form action="<?= base_url('viaje/calificarViaje') ?>" method="POST">
+	                    <div class="form-group">
+	                        <label class="form-control" for="calificacion" id="labelid">Valoracion: 5 estrellas</label>
+	                        <input name="calificacion" type="range" max="5" min="1" step="1" value="5" id="slider" class="form-control-range w-100" onchange="actualizarSlider(this.value)" >
+						</div>
+						
+						<div class="form-group">
+							<label for="texto">Comentarios sobre el viaje</label>
+							<textarea name="texto" class="form-control" rows="1"></textarea>
+						</div>
+						<input type="hidden" name="id" value="<?= $id ?>">
+
+	                    <div class="form-goup row">
+	                        <div class="col-md-12 mx-auto">
+	                            <button type="submit" name="btnCalificarViaje" class="_button btn-block">Calificar</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+						
 	<!-- Footer -->
 	<script>
+		//esto actualiza el valor del label valoracion 5 estrellas, en el model calificar
+		function actualizarSlider(val){
+			document.getElementById("labelid").innerHTML = "Valoracion: "+val+" estrellas";
+		}
+
 		var longitud = -56.732051948450575;
 		var latitud = -34.33235873819117;
 		var zoom = 5;

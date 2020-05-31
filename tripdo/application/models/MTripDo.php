@@ -547,7 +547,7 @@ class mTripDo extends CI_Model {
     * @param string $texto comentario asignado a la valoracion (opcional)
     * @return void
     */
-    public function calificarViaje($idUsuario, $idViaje, $valoracion, $texto=null){
+    public function calificarViaje($idUsuario, $idViaje, $valoracion, $texto){
         if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0 || !isset($valoracion)){
             throw new Exception("algunos de los parametros recibidos estan vacios");
         }
@@ -565,16 +565,11 @@ class mTripDo extends CI_Model {
         if (!$this->esViajero($idViaje, $idUsuario)) {
             throw new Exception('El usuario no tiene los permisos para realizar esta acción');
         }
+        if (isset($texto) && strcmp($texto, "") == 0){
+            $texto = null;
+        }
 
-        // verifico si el usuario ya valoró el viaje anteriormente
-        $row = $this->db
-            ->select('v.valoracion')
-            ->from('viajero v')
-            ->where('idUsuario', $idUsuario)
-            ->where('idViaje', $idViaje)
-            ->get()->row();
-        
-        if ($row->valoracion != null){
+        if ($this->viajeValorado($idUsuario, $idViaje)){
             throw new Exception('El usuario ya ha valorado el viaje anteriormente');
         }
 
@@ -590,6 +585,27 @@ class mTripDo extends CI_Model {
         $this->db->where('idViaje', $idViaje);
         $this->db->update('viajero', $datos);
     }
+
+    /**
+     * Devuelve true si el usuario ya valoró el viaje especificado
+    * @param string $idUsuario ID del usuario que se quiere saber si ya valoro el viaje
+    * @param int $idViaje iD del viaje del que se quiere saber si el usuario valoro
+    * @return bool
+     */
+    public function viajeValorado($idUsuario, $idViaje){
+        if( !isset($idViaje) || !isset($idUsuario) || strcmp($idUsuario, "") == 0){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        $row = $this->db
+            ->select('v.valoracion')
+            ->from('viajero v')
+            ->where('idUsuario', $idUsuario)
+            ->where('idViaje', $idViaje)
+            ->get()->row();
+        
+        return ($row->valoracion != null);
+    }
+
 
     //--------------------------------------------------------------------------------
     /**

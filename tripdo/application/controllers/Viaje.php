@@ -59,7 +59,6 @@ class Viaje extends CI_Controller {
 				$rol = "viajero";
 			} 
 		}
-
 		// obtengo el viaje
 		$viaje = $this->MTripDo->obtenerViaje($idViaje);
 
@@ -103,6 +102,12 @@ class Viaje extends CI_Controller {
 		}
 		$log = $logLimpio;
 		
+		$permitirCalificar = true;
+		if (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0){
+			$idUsuario = $this->session->userdata('nickname');
+			$permitirCalificar = ! $this->MTripDo->viajeValorado($idUsuario, $idViaje);
+		}
+		
 		// paso las variables a la vista
 		$this->data['id'] = $idViaje;
 		$this->data['viaje'] = $viaje;
@@ -114,6 +119,7 @@ class Viaje extends CI_Controller {
 		$this->data['colaboradores'] = $colaboradores;
 		$this->data['linkAgregarViajero'] = $this->generarEnlaceInvitacion("v", $idViaje);
 		$this->data['linkAgregarColaborador'] = $this->generarEnlaceInvitacion("c", $idViaje);
+		$this->data['permitirCalificar'] = $permitirCalificar;
 
 		$this->load->view('viaje', $this->data);
 	}
@@ -236,8 +242,7 @@ class Viaje extends CI_Controller {
 			redirect(base_url('/viaje/ver/'.$idViaje));
 		} catch (Exception $e) {
 			$this->data['exception'] = $e;
-			echo $e;
-            //redirect(base_url());
+            redirect(base_url());
 		}
 	}
 
@@ -259,6 +264,27 @@ class Viaje extends CI_Controller {
 		}
 		redirect(base_url('/viaje/ver/'.$idViaje));
 	}
+
+	public function calificarViaje(){
+		$redirigir = $this->input->post('btnCalificarViaje');
+        if ( ! isset($redirigir)) {
+            redirect(base_url());
+		}
+		
+		// obtengo los datos del form
+		$calificacion = $this->input->post('calificacion');
+		$texto        = $this->input->post('texto');
+		$idViaje      = $this->input->post('id');
+		$idUsuario    = $this->session->userdata('nickname');
+
+		try {
+			$this->MTripDo->calificarViaje($idUsuario, $idViaje, $calificacion, $texto);
+		} catch (Exception $e) {
+			$this->data['exception'] = $e;
+		}
+		redirect(base_url('/viaje/ver/'.$idViaje));
+	}
+
 
 	//------------------------------------------------------------------------------
 	private function generarEnlaceInvitacion($rol, $idViaje){

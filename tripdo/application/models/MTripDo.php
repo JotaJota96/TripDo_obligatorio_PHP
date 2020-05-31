@@ -949,6 +949,86 @@ class mTripDo extends CI_Model {
     }
 
     //--------------------------------------------------------------------------------
+
+    public function obtenerMisViajes($idUsuario){
+        if (!isset($idUsuario)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+
+        $duenio      = array();
+        $viajero     = array();
+        $colaborador = array();
+        
+        foreach ($this->obtenerMisViajesPropietario($idUsuario) as $v){
+            array_push($duenio, $v);
+        }
+        foreach ($this->obtenerMisViajesViajero($idUsuario) as $v){
+            array_push($viajero, $v);
+        }
+        foreach ($this->obtenerMisViajesColaborador($idUsuario) as $v){
+            array_push($colaborador, $v);
+        }
+
+        $ret = array();
+        $ret['duenio']      = $duenio;
+        $ret['viajero']     = $viajero;
+        $ret['colaborador'] = $colaborador;
+        return $ret;
+    }
+    private function obtenerMisViajesPropietario($idUsuario){
+        $filas = $this->db
+            ->select('id')
+            ->from('viaje')
+            ->where('idUsuario', $idUsuario)
+            ->get()->result_array();
+        $ret = array();
+        foreach($filas as $f){
+            $dtv = $this->obtenerViaje($f['id']);
+            array_push($ret, $dtv);
+        }
+        return $ret;
+    }
+    //--------------------------------------------------------------------------------
+    /**
+     * debuelve un array con todos los viajes en los que participo como viajero
+     * @param DtUsuario $idUsuario id del usuario
+     * @return array
+     */
+    public function obtenerMisViajesViajero($idUsuario){
+        //SELECT v.nombre FROM viaje v join viajero j on v.id = j.idViaje WHERE v.idUsuario = "antonio57"; 
+        $filas = $this->db
+            ->select('v.id')
+            ->from('viaje v')
+            ->join('viajero j', 'v.id = j.idViaje')
+            ->where('j.idUsuario', $idUsuario)
+            ->where('v.idUsuario !=', $idUsuario)
+            ->get()->result_array();
+        $ret = array();
+
+        foreach($filas as $f){
+            $dtv = $this->obtenerViaje($f['id']);
+            array_push($ret, $dtv);
+        }
+        return $ret;
+    }
+    private function obtenerMisViajesColaborador($idUsuario){
+        $filas = $this->db
+            ->select('v.id')
+            ->from('viaje v')
+            ->join('colaborador c', 'v.id = c.idViaje')
+            ->where('c.idUsuario', $idUsuario)
+            ->where('v.idUsuario !=', $idUsuario)
+            ->get()->result_array();
+        $ret = array();
+
+        foreach($filas as $f){
+            $dtv = $this->obtenerViaje($f['id']);
+            array_push($ret, $dtv);
+        }
+        return $ret;
+    }
+
+    //--------------------------------------------------------------------------------
     /**
     * el sistema debuelve un conjunto de DtViaje cuyos tags o nombres coinsidan con las keywords
     * @param array $keyWords conjunto de palabras clave de la busqueda. En caso de que el array este vacio, se devuelven todos los viajes del sistema

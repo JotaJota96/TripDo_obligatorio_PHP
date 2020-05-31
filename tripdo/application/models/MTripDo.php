@@ -1029,6 +1029,50 @@ class mTripDo extends CI_Model {
     }
 
     //--------------------------------------------------------------------------------
+
+    public function obtenerMisDestinosVotados($idUsuario, $idViaje){
+        if (!isset($idUsuario) || !isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
+        $filas = $this->db
+            ->select('idDestino')
+            ->from('destinovotado')
+            ->where('idViaje', $idViaje)
+            ->where('idUsuario', $idUsuario)
+            ->get()->result_array();
+
+        $ret = array();
+        foreach($filas as $f){
+            array_push($ret, (int) $f['idDestino']);
+        }
+        return $ret;
+    }
+
+    public function obtenerMisPlanesVotados($idUsuario, $idViaje){
+        if (!isset($idUsuario) || !isset($idViaje)){
+            throw new Exception("algunos de los parametros recibidos estan vacios");
+        }
+        if (!$this->existeViaje($idViaje)){
+            throw new Exception("No existe un viaje con ese id");
+        }
+        $filas = $this->db
+            ->select('idPlan')
+            ->from('planvotado')
+            ->where('idViaje', $idViaje)
+            ->where('idUsuario', $idUsuario)
+            ->get()->result_array();
+
+        $ret = array();
+        foreach($filas as $f){
+            array_push($ret, (int) $f['idPlan']);
+        }
+        return $ret;
+    }
+
+    //--------------------------------------------------------------------------------
     /**
     * el sistema debuelve un conjunto de DtViaje cuyos tags o nombres coinsidan con las keywords
     * @param array $keyWords conjunto de palabras clave de la busqueda. En caso de que el array este vacio, se devuelven todos los viajes del sistema

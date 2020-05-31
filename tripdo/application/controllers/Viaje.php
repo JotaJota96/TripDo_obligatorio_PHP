@@ -295,7 +295,7 @@ class Viaje extends CI_Controller {
 	}
 
 	public function votar(){
-		$redirigir = $this->input->post('btnVotarDestino');
+		$redirigir = $this->input->post('btnVotarDestinoOPlan');
         if ( ! isset($redirigir)) {
             redirect(base_url());
 		}

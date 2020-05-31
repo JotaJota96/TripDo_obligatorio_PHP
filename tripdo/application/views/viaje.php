@@ -150,9 +150,14 @@
 	                                                                <a  href="javascript:verMarcador(<?= $p->longitud.",".$p->latitud;?>)">Ver en el mapa</a>
 	                                                            </div>
 	                                                            <?php if ($mostrarVotarPlan){ ?>
-	                                                            <div class="col-2">
-	                                                                <a href="#">Votar</a>
-	                                                            </div>
+																	<div class="col-2">
+																		<form action="<?= base_url('/viaje/votar')?>" method="POST">
+																			<input type="hidden" name="idViaje" value="<?= $id ?>">
+																			<input type="hidden" name="idDestinoOPlan" value="<?= $p->id ?>">
+																			<input type="hidden" name="destinoOPlan" value="plan">
+																			<button type="submit" name="btnVotarDestinoOPlan" class="_button btn-block">Votar</button>
+																		</form>
+																	</div>
 	                                                            <?php } ?>
 	                                                        </div>
 	                                                    </div>
@@ -179,7 +184,7 @@
 
 														<div class="form-goup row">
 															<div class="col-md-12 mx-auto">
-																<button type="submit" name="btnVotarDestino" class="_button btn-block">Votar</button>
+																<button type="submit" name="btnVotarDestinoOPlan" class="_button btn-block">Votar</button>
 															</div>
 														</div>
 													</form>

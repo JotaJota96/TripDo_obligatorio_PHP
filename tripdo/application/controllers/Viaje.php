@@ -102,8 +102,8 @@ class Viaje extends CI_Controller {
 		}
 		$log = $logLimpio;
 		
-		$idPlanesVotados = array();
-		$idDestinosVotados = array();
+		$idPlanesVotados = null;
+		$idDestinosVotados = null;
 
 		$permitirCalificar = true;
 		if (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0){

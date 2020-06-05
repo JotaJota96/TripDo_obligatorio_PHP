@@ -17,8 +17,8 @@
                                     echo "<h2>Viajes de los cuales eres dueño</h2><hr>";
                                 }else if(strcmp($key, "viajero" ) == 0 && count($viajes)>0){
                                     echo "<h2>Viajes de los cuales eres viajero</h2><hr>";
-                                }else if(strcmp($key, "colavorador") == 0 && count($viajes)>0){
-                                    echo "<h2>Viajes de los cuales eres colavorador</h2><hr>";
+                                }else if(strcmp($key, "colaborador") == 0 && count($viajes)>0){
+                                    echo "<h2>Viajes de los cuales eres colaborador</h2><hr>";
                                 }
 
                                 foreach ($viajes as $v) {

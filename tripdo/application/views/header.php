@@ -89,11 +89,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<nav class="main_nav ml-auto pr-5">
 							<ul class="main_nav_list ">
 
-								<?php foreach($main_menu as $item): ?>
+								<?php foreach($main_menu['opciones'] as $item): ?>
 								<li class="main_nav_item">
 									<a href="<?= $item['url'] ?>"><?= $item['title'] ?></a>
 								</li>
-								<?php endforeach ?>									
+								<?php endforeach ?>			
+								<?php 
+									if (array_key_exists("usuario", $main_menu)) { 
+										$item = $main_menu['usuario'];
+								?>
+								<li class="main_nav_item">
+									<a href="<?= $item['url'] ?>">
+										<strong><?= $item['nickname'] ?></strong>
+										<img src="<?= base_url("public/perfiles/" . $item['nickname'])?>"
+											width="30px" height="30px" class="rounded-circle">
+									</a>
+								</li>
+								<?php } ?>
 							</ul>
 						</nav>
 
@@ -132,13 +144,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="menu menu_mm">
 					
 						<ul class="menu_list menu_mm">
-							<?php foreach($main_menu as $item): ?>
-							<li class="menu_item menu_mm">
+							<?php foreach($main_menu['opciones'] as $item): ?>
+							<li class="menu_item menu_mm text-center">
 								<a href="<?= $item['url'] ?>" style="color: rgb(255, 255, 255);"><?= $item['title'] ?></a>
 							</li>
-							<?php endforeach ?>									
+							<?php endforeach ?>
+							
+							<?php 
+								if (array_key_exists("usuario", $main_menu)) { 
+									$item = $main_menu['usuario'];
+							?>
+							<li class="menu_item menu_mm text-center">
+								<br><br>
+								<a href="<?= $item['url'] ?>" style="color: rgb(202, 202, 202);">
+									<img src="<?= base_url("public/perfiles/" . $item['nickname'])?>"
+										width="60px" height="60px" class="rounded-circle">
+									<br>
+									<?= $item['nickname'] ?>
+								</a>
+							</li>
+							<?php } ?>
 						</ul>
-
+						
 						<div class="menu_copyright menu_mm">TripDo todos los derechos reservados.</div>
 					</div>
 				</div>

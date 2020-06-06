@@ -612,7 +612,28 @@
 			//document.getElementById('map-div-container').scrollIntoView();
 		}
 
+		function calculateDistance(latitud1, latitud2, longitud1, longitud2) {
+			let p = 0.017453292519943295;
+			let c = Math.cos;
+			let a = 0.5 - c((latitud1 - latitud2) * p) / 2 + c(latitud2 * p) * c((latitud1) * p) * (1 - c(((longitud1 - longitud2) * p))) / 2;
+			let dis = (12742 * Math.asin(Math.sqrt(a)));
+			return Math.trunc(dis);
+		}
 
+		function calculateZoom(distancia) {
+			let zoom = 1;
+			//El primer valor es la distancia y el segundo el zoom para ese rango de distancia
+			let rangos = [[5, 12.6], [10, 11.6], [15, 10.5], [20, 11], [40, 9.5], [60, 8], [80, 7.5], [100, 7], [120, 6.5], [150, 6], [180, 5.5], [200, 5], [500, 4.5], [1000, 4], [1500, 3.5], [2000, 3], [2500, 2.5], [3000, 2], [3500, 1.5]]
+			for (let i = 0; i < rangos.length; i++) {
+				for (let j = 0; j < rangos[i].length; j++) {
+					if (distancia <= rangos[i][0]) {
+					zoom = rangos[i][1];
+					return zoom-0.7;
+					}
+				}
+			}
+			return zoom-0.7;
+		}
 
 		function verTodos(){
 			<?php 
@@ -632,9 +653,15 @@
 			}    
 			            
 			let marker = new mapboxgl.Marker({draggable: false}).setLngLat([longitud, latitud])                            
-						.addTo(map); 
-			map.setCenter([0,0]);
-			map.setZoom(0);
+						.addTo(map);
+			map.setCenter([<?= $centroMapa['longitud'] ?>, <?= $centroMapa['latitud'] ?>]);
+			let lat1  = <?= $centroMapa['minLat'] ?>;
+			let lat2  = <?= $centroMapa['maxLat'] ?>;
+			let long1 = <?= $centroMapa['minLong'] ?>;
+			let long2 = <?= $centroMapa['maxLong'] ?>;
+			let distancia = calculateDistance(lat1, lat2, long1, long2);
+			let zoom = calculateZoom(distancia);
+			map.setZoom(zoom);
 		}
 
 		//Agrega el cuadro de buscar en el mapa principal

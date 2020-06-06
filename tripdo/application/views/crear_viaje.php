@@ -68,7 +68,7 @@
                 <!-- Sidebar -->
                 <div class="col-lg-4 mt-5 mt-md-0">
                     <div class="sidebar">
-                        <img src="<?= base_url()?>/public/images/top_1.jpg" alt="">
+                        <img class="w-100" src="<?= base_url()?>/public/images/top_1.jpg" alt="">
                     </div>
                 </div>
 

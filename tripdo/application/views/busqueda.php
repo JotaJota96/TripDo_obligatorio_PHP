@@ -79,7 +79,7 @@
             -->
 
             <?php if ( strcmp($keywords, "") != 0 && count($viajes) == 0) { ?>
-                <div class="row">
+            <div class="row">
                 <div class="col">
                     <div class="section_title text-center py-1">
                         <h4>No hemos encontrado resultados para tu búsqueda</h4>

@@ -11,8 +11,9 @@
                     <div class="items item_grid clearfix">
                         <!-- muestra el listado de los resultados de la busqueda -->
                         <?php 
+                            $nadaParaListar = true;
                             foreach ($multiArray as $key => $viajes) {
-
+                                
                                 if(strcmp($key, "duenio") == 0 && count($viajes)>0){
                                     echo "<h2>Viajes de los cuales eres dueño</h2><hr>";
                                 }else if(strcmp($key, "viajero" ) == 0 && count($viajes)>0){
@@ -22,6 +23,7 @@
                                 }
 
                                 foreach ($viajes as $v) {
+                                    $nadaParaListar = false;
                                     $v->valoracion = (int) $v->valoracion;
                         ?>
 
@@ -57,8 +59,17 @@
                                 }
                             } 
                         ?>
-
                         
+                        <?php if ($nadaParaListar) { ?>
+                        <div class="section_title text-center py-1">
+                            <h2>Aun no participas en ningún viaje</h2>
+                        </div>
+                        <div class="section_title text-center py-1">
+                            <a href="<?= base_url('/crearViaje') ?>">
+                              <h4>Crea tu propio viaje ahora</h4>
+                            </a>
+                        </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

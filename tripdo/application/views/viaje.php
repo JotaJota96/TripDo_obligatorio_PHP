@@ -101,13 +101,6 @@
 	                            <!-- Destinos -->
 	                            <?php 
 									if (count($destinos) > 0){
-									?>
-										<div class="form-goup row">
-											<div class="col-md-12 mx-auto m-0 pr-1">
-												<button onclick="verTodos()" class="_button btn-block m-0 p-0">Ver todos los marcadores</button>
-											</div>
-										</div>
-									<?php 		
 										foreach($destinos as $d){
 											// modificar la linea para decidir si el destino ya fue votado por el usuario o no
 											$mostrarVotarDestino = isset($idDestinosVotados) && !(in_array($d->id,$idDestinosVotados));
@@ -209,7 +202,7 @@
 	            </div>
 
 	            <!-- Sidebar -->
-	            <div class="col-lg-5">
+	            <div id="para-scrolear" class="col-lg-5">
 	                <div class="sidebar">
 	                    <!-- Featured Posts -->
 	                    <div class="sidebar_featured">
@@ -229,7 +222,12 @@
 
 	                        <!-- Featured Post -->
 	                        <div class="sidebar_featured_post">
-	                            <div id="map-div-container" class="tab_panels">
+	                            <div class="tab_panels">
+									<div class="form-goup row">
+										<div class="row col-md-12 mx-auto mb-1">
+											<button onclick="verTodos()" class="_button btn-block m-0 p-0">Restaurar vista del mapa</button>
+										</div>
+									</div>
 	                                <!-- mapa -->
 	                                <div id="map" style='width: 100%; height: 300px;'>
 	                                </div>
@@ -609,7 +607,7 @@
 			map.setCenter([longitud, latitud]);
 			map.setZoom(12);
 			// esto scrolea la pagina hasta mostrar el mapa pero el menu lo tapa y queda feo
-			//document.getElementById('map-div-container').scrollIntoView();
+			document.getElementById('para-scrolear').scrollIntoView();
 		}
 
 		function calculateDistance(latitud1, latitud2, longitud1, longitud2) {
@@ -646,7 +644,7 @@
 			}
 			?>
 		}
-
+		verTodos();
 		function verTodosLosMarcadores(longitud, latitud){
 			if(markerMapaPrincipal != null){
 				markerMapaPrincipal.remove();
@@ -689,7 +687,6 @@
 		//Agregar controles al mapa con geolocalización y la opcion de pantalla completa
 		map.addControl(new mapboxgl.NavigationControl());
 		map.addControl(new mapboxgl.FullscreenControl());
-		
 	</script> 
 
 	<?php echo $footer;?>

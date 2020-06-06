@@ -114,7 +114,7 @@ class Viaje extends CI_Controller {
 			$idPlanesVotados = $this->MTripDo->obtenerMisPlanesVotados($idUsuario, $idViaje);
 		}
 
-
+		// calculos para centrar el m apa
 		$minLat = 0;
 		$minLong = 0;
 		$maxLat = 0;
@@ -146,6 +146,7 @@ class Viaje extends CI_Controller {
 			"maxLat"   => $maxLat,
 			"maxLong"  => $maxLong
 		);
+		// fin de calculos para centrar el m apa
 
 		// paso las variables a la vista
 		$this->data['id']                     = $idViaje;

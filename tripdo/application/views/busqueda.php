@@ -35,7 +35,7 @@
                             <a href="<?= base_url('/viaje/ver/'.$v->id) ?>">
                                 <div class="row">
                                     <div class="item_image col-12 col-md-4">
-                                        <img src="<?= $v->imagen ?>" alt="Imagen del viaje <?= $v->nombre ?>">
+                                        <img src="<?= base_url('/public/viajes/' . $v->imagen) ?>" alt="Imagen del viaje <?= $v->nombre ?>">
                                     </div>
                                     <div class="item_content col-12 col-md-8">
                                         <div class="item_title"> <?= $v->nombre ?> </div>

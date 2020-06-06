@@ -8,10 +8,10 @@ INSERT INTO `usuario` (`nickname`, `email`, `contrasenia`, `nombre`, `apellido`,
 ('josefa84', 'josefa@email.com', '1234', 'Josefa', 'Gomez', '092784256', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta non eaque iure perferendis, autem earum, reprehenderit laboriosam perspiciatis facere dolorem ipsam suscipit laudantium! ', null, true);
 
 INSERT INTO `viaje` (`id`, `nombre`, `descripcion`, `publico`, `imagen` , `realizado`, `idUsuario`) VALUES 
-(1, 'Vinos de América', 'Oportundad para recrear la cultura vitivinícola.', true, 'https://www.infocampo.com.ar/wp-content/uploads/2019/11/vino.jpg', true, 'antonio57'),
-(2, 'Corredor termal Río Uruguay.', 'Aguas termales, un encanto para disfrutar.', true, 'https://turismo.gub.uy/pajarospintados/wp-content/uploads/2019/04/promo-0.jpg', false, 'jose57'),
-(3, 'Uruguay Natural.', 'De la costa a las sierras.', false, 'https://cdn.trt.net.tr/images/xlarge/rectangle/7b21/10ae/6a47/5b6c3713e71a2.jpg?time=1590191560', false, 'antonio57'),
-(4, 'El gran Buenos Aires.', 'Paseos y entretenimiento.', false, 'https://conocedores.com/wp-content/uploads/2019/09/10-museos-gratis-buenos-aires-26092019.jpg', false, 'francisco91');
+(1, 'Vinos de América', 'Oportundad para recrear la cultura vitivinícola.', true, 'viaje_prueba_1', true, 'antonio57'),
+(2, 'Corredor termal Río Uruguay.', 'Aguas termales, un encanto para disfrutar.', true, 'viaje_prueba_2', false, 'jose57'),
+(3, 'Uruguay Natural.', 'De la costa a las sierras.', false, 'viaje_prueba_3', false, 'antonio57'),
+(4, 'El gran Buenos Aires.', 'Paseos y entretenimiento.', false, 'viaje_prueba_4', false, 'francisco91');
 
 INSERT INTO `destino` (`id`, `pais`, `ciudad`, `idViaje`, `agregadoPor`, `fechaAgregado`) VALUES 
 (1, 'Argentina', 'Mendoza', 1, 'antonio57', '2020-04-12'),

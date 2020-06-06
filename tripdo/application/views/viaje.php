@@ -17,7 +17,7 @@
 	                        </div>
 	                        <!-- imagen -->
 	                        <div class="post_image">
-								<img src="<?= $viaje->imagen ?>">
+								<img src="<?= base_url('/public/viajes/'.$viaje->imagen) ?>" alt="Imagen del viaje <?= $viaje->nombre ?>">
 								<?php if (strcmp($rol, "") != 0){  ?>
 								<form action="<?= base_url('/viaje/copiar') ?>" method="POST">
 									<input type="hidden" name="idViaje" value="<?= $id ?>" >

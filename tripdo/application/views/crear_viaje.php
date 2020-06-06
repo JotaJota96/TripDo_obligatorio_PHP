@@ -8,7 +8,7 @@
                 <!-- News Posts -->
                 <div class="col-lg-8">
                     <div class="form_registro">
-                        <form action="<?= base_url('crearViaje/validate')?>" method="POST" >
+                        <form action="<?= base_url('crearViaje/validate')?>" method="POST" enctype="multipart/form-data">
                             <div class="form-group row col-md-9 mx-auto">
                                 <h2 class="col-md-9">Crear Nuevo Viaje</h2>
                             </div>
@@ -28,15 +28,27 @@
                                     <span><?= form_error('descripcion'); ?></span>	
                                 </div>								
                             </div>  
-                            
+                            <!--
                             <div class="form-group row col-md-9 mx-auto">
                                 <label class="col-md-3" for="linkImagen">URL de imagen</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="linkImagen" name="linkImagen" value="<?= $defLinkImagen?>">
-                                    <span><?= form_error('linkImagen'); ?></span>	
+                                    <span><?php // echo form_error('linkImagen'); ?></span>	
                                 </div>																
                             </div>
-                            
+                            -->
+                            <!-- ******** -->
+                            <div class="form-group row col-md-9 mx-auto">
+                                <label class="col-md-3" for="imagen">Imagen</label>
+                                <div class="col-md-9 ">
+                                    <input type="file" accept="image/*" class="form-control-file" id="imagen" name="imagen">
+                                    <span class="mt-2 text-danger"><?= $msgFoto; ?></span>
+                                    <span><?= form_error('imagen'); ?></span>	
+                                </div>
+                            </div>	
+                            <!-- ******** -->
+
+
                             <div class="form-group row col-md-9 mx-auto">
                                 <label class="col-md-3" for="publico">Privacidad</label>
                                 <div class="col-md-9">

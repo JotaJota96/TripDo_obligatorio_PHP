@@ -51,6 +51,13 @@ class LoginValidar extends CI_Controller {
                 return;
             }else{
                 $this->session->set_userdata('nickname', $nick);
+
+                // verifico si se debe redirigir a una ruta especifica
+                if ($this->session->has_userdata('redirigir-a')){
+                    // obtengo la ruta y redirijo a ella
+                    $url = $this->session->userdata('redirigir-a');
+                    redirect(base_url($url));
+                }
                 redirect(base_url());
             }
         }else{

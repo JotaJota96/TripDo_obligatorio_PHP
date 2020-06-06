@@ -268,6 +268,10 @@ class Viaje extends CI_Controller {
 		}
 		// si no hay usuario logueado
 		if ( ! $this->session->has_userdata('nickname')){
+			// antes de redirigir al login, guardo la url a la que se quiso acceder, asi luego del login vuelve a cargarla automaticamente
+			$url = "/viaje/agregarRol/$rol/$idViaje/$verificacion";
+			$this->session->set_userdata('redirigir-a', $url);
+			// ahora si mando al login
 			redirect(base_url('/login'));
 		}
 		// verifico el hash

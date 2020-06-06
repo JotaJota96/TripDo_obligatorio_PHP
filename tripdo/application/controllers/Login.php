@@ -61,7 +61,14 @@ class Login extends CI_Controller {
             // si se puede iniciar sesion
             // guarda el nickname en la sesion
             $this->session->set_userdata('nickname', $nick);
-            // redirige a la pagina de inicio
+
+            // verifico si se debe redirigir a una ruta especifica
+            if ($this->session->has_userdata('redirigir-a')){
+                // obtengo la ruta y redirijo a ella
+                $url = $this->session->userdata('redirigir-a');
+                redirect(base_url($url));
+            }
+            // sno redirige a la pagina de inicio
             redirect(base_url());
         }
         

@@ -108,3 +108,23 @@ INSERT INTO `planvotado` (`idUsuario`, `idViaje`, `idPlan`)
 UPDATE plan SET latitud = latitud*0.6;
 
 UPDATE tag SET texto = lower(texto);
+
+-- tremendo parche este... xD
+UPDATE `plan` SET `latitud` = -32.957005, `longitud` = -68.873726 WHERE id = 1;
+UPDATE `plan` SET `latitud` = -32.944622, `longitud` = -68.814781 WHERE id = 2;
+UPDATE `plan` SET `latitud` = -33.442039, `longitud` = -70.530159 WHERE id = 3;
+UPDATE `plan` SET `latitud` = -33.503830, `longitud` = -70.627525 WHERE id = 4;
+UPDATE `plan` SET `latitud` = -31.452635, `longitud` = -57.907772 WHERE id = 5;
+UPDATE `plan` SET `latitud` = -31.377329, `longitud` = -57.896774 WHERE id = 6;
+UPDATE `plan` SET `latitud` = -32.209526, `longitud` = -58.145695 WHERE id = 7;
+UPDATE `plan` SET `latitud` = -32.220020, `longitud` = -58.132359 WHERE id = 8;
+UPDATE `plan` SET `latitud` = -34.811230, `longitud` = -55.255993 WHERE id = 9;
+UPDATE `plan` SET `latitud` = -34.863083, `longitud` = -55.280735 WHERE id = 10;
+UPDATE `plan` SET `latitud` = -34.281502, `longitud` = -55.255878 WHERE id = 11;
+UPDATE `plan` SET `latitud` = -34.375015, `longitud` = -55.217361 WHERE id = 12;
+UPDATE `plan` SET `latitud` = -34.622265, `longitud` = -58.381557 WHERE id = 13;
+UPDATE `plan` SET `latitud` = -34.654129, `longitud` = -58.455276 WHERE id = 14;
+UPDATE `plan` SET `latitud` = -34.422905, `longitud` = -58.579872 WHERE id = 15;
+UPDATE `plan` SET `latitud` = -34.446190, `longitud` = -58.550121 WHERE id = 16;
+
+

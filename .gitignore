@@ -4,6 +4,10 @@
 tripdo/public/perfiles/*
 !tripdo/public/perfiles/UKM
 
+# ignorar fotos de viajes excepto la por defecto
+tripdo/public/viajes/*
+!tripdo/public/viajes/.oculto
+
 tripdo/.DS_Store
 
 tripdo/application/cache/*

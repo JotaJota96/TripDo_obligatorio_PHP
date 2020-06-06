@@ -1327,7 +1327,7 @@ class CI_Form_validation {
 	 */
 	public function alpha_numeric_spaces($str)
 	{
-		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
+		return (bool) preg_match('/^[A-Z0-9 áéíóúüÁÉÍÓÚÜ ]+$/i', $str);
 	}
 
 	// --------------------------------------------------------------------

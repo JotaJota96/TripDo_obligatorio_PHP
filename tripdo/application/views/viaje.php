@@ -17,7 +17,7 @@
 	                        </div>
 	                        <!-- imagen -->
 	                        <div class="post_image">
-								<img src="<?= $viaje->imagen ?>">
+								<img src="<?= base_url('/public/viajes/'.$viaje->imagen) ?>" alt="Imagen del viaje <?= $viaje->nombre ?>">
 								<?php if (strcmp($rol, "") != 0){  ?>
 								<form action="<?= base_url('/viaje/copiar') ?>" method="POST">
 									<input type="hidden" name="idViaje" value="<?= $id ?>" >
@@ -101,16 +101,9 @@
 	                            <!-- Destinos -->
 	                            <?php 
 									if (count($destinos) > 0){
-									?>
-										<div class="form-goup row">
-											<div class="col-md-12 mx-auto m-0 pr-1">
-												<button onclick="verTodos()" class="_button btn-block m-0 p-0">Ver todos los marcadores</button>
-											</div>
-										</div>
-									<?php 		
 										foreach($destinos as $d){
 											// modificar la linea para decidir si el destino ya fue votado por el usuario o no
-											$mostrarVotarDestino = !(in_array($d->id,$idDestinosVotados));
+											$mostrarVotarDestino = isset($idDestinosVotados) && !(in_array($d->id,$idDestinosVotados));
 											$col_destino = "col-10";
 											if ( ! $mostrarVotarDestino) $col_destino = "col-12";
 								?>
@@ -131,7 +124,7 @@
 	                                                <?php 
 														foreach ($planes[$d->id] as $p){
 															// Cambiar la linea siguiente y evaluar si el usuario ya voto el plan o no
-															$mostrarVotarPlan = !($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
+															$mostrarVotarPlan = isset($idPlanesVotados) &&  !($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
 															$col_plan = "col-10";
 															if ( ! $mostrarVotarPlan) $col_plan = "col-12";
 													?>
@@ -209,7 +202,7 @@
 	            </div>
 
 	            <!-- Sidebar -->
-	            <div class="col-lg-5">
+	            <div id="para-scrolear" class="col-lg-5">
 	                <div class="sidebar">
 	                    <!-- Featured Posts -->
 	                    <div class="sidebar_featured">
@@ -229,7 +222,12 @@
 
 	                        <!-- Featured Post -->
 	                        <div class="sidebar_featured_post">
-	                            <div id="map-div-container" class="tab_panels">
+	                            <div class="tab_panels">
+									<div class="form-goup row">
+										<div class="row col-md-12 mx-auto mb-1">
+											<button onclick="verTodos()" class="_button btn-block m-0 p-0">Restaurar vista del mapa</button>
+										</div>
+									</div>
 	                                <!-- mapa -->
 	                                <div id="map" style='width: 100%; height: 300px;'>
 	                                </div>
@@ -609,10 +607,31 @@
 			map.setCenter([longitud, latitud]);
 			map.setZoom(12);
 			// esto scrolea la pagina hasta mostrar el mapa pero el menu lo tapa y queda feo
-			//document.getElementById('map-div-container').scrollIntoView();
+			document.getElementById('para-scrolear').scrollIntoView();
 		}
 
+		function calculateDistance(latitud1, latitud2, longitud1, longitud2) {
+			let p = 0.017453292519943295;
+			let c = Math.cos;
+			let a = 0.5 - c((latitud1 - latitud2) * p) / 2 + c(latitud2 * p) * c((latitud1) * p) * (1 - c(((longitud1 - longitud2) * p))) / 2;
+			let dis = (12742 * Math.asin(Math.sqrt(a)));
+			return Math.trunc(dis);
+		}
 
+		function calculateZoom(distancia) {
+			let zoom = 1;
+			//El primer valor es la distancia y el segundo el zoom para ese rango de distancia
+			let rangos = [[5, 12.6], [10, 11.6], [15, 10.5], [20, 11], [40, 9.5], [60, 8], [80, 7.5], [100, 7], [120, 6.5], [150, 6], [180, 5.5], [200, 5], [500, 4.5], [1000, 4], [1500, 3.5], [2000, 3], [2500, 2.5], [3000, 2], [3500, 1.5]]
+			for (let i = 0; i < rangos.length; i++) {
+				for (let j = 0; j < rangos[i].length; j++) {
+					if (distancia <= rangos[i][0]) {
+					zoom = rangos[i][1];
+					return zoom-0.7;
+					}
+				}
+			}
+			return zoom-0.7;
+		}
 
 		function verTodos(){
 			<?php 
@@ -625,16 +644,22 @@
 			}
 			?>
 		}
-
+		verTodos();
 		function verTodosLosMarcadores(longitud, latitud){
 			if(markerMapaPrincipal != null){
 				markerMapaPrincipal.remove();
 			}    
 			            
 			let marker = new mapboxgl.Marker({draggable: false}).setLngLat([longitud, latitud])                            
-						.addTo(map); 
-			map.setCenter([0,0]);
-			map.setZoom(0);
+						.addTo(map);
+			map.setCenter([<?= $centroMapa['longitud'] ?>, <?= $centroMapa['latitud'] ?>]);
+			let lat1  = <?= $centroMapa['minLat'] ?>;
+			let lat2  = <?= $centroMapa['maxLat'] ?>;
+			let long1 = <?= $centroMapa['minLong'] ?>;
+			let long2 = <?= $centroMapa['maxLong'] ?>;
+			let distancia = calculateDistance(lat1, lat2, long1, long2);
+			let zoom = calculateZoom(distancia);
+			map.setZoom(zoom);
 		}
 
 		//Agrega el cuadro de buscar en el mapa principal
@@ -662,7 +687,6 @@
 		//Agregar controles al mapa con geolocalización y la opcion de pantalla completa
 		map.addControl(new mapboxgl.NavigationControl());
 		map.addControl(new mapboxgl.FullscreenControl());
-		
 	</script> 
 
 	<?php echo $footer;?>

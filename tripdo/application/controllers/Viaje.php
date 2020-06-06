@@ -102,8 +102,8 @@ class Viaje extends CI_Controller {
 		}
 		$log = $logLimpio;
 		
-		$idPlanesVotados = array();
-		$idDestinosVotados = array();
+		$idPlanesVotados = null;
+		$idDestinosVotados = null;
 
 		$permitirCalificar = true;
 		if (strcmp($rol, "duenio") == 0 || strcmp($rol, "viajero") == 0){
@@ -114,7 +114,40 @@ class Viaje extends CI_Controller {
 			$idPlanesVotados = $this->MTripDo->obtenerMisPlanesVotados($idUsuario, $idViaje);
 		}
 
-		
+		// calculos para centrar el m apa
+		$minLat = 0;
+		$minLong = 0;
+		$maxLat = 0;
+		$maxLong = 0;
+		$inicio = true;
+
+		foreach ($planes as $key => $ps){
+			foreach ($ps as $key => $p){
+				if ($inicio){
+					$minLat = $p->latitud;
+					$minLong = $p->longitud;
+					$maxLat = $p->latitud;
+					$maxLong = $p->longitud;
+					$inicio = false;
+				}else{
+					if ($minLong > $p->longitud) $minLong = $p->longitud;				
+					if ($minLat  > $p->latitud ) $minLat  = $p->latitud ;
+					if ($maxLong < $p->longitud) $maxLong = $p->longitud;
+					if ($maxLat  < $p->latitud ) $maxLat  = $p->latitud ;
+				}
+			}
+		}
+
+		$centroMapa = array(
+			"latitud"  => (($minLat + $maxLat)/2),
+			"longitud" => (($minLong + $maxLong)/2),
+			"minLat"   => $minLat,
+			"minLong"  => $minLong,
+			"maxLat"   => $maxLat,
+			"maxLong"  => $maxLong
+		);
+		// fin de calculos para centrar el m apa
+
 		// paso las variables a la vista
 		$this->data['id']                     = $idViaje;
 		$this->data['viaje']                  = $viaje;
@@ -129,8 +162,8 @@ class Viaje extends CI_Controller {
 		$this->data['permitirCalificar']      = $permitirCalificar;
 		$this->data['idPlanesVotados']        = $idPlanesVotados;
 		$this->data['idDestinosVotados']      = $idDestinosVotados;
-
-	
+		$this->data['centroMapa']             = $centroMapa;
+		
 		$this->load->view('viaje', $this->data);
 	}
 
@@ -235,6 +268,10 @@ class Viaje extends CI_Controller {
 		}
 		// si no hay usuario logueado
 		if ( ! $this->session->has_userdata('nickname')){
+			// antes de redirigir al login, guardo la url a la que se quiso acceder, asi luego del login vuelve a cargarla automaticamente
+			$url = "/viaje/agregarRol/$rol/$idViaje/$verificacion";
+			$this->session->set_userdata('redirigir-a', $url);
+			// ahora si mando al login
 			redirect(base_url('/login'));
 		}
 		// verifico el hash

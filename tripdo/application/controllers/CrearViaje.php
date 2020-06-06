@@ -21,7 +21,7 @@ class CrearViaje extends CI_Controller {
 		
 		$this->data['defNombre']      = $this->input->post('nombreViaje');
 		$this->data['defDescripcion'] = $this->input->post('descripcion');
-		$this->data['defLinkImagen']  = $this->input->post('linkImagen');
+		$this->data['msgFoto'] ="";
     }
 
 	public function index(){	
@@ -41,7 +41,6 @@ class CrearViaje extends CI_Controller {
 		$dtviaje = new DtViaje();
 		$dtviaje->nombre      = $this->input->post('nombreViaje');
 		$dtviaje->descripcion = $this->input->post('descripcion');
-		$dtviaje->imagen      = $this->input->post('linkImagen');
 		$publico              = $this->input->post('publico');
 
 		if($publico=='option1'){
@@ -50,10 +49,51 @@ class CrearViaje extends CI_Controller {
 			$dtviaje->publico = true;
 		}
 
+		//-------------------aca empieza el tema imagen--------------------------
+        // Check if file was uploaded without errors
+		if(isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] == 0){
+
+			$allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+			$filename = $_FILES["imagen"]["name"];
+			$filetype = $_FILES["imagen"]["type"];
+			$filesize = $_FILES["imagen"]["size"];
+		
+			// Verify file extension
+			$ext = pathinfo($filename, PATHINFO_EXTENSION);
+			if(!array_key_exists($ext, $allowed) || !in_array($filetype, $allowed)){
+				$this->data['msgFoto'] ="El archivo debe tener alguno de estos formatos (jpg, jpeg, gif, png)";
+				$this->load->view('crear_viaje', $this->data);
+				return;
+				//die("Error: Please select a valid file format.");
+			} 
+		
+			// Verify file size - 5MB maximum and Verify MYME type of the file
+			//$maxsize = 5 * 1024 * 1024;
+			$maxsize = 10 * 5000 * 5000; //yo lo cambie para que aguante mas
+			if($filesize > $maxsize){
+				$this->data['msgFoto'] ="El archivo exede los 5MB";
+				$this->load->view('crear_viaje', $this->data);
+				//die("Error: File size is larger than the allowed limit.");
+				return;
+			} 
+		}else{
+			// Aca nunca deberia entrar porque la imagen es obligatoria
+			//$dtusuario->imagen = $nick;
+			//copy("public/perfiles/UKM", "public/perfiles/" . $nick);
+		}
+
+		//-------------------termina imagen--------------------------
+
 		try {
 			$idUsuario = $this->session->userdata('nickname');
+			$nuevoNombreArchivo = sha1(date(DATE_RFC2822) . $_FILES["imagen"]["name"] . $idUsuario);
+			$dtviaje->imagen = $nuevoNombreArchivo;
 			// manda a persistir el viaje y obtengo lo persistido con el ID que le fue asignado
 			$dtviaje = $this->MTripDo->crearViaje($dtviaje, $idUsuario);
+
+			// Guarda la imagen
+			move_uploaded_file($_FILES["imagen"]["tmp_name"], "public/viajes/" . $nuevoNombreArchivo );
+			$dtusuario->imagen = $nick;
 
 			redirect(base_url('/viaje/ver/'.$dtviaje->id));
 
@@ -73,7 +113,11 @@ class CrearViaje extends CI_Controller {
 		//Validaciones
 		$this->form_validation->set_rules('nombreViaje', 'Nombre del viaje', 'trim|required|min_length[5]|max_length[50]|alpha_numeric_spaces');
 		$this->form_validation->set_rules('descripcion', 'Descripción', 'trim|required');
-		$this->form_validation->set_rules('linkImagen', 'URL de imagen', 'trim|required|min_length[10]|valid_url');
+		// para que la imagen sea obligatoria
+		if (empty($_FILES['imagen']['name'])){
+			$this->form_validation->set_rules('imagen', 'Imagen', 'required');
+		}
+
 
 		//Mensajes de error
 		$this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');

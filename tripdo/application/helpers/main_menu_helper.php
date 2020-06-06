@@ -12,7 +12,7 @@ function mainMenu(){
     $nickname = $CI->session->userdata('nickname'); // le pido a ese controller que busque en la sesion la variable que necesito
 
     // array base que incluye las opciones a mostrar siempre
-    $menu = array(
+    $menu['opciones'] = array(
         array(
             'title'=> 'Incio',
             'url' => base_url('/')
@@ -30,7 +30,7 @@ function mainMenu(){
     // se agregan mas opciones al menu dependiendo de si hay un usuario logueado o no
     if ($nickname == null){
         // si NO hay usuario logueado, agrego opciones de login, registro, etc
-        array_push($menu, 
+        array_push($menu['opciones'], 
             array(
                 'title'=> 'Iniciar sesión',
                 'url' => base_url('/login')
@@ -42,9 +42,9 @@ function mainMenu(){
         );
     }else{
         // si SI hay un usuario logueado, agrego opciones de crear viaje, logout, etc
-        array_push($menu, 
+        array_push($menu['opciones'], 
             array(
-                'title'=> 'Mis viaje',
+                'title'=> 'Mis viajes',
                 'url' => base_url('/misViajes')
             ),
             array(
@@ -54,11 +54,11 @@ function mainMenu(){
             array(
                 'title'=> 'Cerrar sesión',
                 'url' => base_url('/login/salir')
-            ),
-            array(
-                'title'=> $nickname,
-                'url' => base_url()
             )
+        );
+        $menu['usuario'] = array(
+            'nickname'=> $nickname,
+            'url' => base_url()
         );
     }
     return $menu;

@@ -947,3 +947,6 @@ section
 {
 	background: rgba(254,60,82,0.8);
 }
+html {
+	scroll-behavior: smooth;
+  }

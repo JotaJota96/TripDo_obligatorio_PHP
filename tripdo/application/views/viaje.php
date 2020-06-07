@@ -304,7 +304,7 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-	                <form action="<?= base_url('viaje/sugerirDestino') ?>" method="POST">
+	                <form action="<?= base_url('/viaje/sugerirDestino') ?>" method="POST">
 	                    <div class="form-group">
 	                        <label for="Pais">País</label>
 	                        <input name="Pais" class="form-control">
@@ -342,7 +342,7 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-					<form action="<?= base_url('viaje/sugerirPlan') ?>" method="POST">
+					<form action="<?= base_url('/viaje/sugerirPlan') ?>" method="POST">
 	                    <div class="conteiner">
 	                        <div class="row">
 	                            <div class="col-12 col-md-6">
@@ -502,7 +502,7 @@
 	                        </div>
 	                        <div class="tab_panel">
 	                            <div class="buttons m-5">
-									<form action="<?= base_url('viaje/marcarComoRealizado') ?>" method="POST">
+									<form action="<?= base_url('/viaje/marcarComoRealizado') ?>" method="POST">
 										<input type="hidden" id="idViaje" name="idViaje" value="<?= $id ?>">
 										<div class="form-goup row">
 											<div class="col-md-12 mx-auto">
@@ -531,7 +531,7 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-	                <form action="<?= base_url('viaje/calificarViaje') ?>" method="POST">
+	                <form action="<?= base_url('/viaje/calificarViaje') ?>" method="POST">
 	                    <div class="form-group">
 	                        <label class="form-control" for="calificacion" id="labelid">Valoracion: 5 estrellas</label>
 	                        <input name="calificacion" type="range" max="5" min="1" step="1" value="5" id="slider" class="form-control-range w-100" onchange="actualizarSlider(this.value)" >

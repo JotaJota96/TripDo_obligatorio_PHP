@@ -8,7 +8,7 @@
                 <!-- News Posts -->
                 <div class="col-lg-8">
                     <div class="form_registro">
-                        <form action="<?= base_url('crearViaje/validate')?>" method="POST" enctype="multipart/form-data">
+                        <form action="<?= base_url('/crearViaje/validate')?>" method="POST" enctype="multipart/form-data">
                             <div class="form-group row col-md-9 mx-auto">
                                 <h2 class="col-md-9">Crear Nuevo Viaje</h2>
                             </div>
@@ -80,7 +80,7 @@
                 <!-- Sidebar -->
                 <div class="col-lg-4 mt-5 mt-md-0">
                     <div class="sidebar">
-                        <img class="w-100" src="<?= base_url()?>/public/images/top_1.jpg" alt="">
+                        <img class="w-100" src="<?= base_url('/public/images/top_1.jpg')?>" alt="">
                     </div>
                 </div>
 

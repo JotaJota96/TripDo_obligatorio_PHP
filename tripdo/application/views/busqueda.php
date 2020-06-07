@@ -14,10 +14,10 @@
 
             <!-- Campo de busqueda de viaje -->
             <div class="menu_search_form_container">
-                <form action="<?= base_url('busqueda')?>" method="GET" id="menu_search_form">
+                <form action="<?= base_url('/busqueda')?>" method="GET" id="menu_search_form">
                     <input type="search" value="<?= $keywords ?>" class="menu_search_input menu_mm" name="keywords">
                     <button id="menu_search_submit" class="menu_search_submit" type="submit">
-                        <img src="<?= base_url()?>/public/images/search_2.png" alt="">
+                        <img src="<?= base_url('/public/images/search_2.png')?>" alt="">
                     </button>
                 </form>
             </div>

@@ -8,7 +8,7 @@
                 <!-- News Posts -->
                 <div class="col-lg-8">
                     <div class="form_registro">
-                        <form action="<?= base_url('loginValidar/validate')?>" method="POST" >
+                        <form action="<?= base_url('/loginValidar/validate')?>" method="POST" >
                             <div class="form-group row col-md-9 mx-auto">
                                 <h2 class="col-md-9">Valida tu registro</h2>
                                 <p class="col-md-9">Te hemos enviado un código de validación a tu direccion de correo.</p>
@@ -56,7 +56,7 @@
                 <!-- Sidebar -->
                 <div class="col-lg-4">
                     <div class="sidebar">
-                        <img src="<?= base_url()?>/public/images/top_1.jpg" alt="">
+                        <img src="<?= base_url('/public/images/top_1.jpg')?>" alt="">
                     </div>
                 </div>
 

@@ -15,7 +15,7 @@ function mainMenu(){
     $menu['opciones'] = array(
         array(
             'title'=> 'Incio',
-            'url' => base_url('/')
+            'url' => base_url()
         ),
         array(
             'title'=> 'Buscar',

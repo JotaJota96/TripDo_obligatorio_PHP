@@ -9,7 +9,7 @@
                                 <div class="logo">
                                     <div>TripDo</div>
                                     <div>Planea tu viaje</div>
-                                    <div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
+                                    <div class="logo_image"><img src="<?= base_url('/public/images/logo.png')?>" alt=""></div>
                                 </div>
                             </div>
                             <div class="footer_about_text">
@@ -46,20 +46,20 @@
        
 
      
-        <script src="<?= base_url()?>public/js/jquery-3.2.1.min.js"></script>
-        <script src="<?= base_url()?>public/styles/bootstrap4/popper.js"></script>
-        <script src="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.js"></script>
+        <script src="<?= base_url('/public/js/jquery-3.2.1.min.js')?>"></script>
+        <script src="<?= base_url('/public/styles/bootstrap4/popper.js')?>"></script>
+        <script src="<?= base_url('/public/styles/bootstrap4/bootstrap.min.js')?>"></script>
 
-        <script src="<?= base_url()?>public/plugins/greensock/TweenMax.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/greensock/TimelineMax.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/scrollmagic/ScrollMagic.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/greensock/animation.gsap.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/greensock/ScrollToPlugin.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/easing/easing.js"></script>
-        <script src="<?= base_url()?>public/plugins/progressbar/progressbar.min.js"></script>
-        <script src="<?= base_url()?>public/plugins/parallax-js-master/parallax.min.js"></script>
-        <script src="<?= base_url()?>public/js/elements_custom.js"></script>
-        <script src="<?= base_url()?>public/js/custom.js"></script>
-        <script src="<?= base_url()?>public/js/news_custom.js"></script>
+        <script src="<?= base_url('/public/plugins/greensock/TweenMax.min.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/greensock/TimelineMax.min.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/scrollmagic/ScrollMagic.min.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/greensock/animation.gsap.min.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/greensock/ScrollToPlugin.min.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/easing/easing.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/progressbar/progressbar.min.js')?>"></script>
+        <script src="<?= base_url('/public/plugins/parallax-js-master/parallax.min.js')?>"></script>
+        <script src="<?= base_url('/public/js/elements_custom.js')?>"></script>
+        <script src="<?= base_url('/public/js/custom.js')?>"></script>
+        <script src="<?= base_url('/public/js/news_custom.js')?>"></script>
     </body>
 </html>

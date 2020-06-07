@@ -27,7 +27,7 @@
                                     $v->valoracion = (int) $v->valoracion;
                         ?>
 
-                        <div class="item clearfix rating_<?= $v->valoracion ?>">
+                        <div class="item clearfix">
                             <a href="<?= base_url('/viaje/ver/'.$v->id) ?>">
                                 <div class="row">
                                     <div class="item_image col-12 col-md-4">
@@ -35,13 +35,6 @@
                                     </div>
                                     <div class="item_content col-12 col-md-8">
                                         <div class="item_title"> <?= $v->nombre ?> </div>
-                                        <div class="rating rating_<?= $v->valoracion ?>" data-rating="<?= $v->valoracion ?>">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
                                         
                                         <div class="item_text">
                                             Organizado por: <?= $v->idUsuario ?>

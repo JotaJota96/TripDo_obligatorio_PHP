@@ -349,7 +349,7 @@
 									<!-- Drop down de destinos-->
 	                                <div class="form-group">
 	                                    <label for="exampleFormControlSelect1">Selecione el destino</label>
-	                                    <select name="idDestino" class="form-control" id="SelectDestinos">
+	                                    <select name="idDestino" class="form-control custom-select" id="SelectDestinos">
 	                                        <?php 
 											foreach($destinos as $d){
 										?>

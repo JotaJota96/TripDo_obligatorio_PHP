@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					
 						<ul class="menu_list menu_mm">
 							<?php foreach($main_menu['opciones'] as $item): ?>
-							<li class="menu_item menu_mm text-center">
+							<li class="mobile-menu-item menu_mm">
 								<a href="<?= $item['url'] ?>" style="color: rgb(255, 255, 255);"><?= $item['title'] ?></a>
 							</li>
 							<?php endforeach ?>

@@ -37,14 +37,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="description" content="Registro de usuario">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/bootstrap4/bootstrap.min.css">
-	<link href="<?= base_url()?>public/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/main_styles.css">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/elements_styles.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/public/styles/bootstrap4/bootstrap.min.css')?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/public/plugins/font-awesome-4.7.0/css/font-awesome.min.css')?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/public/styles/main_styles.css')?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/public/styles/elements_styles.css')?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $style?>">
-	<link rel="stylesheet" type="text/css" href="<?= base_url()?>public/styles/<?= $responsive ?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/public/styles/'. $style)?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('/public/styles/'. $responsive)?>">
 	<script>
 		
 	</script>
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="logo">
                                     <div>TripDo</div>
                                     <div>Planea tu viaje</div>
-                                    <div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
+                                    <div class="logo_image"><img src="<?= base_url('/public/images/logo.png')?>" alt=""></div>
                                 </div>
                             </a>
 						</div>
@@ -130,7 +130,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div class="logo">
 									<div>TripDo</div>
 									<div>Planea tu viaje</div>
-									<div class="logo_image"><img src="<?= base_url()?>/public/images/logo.png" alt=""></div>
+									<div class="logo_image"><img src="<?= base_url('/public/images/logo.png')?>" alt=""></div>
 								</div>
 							</a>
 						</div>
@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					
 						<ul class="menu_list menu_mm">
 							<?php foreach($main_menu['opciones'] as $item): ?>
-							<li class="menu_item menu_mm text-center">
+							<li class="mobile-menu-item menu_mm">
 								<a href="<?= $item['url'] ?>" style="color: rgb(255, 255, 255);"><?= $item['title'] ?></a>
 							</li>
 							<?php endforeach ?>

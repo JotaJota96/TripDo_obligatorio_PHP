@@ -654,6 +654,10 @@ section
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
+.mobile-menu-item{
+	transition: all 200ms ease;
+	font-size: 18px;
+}
 .menu_item a:hover
 {
 	color: #fe435b;

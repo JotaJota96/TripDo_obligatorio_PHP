@@ -2,5 +2,5 @@
 ## Datos cuenta para uso de mapbox
 
 + username: tripdo
-+ contraseña: tripDo.uy
++ contraseña: *********
 + email asociado: tripDo.uy@gmail.com

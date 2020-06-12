@@ -46,6 +46,7 @@ class Viaje extends CI_Controller {
 		 * - Lista de Viajeros del viaje
 		 * - Lista de Colaboradores del viaje
 		 * - Listado de actividad reciente (ordenado cronologicamente)
+		 * y muchas cosas mas que agregamos espues pero no aclaramos aca
 		 */
 
 		// defino el rol del usuario que visualiza el viaje

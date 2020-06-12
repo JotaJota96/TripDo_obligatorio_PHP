@@ -928,7 +928,9 @@ class mTripDo extends CI_Model {
             throw new Exception("La cantidad de elementos deseada debe ser mayor a 0");
         }
         /* estilo de la consulta resultante
-        SELECT t.texto, count(*) AS contador FROM tag t
+        SELECT t.texto, count(*) AS contador
+        FROM tag t
+        JOIN destino d
         GROUP BY t.texto
         ORDER BY contador DESC
         LIMIT $cant
@@ -936,6 +938,9 @@ class mTripDo extends CI_Model {
         $result = $this->db
             ->select("t.texto, count(*) AS contador")
             ->from("tag t")
+            ->join('destino d', 't.idDestino = d.id')
+            ->join('viaje v', 'd.idViaje = v.id')
+            ->where('v.publico', true)
             ->group_by("t.texto")
             ->order_by("contador", "DESC")
             ->limit($cant)
@@ -1106,7 +1111,7 @@ class mTripDo extends CI_Model {
             // algun dia pueden ser útiles...
             // $this->db->or_where("LOWER(d.pais) LIKE LOWER('%$kw%')");
             // $this->db->or_where("LOWER(d.ciudad) LIKE LOWER('%$kw%')");
-            // $this->db->or_where("LOWER(v.nombre) LIKE LOWER('%$kw%')");
+            $this->db->or_where("LOWER(v.nombre) LIKE LOWER('%$kw%')");
             // $this->db->or_where("LOWER(v.descripcion) LIKE LOWER('%$kw%')");
         }
         // echo $this->db->get_compiled_select();

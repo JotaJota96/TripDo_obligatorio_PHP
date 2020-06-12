@@ -103,7 +103,7 @@
 									if (count($destinos) > 0){
 										foreach($destinos as $d){
 											// modificar la linea para decidir si el destino ya fue votado por el usuario o no
-											$mostrarVotarDestino = isset($idDestinosVotados) && !(in_array($d->id,$idDestinosVotados));
+											$mostrarVotarDestino = (!$viaje->realizado) && isset($idDestinosVotados) && !(in_array($d->id,$idDestinosVotados));
 											$col_destino = "col-10";
 											if ( ! $mostrarVotarDestino) $col_destino = "col-12";
 								?>
@@ -124,7 +124,7 @@
 	                                                <?php 
 														foreach ($planes[$d->id] as $p){
 															// Cambiar la linea siguiente y evaluar si el usuario ya voto el plan o no
-															$mostrarVotarPlan = isset($idPlanesVotados) &&  !($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
+															$mostrarVotarPlan = (!$viaje->realizado) && isset($idPlanesVotados) &&  !($mostrarVotarDestino) && !(in_array($p->id,$idPlanesVotados));
 															$col_plan = "col-10";
 															if ( ! $mostrarVotarPlan) $col_plan = "col-12";
 													?>
@@ -304,7 +304,7 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-	                <form action="<?= base_url('viaje/sugerirDestino') ?>" method="POST">
+	                <form action="<?= base_url('/viaje/sugerirDestino') ?>" method="POST">
 	                    <div class="form-group">
 	                        <label for="Pais">País</label>
 	                        <input name="Pais" class="form-control">
@@ -342,14 +342,14 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-					<form action="<?= base_url('viaje/sugerirPlan') ?>" method="POST">
+					<form action="<?= base_url('/viaje/sugerirPlan') ?>" method="POST">
 	                    <div class="conteiner">
 	                        <div class="row">
 	                            <div class="col-12 col-md-6">
 									<!-- Drop down de destinos-->
 	                                <div class="form-group">
 	                                    <label for="exampleFormControlSelect1">Selecione el destino</label>
-	                                    <select name="idDestino" class="form-control" id="SelectDestinos">
+	                                    <select name="idDestino" class="form-control custom-select" id="SelectDestinos">
 	                                        <?php 
 											foreach($destinos as $d){
 										?>
@@ -502,7 +502,7 @@
 	                        </div>
 	                        <div class="tab_panel">
 	                            <div class="buttons m-5">
-									<form action="<?= base_url('viaje/marcarComoRealizado') ?>" method="POST">
+									<form action="<?= base_url('/viaje/marcarComoRealizado') ?>" method="POST">
 										<input type="hidden" id="idViaje" name="idViaje" value="<?= $id ?>">
 										<div class="form-goup row">
 											<div class="col-md-12 mx-auto">
@@ -531,7 +531,7 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-	                <form action="<?= base_url('viaje/calificarViaje') ?>" method="POST">
+	                <form action="<?= base_url('/viaje/calificarViaje') ?>" method="POST">
 	                    <div class="form-group">
 	                        <label class="form-control" for="calificacion" id="labelid">Valoracion: 5 estrellas</label>
 	                        <input name="calificacion" type="range" max="5" min="1" step="1" value="5" id="slider" class="form-control-range w-100" onchange="actualizarSlider(this.value)" >
